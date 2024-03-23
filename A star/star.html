@@ -8,13 +8,14 @@
         <h1>Алгоритм A*</h1>
         <h2>Инструкция:</h2>
         <ul type="disc">
-            <li>Введите размер</li>
-            <input oninput="onClickButton()"></input>
-            <li>Отметьте начало пути</li>
-            <li>Отметьте конец пути</li>
+            <li>Введите размер карты n*n</li>
+            <input oninput="GenerationMap()"></input>
+            <li>Выберете начало пути</li>
+            <li>Выберете конец пути</li>
             <li>Отметьте непроходимые клетки</li>
             <li>Запустите алгоритм</li>
-            <p><button onclick="onClickButton()">Запустить</button></p>
+            <button onclick="SearchPath()">Запустить</button>
+            <br><button onclick="SearchPath()">Вернуться на главную</button>
         </ul>
         
         
