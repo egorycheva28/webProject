@@ -77,33 +77,48 @@ function genMaze(x, y) { // генерируем лабиринт
 
 	const directions = randomize(['top', 'right', 'bottom', 'left']); 
 
-	for (const direction of directions) { 
-		const dx = 
-			{ top: 0, right: 1, bottom: 0, left: -1 }[direction]; 
-		const dy = 
-			{ top: -1, right: 0, bottom: 1, left: 0 }[direction]; 
+	for (let i = 0; i < directions.length; i++) {
+        let dx, dy;
 
-		const newX = x + dx; 
-		const newY = y + dy; 
-		// if the coordinates are inbound 
-		if (newX >= 0 && newX < cols 
-			&& newY >= 0 && newY < rows) { 
-			const neighbour = cells[newX][newY]; 
+        if (i === 'top') { // смещение
+            dx = 0;
+            dy = -1;
+        } else if (i === 'right') {
+            dx = 1;
+            dy = 0;
+        } else if (i === 'bottom') {
+            dx = 0;
+            dy = 1;
+        } else if (i === 'left') {
+            dx = -1;
+            dy = 0;
+        }
 
-			// removing walls 
 
-			if (!neighbour.visited) { 
-				currCell.walls[direction] = false; 
-				neighbour.walls[{ 
-					top: 'bottom', 
-					right: 'left', 
-					bottom: 'top', 
-					left: 'right', 
-				}[direction]] = false; 
-				genMaze(newX, newY); 
-			} 
-		} 
-	} 
+        const newX = x + dx;
+        const newY = y + dy;
+
+        if (newX >= 0 && newX < N // проверяем вышли ли мы за границы или нет
+            && newY >= 0 && newY < N) {
+            const neighbour = cells[newX][newY];
+
+            if (!neighbour.visited) { // убираем стены
+                currCell.walls[i] = false;
+                
+                if (i === 'top') {
+                    neighbour.walls['bottom'] = false;
+                } else if (i === 'right') {
+                    neighbour.walls['left'] = false;
+                } else if (i === 'bottom') {
+                    neighbour.walls['top'] = false;
+                } else if (i === 'left') {
+                    neighbour.walls['right'] = false;
+                }
+                
+                genMaze(newX, newY); // рекурсия для всех ячеек лабиринта
+            }
+        }
+    }
 	generatedMaze = 
 		cells.map(row => row.map( 
 			cell => ({ ...cell }))); 
