@@ -4,9 +4,13 @@ let start;
 let end;
 function GenerationMap()
 {
-
+    
 }
 function onClickButton()
 {
     document.write('вы нажали на меня');
+}
+function SearchPath()
+{
+    
 }
