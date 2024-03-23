@@ -1,0 +1,21 @@
+body{
+    background-color:cornsilk;
+}
+h1
+{
+    color:black;
+    text-align: center;
+}
+.start
+{
+    background-color:green;
+}
+.end
+{
+    background-color: red;
+}
+.blocked
+{
+    background-color: black;
+}
+
