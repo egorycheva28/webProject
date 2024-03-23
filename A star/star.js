@@ -25,7 +25,7 @@ for (let x = 0; x < N; x++) {
     }
 }
 
-class MazeCell { // класс, который создается для каждой ячейки
+class CellMaze { // класс, который создается для каждой ячейки
     constructor(x, y) {
         this.x = x;
         this.y = y;
@@ -70,8 +70,16 @@ class MazeCell { // класс, который создается для каж�
     }
 }
 
+function setup() { // инициализация каждой ячейки лабиринта
+    for (let x = 0; x < N; x++) {
+        for (let y = 0; y < N; y++) {
+            cells[x][y] = new MazeCell(x, y);
+        }
+    }
+    generation(0, 0);
+}
 
-function genMaze(x, y) { // генерируем лабиринт
+function generation(x, y) { // генерируем лабиринт
     const currCell = cells[x][y]; // копируем текущую ячейку
     currCell.visited = true; // отмечаем посещенную ячейку
 
@@ -121,14 +129,53 @@ function genMaze(x, y) { // генерируем лабиринт
     }
     generatedMaze = cells.map(row => row.map(cell => ({ ...cell }))); // клонируем
 
-    solutionPath = solveMaze();
+    solutionPath = solution();
 }
 
-function setup() { // инициализация каждой ячейки лабиринта
-    for (let x = 0; x < N; x++) {
-        for (let y = 0; y < N; y++) {
-            cells[x][y] = new MazeCell(x, y);
+function solution() {
+    var visited = new Array(N); // создаем массив из N элементов
+
+    for (let i = 0; i < N; i++) {
+        visited[i] = new Array(N); // для каждой строки создаем массив из N элементов
+        for (let j = 0; j < N; j++) {
+            visited[i][j] = false; // инициализируем каждый элемент значением false
         }
     }
-    genMaze(0, 0);
-} 
+
+    const path = [];
+
+    function dfs(x, y) { // поиск в глубину
+        if (x < 0 || x >= N || y < 0 ||
+            y >= N || visited[y][x]) {
+            return false;
+        }
+
+        visited[y][x] = true;
+        path.push({ x, y });
+
+        if (x === cols - 1 && y === rows - 1) {
+            return true;
+        }
+
+        const cell = generatedMaze[x][y];
+
+        if (!cell.walls.top && dfs(x, y - 1)) {
+            return true;
+        }
+        if (!cell.walls.right && dfs(x + 1, y)) {
+            return true;
+        }
+        if (!cell.walls.bottom && dfs(x, y + 1)) {
+            return true;
+        }
+        if (!cell.walls.left && dfs(x - 1, y)) {
+            return true;
+        }
+
+        path.pop();
+        return false;
+    }
+
+    dfs(0, 0);
+    return path;
+}
