@@ -103,9 +103,9 @@ function genMaze(x, y) { // генерируем лабиринт
             const neighbour = cells[newX][newY];
 
             if (!neighbour.visited) { // убираем стены
-                currCell.walls[i] = false;
-                
-                if (i === 'top') {
+                currCell.walls[i] = false; // у текущей ячейки удаляем стену в напрвалении i
+
+                if (i === 'top') { // у соседней ячейки удаляем стену в противоположном направлении i
                     neighbour.walls['bottom'] = false;
                 } else if (i === 'right') {
                     neighbour.walls['left'] = false;
