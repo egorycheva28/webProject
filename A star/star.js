@@ -73,7 +73,7 @@ class CellMaze { // класс, который создается для каж�
 function setup() { // инициализация каждой ячейки лабиринта
     for (let x = 0; x < N; x++) {
         for (let y = 0; y < N; y++) {
-            cells[x][y] = new MazeCell(x, y);
+            cells[x][y] = new CellMaze(x, y);
         }
     }
     generation(0, 0);
@@ -88,16 +88,16 @@ function generation(x, y) { // генерируем лабиринт
     for (let i = 0; i < directions.length; i++) {
         let dx, dy;
 
-        if (i === 'top') { // смещение
+        if (directions[i] === 'top') { // смещение
             dx = 0;
             dy = -1;
-        } else if (i === 'right') {
+        } else if (directions[i] === 'right') {
             dx = 1;
             dy = 0;
-        } else if (i === 'bottom') {
+        } else if (directions[i] === 'bottom') {
             dx = 0;
             dy = 1;
-        } else if (i === 'left') {
+        } else if (directions[i] === 'left') {
             dx = -1;
             dy = 0;
         }
@@ -111,7 +111,7 @@ function generation(x, y) { // генерируем лабиринт
             const neighbour = cells[newX][newY];
 
             if (!neighbour.visited) { // убираем стены
-                currCell.walls[i] = false; // у текущей ячейки удаляем стену в напрвалении i
+                currCell.walls[directions[i]] = false; // у текущей ячейки удаляем стену в напрвалении i
 
                 if (i === 'top') { // у соседней ячейки удаляем стену в противоположном направлении i
                     neighbour.walls['bottom'] = false;
@@ -123,7 +123,7 @@ function generation(x, y) { // генерируем лабиринт
                     neighbour.walls['right'] = false;
                 }
 
-                genMaze(newX, newY); // рекурсия для всех ячеек лабиринта
+                generation(newX, newY); // рекурсия для всех ячеек лабиринта
             }
         }
     }
@@ -153,7 +153,7 @@ function solution() {
         visited[y][x] = true;
         path.push({ x, y });
 
-        if (x === cols - 1 && y === rows - 1) {
+        if (x === N - 1 && y === N - 1) {
             return true;
         }
 
