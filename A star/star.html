@@ -5,20 +5,23 @@
         <link rel="stylesheet" href="star.css">
     </head>
     <body>
+        <p onclick="window.location.href='star.html'">Алгоритм А*</p>
+        <p onclick="window.location.href='cluster.html'">Алгоритм кластеризации</p>
         <h1><u>Алгоритм A*</u></h1>
+        
         <h2>Инструкция:</h2>
-        <ul type="disc">
+        
+        <ul type="disc"></ul>
             <li>Введите размер карты n*n</li>
-            <input type="text" name="name" placeholder="n" oninput="GenerationMap()"></input>
+            <input type="text" name="name" placeholder="n" oninput="generateMaze(0, 0, width/cellSize, height/cellSize)"></input>
             <li>Выберете начало пути</li>
             <li>Выберете конец пути</li>
             <li>Отметьте непроходимые клетки</li>
             <li>Запустите алгоритм</li>
-            <button onclick="SearchPath()">Запустить</button>
-            <br><button onclick="SearchPath()">Вернуться на главную</button>
-                 
-        </ul>
-        
+            <p class="er"><button onclick="onClickButton()">Запустить</button></p>
+            <p class="et"><button onclick="window.location.href='main.html'">Вернуться на главную</button></p>
+            <canvas id="canvas"></canvas>     
+        </ul>  
         
         <script src="star.js"></script>
     </body>

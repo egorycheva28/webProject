@@ -1,10 +1,26 @@
+canvas {   
+    width: 500px;
+    height: 500px;
+    border: 5px solid black;
+    cursor: crosshair;   
+    
+}
 body{
-    background-color:cornsilk;
+    background-color:antiquewhite;
 }
 h1
 {
     color:black;
-    text-align: center;
+    text-align: left;
+    font-size: 50px;
+}
+.er
+{
+    text-indent: 30px;
+}
+.et
+{
+    text-indent: 30px;
 }
 .start
 {
