@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Clustering algorithm</title>
+        
+        <link rel="stylesheet" href="cluster.css">
+    </head>
+    <body>
+        <h1><u>Алгоритм кластеризации</u></h1>
+        <h2>Инструкция:</h2>
+        <ul type="disc"></ul>
+            <li>Введите количество кластеров</li>
+            <input type="text" name="name" placeholder="1-5" oninput="drawPoint(10,10)"></input>
+            <li>Запустите алгоритм</li>
+            <p class="er"><button onclick="drawPoint(10,10)">Запустить</button></p>
+            <p class="et"><button onclick="window.location.href='main.html'">Вернуться на главную</button></p>
+               
+            <canvas id="canvas"></canvas> 
+              
+        </ul>        
+        <script src="cluster.js"></script>
+    </body>
+    
+</html>
