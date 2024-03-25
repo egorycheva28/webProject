@@ -12,9 +12,9 @@ canvas.width = width;
 canvas.height = height;
 
 // Задаем размер ячейки
-const cellSize = Math.floor(width /n);
-let rows = Math.floor(n);//вводим сами
-let cols = Math.floor(n);//вводим сами
+const cellSize = Math.round(width /n);
+let rows = n;//вводим сами
+let cols = n;//вводим сами
 
 // Создаем двумерный массив для представления лабиринта
 let maze = [];
