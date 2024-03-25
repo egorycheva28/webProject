@@ -11,14 +11,15 @@
         
         <h2>Инструкция:</h2>
         
-        <ul type="disc"></ul>
+        <ul type="disc">
             <li>Введите размер карты n*n</li>
-            <input type="text" name="name" placeholder="n" oninput="generateMaze(0, 0, width/cellSize, height/cellSize)"></input>
+            <input type="number" name="name" placeholder="n" id="n"></input>
+            <p class="er"><button onclick="generation()">Сгенерировать лабиринт</button></p>
             <li>Выберете начало пути</li>
             <li>Выберете конец пути</li>
             <li>Отметьте непроходимые клетки</li>
             <li>Запустите алгоритм</li>
-            <p class="er"><button onclick="createMaze(1, 1)">Запустить</button></p>
+            <p class="er"><button onclick="createMaze(1, 1), draw()">Запустить алгоритм</button></p>
             <p class="et"><button onclick="window.location.href='main.html'">Вернуться на главную</button></p>
             <canvas id="canvas"></canvas>     
         </ul>  
