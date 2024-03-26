@@ -5,8 +5,8 @@
         <link rel="stylesheet" href="star.css">
     </head>
     <body>
-        <button onclick="window.location.href='star.html';">Алгоритм А*</button>
-        <button onclick="window.location.href='cluster.html';">Алгоритм кластеризации</button>
+        <p onclick="window.location.href='star.html';">Алгоритм А*</p>
+        <p onclick="window.location.href='../Clustering algorithm/cluster.html';">Алгоритм кластеризации</p>
         <h1><u>Алгоритм A*</u></h1>
         
         <h2>Инструкция:</h2>
@@ -20,8 +20,8 @@
             <li>Отметьте непроходимые клетки</li>
             <li>Запустите алгоритм</li>
             <p class="er"><button onclick="createMaze(1, 1), draw()">Запустить алгоритм</button></p>
-            <p class="et"><button onclick="window.location.href='main.html'">Вернуться на главную</button></p>
-            <canvas id="canvas"></canvas>     
+            <p class="et"><button onclick="window.location.href='../Main/main.html'">Вернуться на главную</button></p>
+            <canvas id="canvas" onclick="blockClick(event)"></canvas>     
         </ul>  
         
         <script src="star.js"></script>
