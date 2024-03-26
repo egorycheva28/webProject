@@ -5,18 +5,24 @@ let clusters=[];
 canvas.addEventListener("click",function(event)
 {
     let rect=canvas.getBoundingClientRect();
-    let x=event.clientX-rect.left;
-    let y=event.clientY-rect.top;
-    points.push({x,y});
-    drawPoint(x,y);
-});
-function drawPoint(x,y)
-{
+    //let x=event.clientX-rect.left;
+    //let y=event.clientY-rect.top;
+    const x = Math.round((event.clientX - rect.left)/20);
+    const y = Math.round((event.clientY - rect.top)/20);
     context.beginPath();
     context.arc(x,y,5,0,Math.PI*2);
+    context.fill();
+    context.closePath();
+    //points.push({x,y});
+    //drawPoint(x,y);
+});
+/*function drawPoint(x,y)
+{
+    context.beginPath();
+    context.fillArc(x,y,5,0,Math.PI*2);
     //context.fillStyle="black";
     context.fill();
     context.closePath();
-}
+}*/
 
 
