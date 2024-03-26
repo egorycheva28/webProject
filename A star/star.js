@@ -12,7 +12,7 @@ canvas.width = width;
 canvas.height = height;
 
 // Задаем размер ячейки
-const cellSize = Math.round(width /n);
+const cellSize =Math.floor(width/n);
 let rows = n;//вводим сами
 let cols = n;//вводим сами
 
@@ -97,16 +97,89 @@ createMaze(1, 1);
 
 // Отрисовка лабиринта на холсте
 
-
-    
 for (let i = 0; i < rows; i++) 
 {
     for (let j = 0; j < cols; j++) 
     {
         if (maze[i][j])
         {
+            context.fillStyle='black';
             context.fillRect(i * cellSize, j * cellSize, cellSize, cellSize);
         }
     }
 }
 }
+
+function blockClick(event)
+{
+    let canvas = document.getElementById('canvas');
+    let context = canvas.getContext('2d');
+    let rect = canvas.getBoundingClientRect();
+    let input = document.querySelector('input');
+    let n=input.value;
+    let width = 500;
+    let height = 500;
+    const cellSize =Math.floor(width/n);
+
+    let x = Math.floor((event.clientX - rect.left) / cellSize);
+    let y = Math.floor((event.clientY - rect.top) / cellSize);
+
+    drawCell(cellSize,context, x*cellSize, y*cellSize);
+}
+
+function drawCell(cellSize,context, x, y)
+{
+    let color1 = "white";
+    let color2 = "black";
+
+    switch(context.fillStyle)
+    {
+        
+        case "black":
+            context.fillStyle="white";
+            break;
+        case "white":
+            context.fillStyle="black";
+            break;
+    }
+
+    /*if (context.fillStyle ==color2) 
+    {
+        console.log("a");
+        context.fillStyle = color1;
+    } 
+    else
+    {
+        context.fillStyle = color2;
+    }*/
+
+    context.fillRect(x, y, cellSize, cellSize);
+}
+/*function start()
+{
+    canvas.addEventListener('click', function(event) {
+        let rect = canvas.getBoundingClientRect();
+        const x = Math.floor((event.clientX - rect.left) / cellSize);
+        const y = Math.floor((event.clientY - rect.top) / cellSize);
+        //let startX=x*cellSize;
+        //let startY=y*cellSize;
+        context.fillStyle = 'green';
+        context.fillRect(x * cellSize, y * cellSize, cellSize, cellSize);
+        
+    });
+}
+function end()
+{
+    canvas.addEventListener('click', function(event) {
+        let rect = canvas.getBoundingClientRect();
+        let x = Math.floor((event.clientX - rect.left) / cellSize);
+        let y = Math.floor((event.clientY - rect.top) / cellSize);
+               
+        context.fillStyle = 'red';
+        context.fillRect(x * cellSize, y * cellSize, cellSize, cellSize);});
+}
+start();
+end();*/
+
+    //const start=x * cellSize, y * cellSize;
+
