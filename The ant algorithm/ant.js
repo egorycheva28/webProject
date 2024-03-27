@@ -1,14 +1,11 @@
+let canvas=document.getElementById("canvas");
+let context=canvas.getContext("2d");
 
 function draw(){
     let input = document.querySelector('input');
     let points=[];
     let clusters=[];
     let n=input.value;
-
-    
-
-    let canvas=document.getElementById("canvas");
-    let context=canvas.getContext("2d");
 
     canvas.addEventListener("click",function(event)
     {
@@ -28,8 +25,7 @@ function draw(){
     
 }
 
-function clear(){
-    let canvas=document.getElementById("canvas");
-    let context=canvas.getContext("2d");
+function clean()
+{
     context.clearRect(0, 0, canvas.width, canvas.height);
 }
