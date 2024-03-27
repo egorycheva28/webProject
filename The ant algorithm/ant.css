@@ -1,0 +1,43 @@
+canvas {   
+    position: absolute;
+    cursor: crosshair; 
+    background-color: aliceblue;  
+    
+}
+.canvas {
+    position: relative;
+    border: 1px solid black;
+}
+
+h1
+{
+    color:black;
+    text-align: left;
+    font-size: 50px;
+}
+
+input
+{
+    text-align: center;
+}
+.er
+{
+    text-indent: 30px;
+}
+.et
+{
+    text-indent: 30px;
+}
+.start
+{
+    background-color:green;
+}
+.end
+{
+    background-color: red;
+}
+.blocked
+{
+    background-color: black;
+}
+
