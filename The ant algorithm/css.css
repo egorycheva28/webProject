@@ -1,0 +1,10 @@
+canvas {   
+    position: absolute;
+    cursor: crosshair; 
+    background-color: aliceblue;  
+    
+}
+.canvas {
+    position: relative;
+    border: 1px solid black;
+}
