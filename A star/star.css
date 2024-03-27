@@ -26,16 +26,5 @@ input
 {
     text-indent: 30px;
 }
-.start
-{
-    background-color:green;
-}
-.end
-{
-    background-color: red;
-}
-.blocked
-{
-    background-color: black;
-}
+
 
