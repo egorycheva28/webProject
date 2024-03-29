@@ -1,11 +1,18 @@
 canvas {   
     position: absolute;
     cursor: crosshair; 
-    background-color: aliceblue;  
-    
+    background-color: white;  
+    border: 5px solid black;
+    top:50px;
+    right:50px;
 }
 .canvas {
     position: relative;
     border: 1px solid black;
     
+}
+input
+{
+    
+    text-align: center;
 }

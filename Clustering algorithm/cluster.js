@@ -31,7 +31,7 @@ let clusters=[];
 function drawPoint(x,y)
 {
     context.beginPath();
-    context.arc(x,y,2,0,Math.PI*2);
+    context.arc(x,y,5,0,Math.PI*2);
     //context.fillStyle="black";
     context.fill();
     context.stroke();
