@@ -1,4 +1,12 @@
-
+function show(menu)
+{
+    let el=document.getElementById(menu);
+    if(el)
+    {
+        el.style.display="block";
+    }
+    
+}
 function generation()
 {
 const canvas = document.getElementById('canvas');
@@ -176,8 +184,10 @@ function clickCells()
         const y = Math.floor((event.clientY - rect.top) / cellSize);
         let startX=x*cellSize;
         let startY=y*cellSize;
+        
         context.fillStyle = 'green';
         context.fillRect(x * cellSize, y * cellSize, cellSize, cellSize);
+        maze[x][y]=1;//начало пути
     });
     flag=1;
     }
@@ -196,8 +206,10 @@ function clickCells()
             const y = Math.floor((event.clientY - rect.top) / cellSize);
             let endX=x*cellSize;
             let endY=y*cellSize;
+            
             context.fillStyle = 'red';
             context.fillRect(x * cellSize, y * cellSize, cellSize, cellSize);
+            maze[x][y]=1;//конец пути
         });
         flag=2;
     }
@@ -216,16 +228,26 @@ function clickCells()
         let y = Math.floor((event.clientY - rect.top) / cellSize);
         if(context.fillStyle=='white')
         {
+            maze[x][y]=1;//препятствие
         context.fillStyle = 'black';
         context.fillRect(x * cellSize, y * cellSize, cellSize, cellSize);
         }
         else{
+            
             context.fillStyle = 'white';
             context.fillRect(x * cellSize, y * cellSize, cellSize, cellSize);
             context.strokeStyle='black';
             context.strokeRect(x * cellSize, y * cellSize, cellSize, cellSize);
+            maze[x][y]=0;//убрать препятствие
         }
     });
     }
 }
+
+function Astar(start,end,maze)
+{
+
+}
+
+
 

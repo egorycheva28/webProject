@@ -5,8 +5,13 @@
         <link rel="stylesheet" href="star.css">
     </head>
     <body>
-        <p onclick="window.location.href='star.html';">Алгоритм А*</p>
-        <p onclick="window.location.href='../Clustering algorithm/cluster.html';">Алгоритм кластеризации</p>
+        <a href=# onclick="show('menu');return false">меню</a>
+        
+        <div id="menu" class="hidden">
+            <p><button onclick="window.location.href='../A star/star.html'">Алгоритм A*</button></p>
+            <p><button onclick="window.location.href='../Clustering algorithm/cluster.html'">Кластеризация</button></p>
+            <p><button onclick="window.location.href='../The ant algorithm/ant.html'">Муравьиный алгоритм</button></p>
+        </div>
         <h1><u>Алгоритм A*</u></h1>
         
         <h2>Инструкция:</h2>
@@ -19,7 +24,7 @@
             <li>Выберете конец пути</li>
             <li>Отметьте непроходимые клетки</li>
             <li>Запустите алгоритм</li>
-            <p class="er"><button onclick="createMaze(1, 1), draw()">Запустить алгоритм</button></p>
+            <p class="er"><button onclick="Astar()">Запустить алгоритм</button></p>
             <p class="et"><button onclick="window.location.href='../Main/main.html'">Вернуться на главную</button></p>
            
         </ul>  

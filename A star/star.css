@@ -3,35 +3,56 @@ canvas {
     height: 700px;
     
     cursor: crosshair;   
-    background-color: white;
+    background-color:antiquewhite;
     position: absolute;
     top:50px;
     right:50px;
 }
-
-
+.hidden
+{
+    position: absolute;
+    display:none;
+}
 h1
 {
     color:black;
-    
     font-size: 60px;
-    
-    left:100px;
+    position: relative;
+    left:200px;
 }
 h2
 {
     font-size: 40px;
+    position: relative;
+    left:260px;
+    top: 50px;
+}
+ul{
+    position: relative;
+    left:200px;
+    top: 50px;
 }
 button{
-    font-size:x-large;
+   background-color:darkkhaki;
+   font-size: 16px;
+   padding: 15px 32px;
+   border: none;
+   box-shadow: 0 8px 16px 0 black; 
+   color: white;
+   cursor: pointer;
+   text-align: center;
+   display: inline-block;
+   transform: translateY(4px);
+   
 }
 body{
-    font-size: 20px;;
+    font-size: 20px;
+    background-color: antiquewhite;
 }
 input
 {
-    
     text-align: center;
+    background-color: red;
 }
 .er
 {
