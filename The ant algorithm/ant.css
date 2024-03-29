@@ -2,7 +2,8 @@ canvas {
     position: absolute;
     cursor: crosshair; 
     background-color: aliceblue;  
-    
+    top:50px;
+    right:50px;
 }
 .canvas {
     position: relative;
