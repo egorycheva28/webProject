@@ -30,7 +30,7 @@ h2
 ul{
     position: relative;
     left:200px;
-    top: 50px;
+    top: 30px;
 }
 button{
    background-color:darkkhaki;
@@ -43,8 +43,9 @@ button{
    text-align: center;
    display: inline-block;
    transform: translateY(4px);
-   
+   outline: none;
 }
+
 body{
     font-size: 20px;
     background-color: antiquewhite;
@@ -52,7 +53,9 @@ body{
 input
 {
     text-align: center;
-    background-color: red;
+    padding: 15px 32px;
+    position: relative;
+    left:40px;
 }
 .er
 {

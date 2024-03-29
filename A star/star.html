@@ -20,13 +20,10 @@
             <li>Введите размер карты n*n</li>
             <input type="number" name="name" placeholder="n" id="n"></input>
             <p class="er"><button onclick="generation()">Сгенерировать лабиринт</button></p>
-            <li>Выберете начало пути</li>
-            <li>Выберете конец пути</li>
-            <li>Отметьте непроходимые клетки</li>
-            <li>Запустите алгоритм</li>
+            
             <p class="er"><button onclick="Astar()">Запустить алгоритм</button></p>
             <p class="et"><button onclick="window.location.href='../Main/main.html'">Вернуться на главную</button></p>
-           
+            <p class="eg"><button onclick="clean()">Сброс</button></p>
         </ul>  
         <canvas id="canvas" onclick="clickCells()"></canvas>
         <script src="star.js"></script>
