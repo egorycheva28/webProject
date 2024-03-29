@@ -1,21 +1,36 @@
 canvas {   
-    width: 500px;
-    height: 500px;
+    width: 700px;
+    height: 700px;
     
     cursor: crosshair;   
     background-color: white;
-    
+    position: absolute;
+    top:50px;
+    right:50px;
 }
+
 
 h1
 {
     color:black;
-    text-align: left;
-    font-size: 50px;
+    
+    font-size: 60px;
+    
+    left:100px;
 }
-
+h2
+{
+    font-size: 40px;
+}
+button{
+    font-size:x-large;
+}
+body{
+    font-size: 20px;;
+}
 input
 {
+    
     text-align: center;
 }
 .er

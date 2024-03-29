@@ -6,8 +6,8 @@ const context = canvas.getContext('2d');
 let input = document.querySelector('input');
 let n=input.value;
 // Устанавливаем ширину и высоту лабиринта
-let width = 500;
-let height = 500;
+let width = 700;
+let height = 700;
 canvas.width = width;
 canvas.height = height;
 
@@ -25,7 +25,7 @@ for (let i = 0; i < rows; i++)
     {
         maze[i][j] = true;
     }
-}
+ }
 
 // Рекурсивная функция для создания лабиринта
 function createMaze(row, col) 
@@ -156,17 +156,20 @@ function drawCell(cellSize,context, x, y)
     context.fillRect(x, y, cellSize, cellSize);
 }
 
+let flag=0;
 
-function start()
+function clickCells()
 {
+    if(flag==0)
+    {
     canvas.addEventListener('click', function(event) {
         let canvas = document.getElementById('canvas');
         let context = canvas.getContext('2d');
         let rect = canvas.getBoundingClientRect();
         let input = document.querySelector('input');
         let n=input.value;
-        let width = 500;
-        let height = 500;
+        let width = 700;
+        let height = 700;
         const cellSize =Math.floor(width/n);
 
         const x = Math.floor((event.clientX - rect.left) / cellSize);
@@ -176,154 +179,53 @@ function start()
         context.fillStyle = 'green';
         context.fillRect(x * cellSize, y * cellSize, cellSize, cellSize);
     });
-}
-
-function end()
-{
+    flag=1;
+    }
+    else if(flag==1){
+        canvas.addEventListener('click', function(event) {
+            let canvas = document.getElementById('canvas');
+            let context = canvas.getContext('2d');
+            let rect = canvas.getBoundingClientRect();
+            let input = document.querySelector('input');
+            let n=input.value;
+            let width = 700;
+            let height = 700;
+            const cellSize =Math.floor(width/n);
+    
+            const x = Math.floor((event.clientX - rect.left) / cellSize);
+            const y = Math.floor((event.clientY - rect.top) / cellSize);
+            let endX=x*cellSize;
+            let endY=y*cellSize;
+            context.fillStyle = 'red';
+            context.fillRect(x * cellSize, y * cellSize, cellSize, cellSize);
+        });
+        flag=2;
+    }
+    else {
     canvas.addEventListener('click', function(event) {
         let canvas = document.getElementById('canvas');
         let context = canvas.getContext('2d');
         let rect = canvas.getBoundingClientRect();
         let input = document.querySelector('input');
         let n=input.value;
-        let width = 500;
-        let height = 500;
+        let width = 700;
+        let height = 700;
         const cellSize =Math.floor(width/n);
 
-        const x = Math.floor((event.clientX - rect.left) / cellSize);
-        const y = Math.floor((event.clientY - rect.top) / cellSize);
-        let endX=x*cellSize;
-        let endY=y*cellSize;
-        context.fillStyle = 'red';
+        let x = Math.floor((event.clientX - rect.left) / cellSize);
+        let y = Math.floor((event.clientY - rect.top) / cellSize);
+        if(context.fillStyle=='white')
+        {
+        context.fillStyle = 'black';
         context.fillRect(x * cellSize, y * cellSize, cellSize, cellSize);
+        }
+        else{
+            context.fillStyle = 'white';
+            context.fillRect(x * cellSize, y * cellSize, cellSize, cellSize);
+            context.strokeStyle='black';
+            context.strokeRect(x * cellSize, y * cellSize, cellSize, cellSize);
+        }
     });
+    }
 }
 
-
-    //const start=x * cellSize, y * cellSize;
-/*canvas.addEventListener('click', function(event) {
-    let rect = canvas.getBoundingClientRect();
-    let x = Math.floor((event.clientX - rect.left) / cellSize);
-    let y = Math.floor((event.clientY - rect.top) / cellSize);
-           
-    context.fillStyle = 'red';
-    context.fillRect(x * cellSize, y * cellSize, cellSize, cellSize);});*/
-    //const end=x * cellSize, y * cellSize;
-
-/*canvas.addEventListener("click",function(event)
-{
-    let rect=canvas.getBoundingClientRect();
-    let x=event.clientX-rect.left;
-    let y=event.clientY-rect.top;
-    points.push({x,y});
-    drawPoint(x,y);
-});
-function drawPoint(x,y)
-{
-    context.beginPath();
-    context.fillRect(x,y,10,10);
-    context.fillStyle="red";
-    context.fill();
-    context.closePath();
-}*/
-
-
-
-
-
-
-/*const canvas = document.getElementById('canvas');
-const context = canvas.getContext('2d');
-
-const width = 500;
-const height = 500;
-const cellSize = 20;
-
-canvas.width = width;
-canvas.height = height;
-const cols = Math.floor(width / cellSize);
-const rows = Math.floor(height / cellSize);
-function drawWall(x, y)
-{
-    context.beginPath();
-    context.fillStyle = 'black';
-    context.fillRect(x*cellSize, y*cellSize, cellSize, cellSize);
-    context.closePath();
-}
-for (let x = 0; x < cols; x++) {
-    for (let y = 0; y < rows; y++) {
-        if (Math.random() > 0.5) { //вероятность появления стены
-            //context.fillStyle = 'black';
-            drawWall(x, y);
-        }
-    }
-}*/
-/*function generateMaze(x, y, width, height) 
-{
-    if (width < 20 || height < 20) 
-    {
-      return;
-    }
-
-  // рисуем горизонтальную стену
-    const horizontal = Math.floor(Math.random() * (height - 1)) + y;
-    drawWall(x, horizontal * cellSize, width*cellSize, cellSize);
-
-  // рисуем вертикальную стену
-    const vertical = Math.floor(Math.random() * (width - 1)) + x;
-    drawWall(vertical * cellSize, y, cellSize, height*cellSize);
-
-    generateMaze(x, y, vertical - x + 1, horizontal - y + 1);
-    generateMaze(vertical + 1, y, width - (vertical - x) - 1, horizontal - y + 1);
-    generateMaze(x, horizontal + 1, vertical - x + 1, height - (horizontal - y) - 1);
-    generateMaze(vertical + 1, horizontal + 1, width - (vertical - x) - 1, height - (horizontal - y) - 1);
-}*/
-
-//generateMaze(0, 0, width, height);
-/*function solution() {
-    var visited = new Array(N); // создаем массив из N элементов
-
-    for (let i = 0; i < N; i++) {
-        visited[i] = new Array(N); // для каждой строки создаем массив из N элементов
-        for (let j = 0; j < N; j++) {
-            visited[i][j] = false; // инициализируем каждый элемент значением false
-        }
-    }
-
-    const path = [];
-
-    function dfs(x, y) { // поиск в глубину
-        if (x < 0 || x >= N || y < 0 ||
-            y >= N || visited[y][x]) {
-            return false;
-        }
-
-        visited[y][x] = true;
-        path.push({ x, y });
-
-        if (x === N - 1 && y === N - 1) {
-            return true;
-        }
-
-        const cell = generatedMaze[x][y];
-
-        if (!cell.walls.top && dfs(x, y - 1)) {
-            return true;
-        }
-        if (!cell.walls.right && dfs(x + 1, y)) {
-            return true;
-        }
-        if (!cell.walls.bottom && dfs(x, y + 1)) {
-            return true;
-        }
-        if (!cell.walls.left && dfs(x - 1, y)) {
-            return true;
-        }
-
-        path.pop();
-        return false;
-    }
-
-    dfs(0, 0);
-    return path;
-}*/
