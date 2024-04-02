@@ -10,13 +10,14 @@
         <h2>Инструкция:</h2>
         <ul type="disc"></ul>
             <li>Введите количество кластеров</li>
-            <input type="text" name="name" placeholder="1-5"></input>
+            <input type="text" name="name" placeholder="1-5" id="n"></input>
+            <p class="eh"><button onclick="addCenter()">Выбрать центры</button></p>
             <li>Запустите алгоритм</li>
-            <p class="er"><button onclick="drawPoint(10,10)">Запустить</button></p>
+            <p class="er"><button onclick="buildCluster()">Запустить</button></p>
             <p class="et"><button onclick="window.location.href='../Main/main.html'">Вернуться на главную</button></p>
-               
-            <canvas id="canvas" width="700" height="700"></canvas> 
+            <p class="eg"><button onclick="clean()">Сброс</button></p>            
         </ul>        
+        <canvas id="canvas" width="700" height="700"></canvas> 
         <script src="cluster.js"></script>
     </body>
     
