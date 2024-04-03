@@ -3,7 +3,7 @@ canvas {
     height: 700px;
     
     cursor: crosshair;   
-    background-color:antiquewhite;
+    background-color:rgb(254, 254, 244);
     position: absolute;
     top:50px;
     right:50px;
@@ -33,22 +33,21 @@ ul{
     top: 30px;
 }
 button{
-   background-color:darkkhaki;
+   background-color: rgb(254, 254, 244);
    font-size: 16px;
    padding: 15px 32px;
-   border: none;
-   box-shadow: 0 8px 16px 0 black; 
-   color: white;
+   border:2px solid black;
+   color: black;
    cursor: pointer;
    text-align: center;
    display: inline-block;
    transform: translateY(4px);
-   outline: none;
+   
 }
 
 body{
     font-size: 20px;
-    background-color: antiquewhite;
+    background-color: rgb(254, 254, 244);
 }
 input
 {
@@ -56,6 +55,7 @@ input
     padding: 15px 32px;
     position: relative;
     left:40px;
+    border:2px solid black;
 }
 .er
 {

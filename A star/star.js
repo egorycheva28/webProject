@@ -245,6 +245,7 @@ function clean()
         return 2 * (Math.abs(current[0] - end[0]) + Math.abs(current[1] - end[1]));
     //}
 }*/
+
 function Astar(start,end,maze)
 {
     let openlist=[];
