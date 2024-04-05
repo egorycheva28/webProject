@@ -7,6 +7,7 @@ function show(menu)
     }
     
 }
+let maze=[[]];
 function generation()
 {
 const canvas = document.getElementById('canvas');
@@ -118,6 +119,7 @@ for (let i = 0; i < rows; i++)
         }
     }
 }
+return maze;
 }
 
 function blockClick(event)
@@ -168,10 +170,7 @@ let flag=0;
 
 function clickCells()
 {
-    if(flag==0)
-    {
-    canvas.addEventListener('click', function(event) {
-        let canvas = document.getElementById('canvas');
+    let canvas = document.getElementById('canvas');
         let context = canvas.getContext('2d');
         let rect = canvas.getBoundingClientRect();
         let input = document.querySelector('input');
@@ -179,6 +178,11 @@ function clickCells()
         let width = 700;
         let height = 700;
         const cellSize =Math.floor(width/n);
+    if(flag==0)
+    {
+        
+    canvas.addEventListener('click', function(event) {
+        
 
         const x = Math.floor((event.clientX - rect.left) / cellSize);
         const y = Math.floor((event.clientY - rect.top) / cellSize);
@@ -193,14 +197,7 @@ function clickCells()
     }
     else if(flag==1){
         canvas.addEventListener('click', function(event) {
-            let canvas = document.getElementById('canvas');
-            let context = canvas.getContext('2d');
-            let rect = canvas.getBoundingClientRect();
-            let input = document.querySelector('input');
-            let n=input.value;
-            let width = 700;
-            let height = 700;
-            const cellSize =Math.floor(width/n);
+            
     
             const x = Math.floor((event.clientX - rect.left) / cellSize);
             const y = Math.floor((event.clientY - rect.top) / cellSize);
@@ -215,18 +212,11 @@ function clickCells()
     }
     else {
     canvas.addEventListener('click', function(event) {
-        let canvas = document.getElementById('canvas');
-        let context = canvas.getContext('2d');
-        let rect = canvas.getBoundingClientRect();
-        let input = document.querySelector('input');
-        let n=input.value;
-        let width = 700;
-        let height = 700;
-        const cellSize =Math.floor(width/n);
+        
 
         let x = Math.floor((event.clientX - rect.left) / cellSize);
         let y = Math.floor((event.clientY - rect.top) / cellSize);
-        if(context.fillStyle=='white')
+        if(maze[x][y]==0)
         {
             maze[x][y]=1;//препятствие
         context.fillStyle = 'black';
@@ -245,14 +235,26 @@ function clickCells()
 }
 function clean()
 {
-    let canvas=document.getElementById("canvas");
-    let context=canvas.getContext("2d");
-
-    context.clearRect(0, 0, canvas.width, canvas.height);
+    location.reload();
 }
+/*function heuristicFunc(current, end, type){
+   // if (type){
+     //   return 2 * (Math.sqrt(Math.pow(current[0] - end[0], 2) + Math.pow(current[1] - end[1], 2)));
+    //}
+    //else{
+        return 2 * (Math.abs(current[0] - end[0]) + Math.abs(current[1] - end[1]));
+    //}
+}*/
+
 function Astar(start,end,maze)
 {
+    let openlist=[];
+    let closelist=[];
+    openlist.push(start);
+    while(openlist>0)
+    {
 
+    }
 }
 
 
