@@ -2,7 +2,7 @@ const canvas = document.querySelector("canvas");
 const context = canvas.getContext("2d");
 
 let vertexes = [];
-let size = 750;
+let size = 700;
 //let lengthOfChromosome; // without start vertex in the end
 let numberOfGenerations = 100000;
 let alpha = 1;
