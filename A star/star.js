@@ -168,7 +168,7 @@ function clickCells()
         let x = Math.floor((event.clientX - rect.left) / cellSize);
         let y = Math.floor((event.clientY - rect.top) / cellSize);
 
-        if(maze[x][y]==0)
+        if(maze[x][y]===0)
         {
             context.fillStyle = 'black';
             context.fillRect(x * cellSize, y * cellSize, cellSize, cellSize);
@@ -177,7 +177,7 @@ function clickCells()
 
         else
         {
-            context.fillStyle = 'white';
+            context.fillStyle = 'rgb(254, 254, 244)'; 
             context.fillRect(x * cellSize, y * cellSize, cellSize, cellSize);
             context.strokeStyle='black';
             context.strokeRect(x * cellSize, y * cellSize, cellSize, cellSize);
@@ -188,23 +188,37 @@ function clickCells()
 
 }
 
+class Node
+{
+    constructor(x,y)
+    {
+        this.x=x;//координата x узла на карте
+        this.y=y;//координата y узла на карте
+        this.g=0;//расстояние от начального узла до текущего
+        this.h=heuristicFunc();//эвристическая оценка расстояния от текущего узла до конечного
+        this.f=0;//сумма g и h
+        this.parent=null;//родительский узел для восстановления пути
 
-/*function heuristicFunc(current, end, type){
-   // if (type){
-     //   return 2 * (Math.sqrt(Math.pow(current[0] - end[0], 2) + Math.pow(current[1] - end[1], 2)));
-    //}
-    //else{
+    }
+}
+function heuristicFunc(current, end, type){
+    if (type){
+        return 2 * (Math.sqrt(Math.pow(current[0] - end[0], 2) + Math.pow(current[1] - end[1], 2)));
+    }
+    else{
         return 2 * (Math.abs(current[0] - end[0]) + Math.abs(current[1] - end[1]));
-    //}
-}*/
+    }
+}
 
 function Astar(start,end)
 {
-    let openlist=[];
-    let closelist=[];
+    let openlist=[];//требующие рассмотрения пути
+    let closelist=[];//просмотренные вершины
     openlist.push(start);
-    while(openlist>0)
+    while(!openlist.empty)
     {
+        let currentNode=openlist[0];
+        let currentIndex=0;
 
     }
 }
