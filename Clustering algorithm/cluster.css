@@ -21,15 +21,15 @@ h1
 }
 h2
 {
-    font-size: 40px;
+    font-size: 30px;
     position: relative;
-    left:260px;
+    left:200px;
     top: 50px;
 }
 ul{
     position: relative;
     left:200px;
-    top: 30px;
+    top: 60px;
 }
 button{
 
@@ -44,7 +44,7 @@ button{
     transform: translateY(4px);
 }
 body{
-    font-size: 20px;
+  
     background-color: rgb(254, 254, 244);
 }
 input
@@ -54,11 +54,19 @@ input
     position: relative;
     left:40px;
 }
-.er
+.button4
 {
     text-indent: 30px;
+    width: 250px;
+    position: relative;
+    left:10px;
+    top: 277px;
 }
-.et
+.button5
 {
     text-indent: 30px;
+    width: 250px;
+    position: relative;
+    left:250px;
+    top: 210px;
 }
