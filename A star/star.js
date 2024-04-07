@@ -4,13 +4,14 @@ let width = 700;
 let height = 700;
 canvas.width = width;
 canvas.height = height;
-
-// Задаем размер ячейки
-
-
-// Создаем двумерный массив для представления лабиринта
 let maze = [];
 maze[0]=[];
+let start;
+let end;
+let startX;
+let startY;
+let endX;
+let endY;
 
 function generation()
 {
@@ -18,23 +19,16 @@ function generation()
     let n=input.value;
 
     let cellSize =Math.floor(width/n);
-for (let i = 0; i < n; i++)
- {
-    maze[i] = [];
-    for (let j = 0; j < n; j++) 
+    for (let i = 0; i < n; i++)
     {
-        maze[i][j] = 1;
+        maze[i] = [];
+        for (let j = 0; j < n; j++) 
+        {
+            maze[i][j] = 1;
+        }
     }
- }
-
-// Рекурсивная функция для создания лабиринта
-
-   
-// Устанавливаем ширину и высоту лабиринта
-
-
-function createMaze(row, col) 
-{
+    function createMaze(row, col) 
+    {
     maze[row][col] = 0;
 
     let directions = ['top', 'bottom', 'right', 'left'];
@@ -122,71 +116,68 @@ let flag=0;
 
 function clickCells()
 {
-    let canvas = document.getElementById('canvas');
-    let context = canvas.getContext('2d');
+    
     let rect = canvas.getBoundingClientRect();
     let input = document.querySelector('input');
-    let n=input.value;
-    let width = 700;
-    let height = 700;
-    const cellSize =Math.floor(width/n);
+    let n = input.value;
+    const cellSize = Math.floor(width/n);
 
     if(flag===0)
     {
         canvas.addEventListener('click', function(event) {
             const x = Math.floor((event.clientX - rect.left) / cellSize);
             const y = Math.floor((event.clientY - rect.top) / cellSize);
-            let startX=x*cellSize;
-            let startY=y*cellSize;
             context.fillStyle = 'green';
             context.fillRect(x * cellSize, y * cellSize, cellSize, cellSize);
-            maze[x][y]=2;//начало пути
+            startX=x;
+            startY=y;
+            start=maze[x][y];
         });
         flag=1;
+        return startX,startY;
     }
 
-    else if(flag===1){
+    else if(flag===1)
+    {
         canvas.addEventListener('click', function(event) {
-            
-    
             const x = Math.floor((event.clientX - rect.left) / cellSize);
-            const y = Math.floor((event.clientY - rect.top) / cellSize);
-            let endX=x*cellSize;
-            let endY=y*cellSize;
-            
+            const y = Math.floor((event.clientY - rect.top) / cellSize);            
             context.fillStyle = 'red';
             context.fillRect(x * cellSize, y * cellSize, cellSize, cellSize);
-            maze[x][y]=3;//конец пути
+            end=maze[x][y];
+            endX=x;
+            endY=y;
         });
         flag=2;
+        return endX,endY;
     }
 
-    else {
-    canvas.addEventListener('click', function(event) {
-        
-
-        let x = Math.floor((event.clientX - rect.left) / cellSize);
-        let y = Math.floor((event.clientY - rect.top) / cellSize);
-
-        if(maze[x][y]===0)
-        {
-            context.fillStyle = 'black';
-            context.fillRect(x * cellSize, y * cellSize, cellSize, cellSize);
-            maze[x][y]=1;//препятствие
-        }
-
-        else
-        {
-            context.fillStyle = 'rgb(254, 254, 244)'; 
-            context.fillRect(x * cellSize, y * cellSize, cellSize, cellSize);
-            context.strokeStyle='black';
-            context.strokeRect(x * cellSize, y * cellSize, cellSize, cellSize);
-            maze[x][y]=0;//убрать препятствие
-        }
-    });
+    else 
+    {
+        canvas.addEventListener('click', function(event) {
+            let x = Math.floor((event.clientX - rect.left) / cellSize);
+            let y = Math.floor((event.clientY - rect.top) / cellSize);
+            if(maze[x][y]===0)
+            {
+                context.fillStyle = 'black';
+                context.fillRect(x * cellSize, y * cellSize, cellSize, cellSize);
+                maze[x][y]=1;//препятствие
+            }
+            else
+            {
+                context.fillStyle = 'rgb(254, 254, 244)'; 
+                context.fillRect(x * cellSize, y * cellSize, cellSize, cellSize);
+                context.strokeStyle='black';
+                context.strokeRect(x * cellSize, y * cellSize, cellSize, cellSize);
+                maze[x][y]=0;//убрать препятствие
+            }
+        });
     }
-
 }
+
+function res()
+{
+
 
 class Node
 {
@@ -195,32 +186,107 @@ class Node
         this.x=x;//координата x узла на карте
         this.y=y;//координата y узла на карте
         this.g=0;//расстояние от начального узла до текущего
-        this.h=heuristicFunc();//эвристическая оценка расстояния от текущего узла до конечного
+        this.h=0;//эвристическая оценка расстояния от текущего узла до конечного
         this.f=0;//сумма g и h
         this.parent=null;//родительский узел для восстановления пути
 
     }
 }
-function heuristicFunc(current, end, type){
-    if (type){
-        return 2 * (Math.sqrt(Math.pow(current[0] - end[0], 2) + Math.pow(current[1] - end[1], 2)));
-    }
-    else{
-        return 2 * (Math.abs(current[0] - end[0]) + Math.abs(current[1] - end[1]));
-    }
+function heuristicFunc(current,ends)
+{
+    return Math.abs(current.x - ends.x) + Math.abs(current.y - ends.y);
 }
 
-function Astar(start,end)
+function Astar()
 {
+    let Start=new Node(startX,startY);
+    let End=new Node(endX,endY);
     let openlist=[];//требующие рассмотрения пути
     let closelist=[];//просмотренные вершины
-    openlist.push(start);
-    while(!openlist.empty)
+    openlist.push(Start);
+    while(openlist.length>0)
     {
-        let currentNode=openlist[0];
-        let currentIndex=0;
+        let currentNode=openlist.shift();
+        //let currentIndex=0;
+        if(currentNode===End)
+        {
+            let path = [];
+            //let temp = currentNode;
+            while (currentNode) {
+                path.push(currentNode);
+                currentNode = currentNode.parent;
+            }
+            return path.reverse();
+        }
+        closelist.push(currentNode);
+        let neighbors=[];
+        for(let i=-1;i<=1;i++)
+        {
+            for(let j=-1;j<=1;j++)
+            {
+                if(i===0 && j===0)
+                {
+                    continue;
+                }
+                let x=currentNode.x+i;
+                let y=currentNode.y+j;
+                if(x<0 || x>=n || y<0 || y>=n)
+                {
+                    continue;
+                }
+                if(maze[x][y])
+                {
+                    continue;
+                }
+                let neighbor=new Node(x,y);
+                neighbors.push(neighbor);
+            }
+        }
+        for(let neighbor of neighbors)
+        {
+            if(closelist.has(neighbor))
+            {
+                continue;
+            }
+            let new_g=currentNode.g+1;
+            let nfo = openlist.find(n => n === neighbor);
+            if(nfo)
+            {
+                if(new_g<nfo.g)
+                {
+                    nfo.g=new_g;
 
+                    nfo.h=heuristicFunc(nfo,End);
+                    nfo.f=nfo.g+nfo.h;
+                    nfo.parent=currentNode;
+
+                }
+            }
+            else{
+                neighbor.g=new_g;
+                neighbor.h=heuristicFunc(neighbor,End);
+                neighbor.f=neighbor.g+neighbor.h;
+                neighbor.parent=currentNode;
+                openlist.push(neighbor);
+            }
+        }
     }
+}
+function drawPath()
+{
+    let input = document.querySelector('input');
+    let n = input.value;
+    const cellSize = Math.floor(width/n);
+    alert(cellSize);
+    for(let node of path)
+    {
+        context.fillStyle='blue';
+        context.fillRect(node.x*cellSize,node.y*cellSize,cellSize,cellSize);
+    }
+}
+    alert(cellSize);
+    Astar();
+    drawPath();
 }
 
 function clean()
