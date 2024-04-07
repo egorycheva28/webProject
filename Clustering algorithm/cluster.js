@@ -63,48 +63,6 @@ function addCenter()//добавляем центры
     }
 }
 
-/*function Cluster()
-{
-    for(let i=0;i<points.length;i++)
-    {
-        let distances=[];
-        for(let j=0;j<centers.length;j++)
-        {
-            let CoordinateX=points[i].pointX-centers[j].X;
-            let CoordinateY=points[i].pointY-centers[j].Y;
-            let distance=Math.pow((Math.pow(CoordinateX,2)+Math.pow(CoordinateY,2)),0.5);
-            distances.push(distance);
-        }
-        allDistances.push(distances);
-    }
-
-    
-    
-    for(let i=0;i<allDistances;i++)
-    {
-        let min=allDistances[i][0];
-        let index=0;
-
-        for(let j=0;j<centers.length;j++)
-        {
-            
-            if(min>allDistances[i][j])
-            {
-                min=allDistances[i][j];
-                index=j;
-            }
-        }
-        clusters[index].push(points[i]);
-        context.fillStyle=collorCenter[index];
-        context.beginPath();
-        context.arc(points[i].pointX,points[i].pointY,10,0,2*Math.PI);
-        context.stroke();
-        context.fill();
-    }
-
-   return clusters;
-}*/
-
 
 function Cluster()//группируем на кластеры
 {
@@ -145,7 +103,42 @@ function Cluster()//группируем на кластеры
 
 function avgCoard()//переопределяем центры
 { 
- 
+    
+    for(let i = 0; i < centers.length; i++)
+    {
+        let sumX = 0;
+        let sumY = 0;
+        
+        for(let j = 0; j < clusters[i].length; j++)
+        {
+            sumX +=clusters[i][j].pointX;
+            sumY += clusters[i][j].pointY;
+        }
+
+        if(clusters[i].length!==0)
+        {            
+            centers[i].X = sumX / clusters[i].length;
+            centers[i].Y = sumY / clusters[i].length;
+            context.fillStyle ='white';
+            context.strokeStyle = 'white';
+            context.beginPath();
+            context.arc(centers[i].X,centers[i].Y,10,0,2*Math.PI);            
+            context.stroke();
+            context.fill();
+        }
+    }   
+    allDistances = [];
+    
+    for(let i=0; i<clusters.length;i++)
+    {
+        clusters[i] = [];
+    }
+    Cluster();
+    return centers;
+} 
+function avgCoard1()//переопределяем центры
+{ 
+    
     for(let i = 0; i < centers.length; i++)
     {
         let sumX = 0;
@@ -178,12 +171,26 @@ function avgCoard()//переопределяем центры
     Cluster();
 
 } 
-
+function isEqual(arr1, arr2) {
+    return arr1.length === arr2.length && arr1.every((value, index) => value === arr2[index]);
+}
+function r()
+{
 function result()
 {
-    addCenter();
-    avgCoard();
+    centers=addCenter();
+    let oldCenters=[];
+    while(!isEqual(centers,oldCenters))
+    {
+        oldCenters=[...centers];
+        centers=avgCoard();
+    }
+    return centers;
 }
+result();
+Cluster();
+}
+    
 
 
 
