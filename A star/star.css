@@ -1,17 +1,16 @@
-canvas {   
+canvas 
+{   
     width: 700px;
     height: 700px;
-    
     cursor: crosshair;   
     background-color:rgb(254, 254, 244);
     position: absolute;
     top:50px;
     right:50px;
 }
-.hidden
-{
-    position: absolute;
-    display:none;
+body
+{ 
+    background-color: rgb(254, 254, 244);
 }
 h1
 {
@@ -25,14 +24,17 @@ h2
     font-size: 30px;
     position: relative;
     left:200px;
-    top: 50px;
+    top: 90px;
 }
-ul{
+ul
+{
+    font-size: 20px;
     position: relative;
     left:200px;
-    top: 60px;
+    top: 100px;
 }
-button{
+button
+{
    background-color: rgb(246, 232, 221);
    font-size: 16px;
    padding: 15px 32px;
@@ -42,50 +44,37 @@ button{
    text-align: center;
    display: inline-block;
    transform: translateY(4px);
-
-}
-
-body{
-    
-    background-color: rgb(254, 254, 244);
 }
 input
 {
     text-align: center;
-    padding: 15px 32px;
-    position: relative;
-    left:40px;
-    
+    font-size: 16px;
+    padding: 15px 29px;
     border:2px solid black;
-    text-indent: 30px;
-    width: 250px;
+    position: relative;
+    top:35px;
 }
 .button1
 {
-    
-    text-indent: 30px;
-    width: 250px;
+    position: relative;
+    top:30px;
 }
 .button2
 {
-    text-indent: 30px;
-    width: 300px;
+    position: relative;
+    top:30px;
 }
 .button3
 {
-    text-indent: 30px;
-    width: 250px;
     position: relative;
     left:10px;
-    top: 270px;
+    top: 240px;
 }
 .button4
 {
-    text-indent: 30px;
-    width: 250px;
     position: relative;
     left:250px;
-    top: 219px;
+    top: 189px;
 }
 
 
