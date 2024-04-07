@@ -1,4 +1,5 @@
-canvas {   
+canvas 
+{   
     position: absolute;
     cursor: crosshair; 
     background-color: white;  
@@ -6,33 +7,39 @@ canvas {
     top:50px;
     right:50px;
 }
-
-.canvas {
+.canvas 
+{
     position: relative;
     border: 1px solid black;
     
+}
+body
+{
+    background-color: rgb(254, 254, 244);
 }
 h1
 {
     color:black;
     font-size: 40px;
     position: relative;
-    left:200px;
+    left:130px;
 }
 h2
 {
     font-size: 30px;
     position: relative;
-    left:200px;
-    top: 50px;
+    left:130px;
+    top: 90px;
 }
-ul{
+ul
+{
+    font-size: 20px;
     position: relative;
-    left:200px;
-    top: 60px;
+    left:130px;
+    top: 100px;
 }
-button{
-
+button
+{
     background-color:rgb(246, 232, 221);
     font-size: 16px;
     padding: 15px 32px;
@@ -43,29 +50,38 @@ button{
     display: inline-block;
     transform: translateY(4px);
 }
-body{
-  
-    background-color: rgb(254, 254, 244);
-}
 input
 {
     text-align: center;
+    font-size: 16px;
     padding: 15px 32px;
+    border:2px solid black;
     position: relative;
-    left:40px;
+    top:35px;
+}
+.button1
+{
+    position: relative;
+    top:30px;
+}
+.button2
+{
+    position: relative;
+    top:30px;
+}
+.button3
+{
+    position: relative;
+    top:30px;
 }
 .button4
 {
-    text-indent: 30px;
-    width: 250px;
     position: relative;
     left:10px;
-    top: 277px;
+    top: 278px;
 }
 .button5
 {
-    text-indent: 30px;
-    width: 250px;
     position: relative;
     left:250px;
     top: 210px;
