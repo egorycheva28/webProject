@@ -43,3 +43,8 @@ document.addEventListener('DOMContentLoaded', function () {
         
     });
 });
+
+function clean()
+{
+    location.reload();
+}

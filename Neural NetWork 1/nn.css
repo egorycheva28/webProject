@@ -13,6 +13,7 @@ canvas {
     border: 10px solid rgb(0, 54, 23);
     display: block;
     margin-bottom: 20px;
+    
 }
 
 
@@ -53,4 +54,28 @@ canvas {
     display: inline-block;
     transform: translateY(4px);
     outline: none;
+}
+button
+{
+   background-color: rgb(246, 232, 221);
+   font-size: 16px;
+   padding: 15px 32px;
+   border:2px solid black;
+   color: black;
+   cursor: pointer;
+   text-align: center;
+   display: inline-block;
+   transform: translateY(4px);
+}
+.button1
+{
+    position: relative;
+    left:10px;
+    top: 200px;
+}
+.button2
+{
+    position: relative;
+    left:250px;
+    top: 149px;
 }
