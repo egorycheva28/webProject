@@ -15,11 +15,14 @@
             <li>Сгенерируйте лабиринт</li>
             <li>Запустите алгоритм</li>
             <input type="number" name="name" placeholder="Размер карты" id="n"></input>
-            <p class="button1"><button onclick="generation()">Сгенерировать лабиринт</button></p>
-            <p class="button2"><button id="alg">Запустить алгоритм</button></p>
+            <p class="button1"><button onclick="generation1()">Сгенерировать поле</button></p>
+            <p class="button2"><button onclick="generation()">Сгенерировать лабиринт</button></p>
+            <p class="button3"><button onclick="Start()">Выбрать начало</button></p>
+            <p class="button4"><button onclick="End()">Выбрать конец</button></p>
+            <p class="button5"><button id="alg">Запустить алгоритм</button></p>
         </ul>
-        <div class="button3"><button onclick="window.location.href='../Main/main.html'">Вернуться на главную</button></div>
-        <div class="button4"><button onclick="clean()">Сброс</button></div>
+        <div class="button6"><button onclick="window.location.href='../Main/main.html'">Вернуться на главную</button></div>
+        <div class="button7"><button onclick="clean()">Сброс</button></div>
          
         <canvas id="canvas" onclick="clickCells()"></canvas>
         <script src="star.js"></script>
