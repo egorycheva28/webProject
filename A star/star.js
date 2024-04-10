@@ -6,13 +6,11 @@ canvas.width = width;
 canvas.height = height;
 let maze = [];
 maze[0]=[];
-let start;
-let end;
-let startX;
-let startY;
-let endX;
-let endY;
 
+let start1=[-1,-1];
+let end1=[-1,-1];
+
+document.getElementById("alg").onclick = function() {Astar(start1, end1)};
 function generation()
 {
     let input = document.querySelector('input');
@@ -27,7 +25,7 @@ function generation()
             maze[i][j] = 1;
         }
     }
-    function createMaze(row, col) 
+    function createMaze(row, col) //генерация лабиринта
     {
     maze[row][col] = 0;
 
@@ -88,33 +86,31 @@ function generation()
                     createMaze(row, col - 2);
                 }
                 break;
+            }
         }
     }
-}
 
-createMaze(1, 1);
-
-// Отрисовка лабиринта на холсте
-
-for (let i = 0; i < n; i++) 
-{
-    for (let j = 0; j < n; j++) 
+    createMaze(1, 1);
+    // Отрисовка лабиринта на холсте
+    for (let i = 0; i < n; i++) 
     {
-        context.strokeStyle="black";
-        context.strokeRect(i * cellSize, j * cellSize, cellSize, cellSize);
-        if (maze[i][j])
+        for (let j = 0; j < n; j++) 
         {
-            context.fillStyle="black";
-            context.fillRect(i * cellSize, j * cellSize, cellSize, cellSize);
+            context.strokeStyle="black";
+            context.strokeRect(i * cellSize, j * cellSize, cellSize, cellSize);
+            if (maze[i][j])
+            {
+                context.fillStyle="black";
+                context.fillRect(i * cellSize, j * cellSize, cellSize, cellSize);
+            }
         }
     }
-}
-return maze;
+    return maze;
 }
 
 let flag=0;
 
-function clickCells()
+function clickCells()//начало, конец, непроходимые клетки
 {
     
     let rect = canvas.getBoundingClientRect();
@@ -124,170 +120,257 @@ function clickCells()
 
     if(flag===0)
     {
-        canvas.addEventListener('click', function(event) {
-            const x = Math.floor((event.clientX - rect.left) / cellSize);
-            const y = Math.floor((event.clientY - rect.top) / cellSize);
+        canvas.addEventListener('click', function(event1) {
+            let x1 = Math.floor((event1.clientX - rect.left) / cellSize);
+            let y1 = Math.floor((event1.clientY - rect.top) / cellSize);
             context.fillStyle = 'green';
-            context.fillRect(x * cellSize, y * cellSize, cellSize, cellSize);
-            startX=x;
-            startY=y;
-            start=maze[x][y];
+            context.fillRect(x1 * cellSize, y1 * cellSize, cellSize, cellSize);
+            start1[0]=x1;
+            start1[1]=y1;
+            maze[x1][y1]=1;
+            
         });
         flag=1;
-        return startX,startY;
+        //return startX,startY;
     }
 
     else if(flag===1)
     {
-        canvas.addEventListener('click', function(event) {
-            const x = Math.floor((event.clientX - rect.left) / cellSize);
-            const y = Math.floor((event.clientY - rect.top) / cellSize);            
+        canvas.addEventListener('click', function(event2) {
+            let x2 = Math.floor((event2.clientX - rect.left) / cellSize);
+            let y2 = Math.floor((event2.clientY - rect.top) / cellSize);            
             context.fillStyle = 'red';
-            context.fillRect(x * cellSize, y * cellSize, cellSize, cellSize);
-            end=maze[x][y];
-            endX=x;
-            endY=y;
+            context.fillRect(x2 * cellSize, y2 * cellSize, cellSize, cellSize);
+            end1[0]=x2;
+            end1[1]=y2;
+            maze[x2][y2]=1;
+            
+            
         });
         flag=2;
-        return endX,endY;
     }
 
     else 
     {
-        canvas.addEventListener('click', function(event) {
-            let x = Math.floor((event.clientX - rect.left) / cellSize);
-            let y = Math.floor((event.clientY - rect.top) / cellSize);
-            if(maze[x][y]===0)
+        canvas.addEventListener('click', function(event3) {
+            let x3 = Math.floor((event3.clientX - rect.left) / cellSize);
+            let y3 = Math.floor((event3.clientY - rect.top) / cellSize);
+            if(maze[x3][y3]===0)
             {
                 context.fillStyle = 'black';
-                context.fillRect(x * cellSize, y * cellSize, cellSize, cellSize);
-                maze[x][y]=1;//препятствие
+                context.fillRect(x3 * cellSize, y3 * cellSize, cellSize, cellSize);
+                maze[x3][y3]=1;
             }
             else
             {
                 context.fillStyle = 'rgb(254, 254, 244)'; 
-                context.fillRect(x * cellSize, y * cellSize, cellSize, cellSize);
+                context.fillRect(x3 * cellSize, y3 * cellSize, cellSize, cellSize);
                 context.strokeStyle='black';
-                context.strokeRect(x * cellSize, y * cellSize, cellSize, cellSize);
-                maze[x][y]=0;//убрать препятствие
+                context.strokeRect(x3 * cellSize, y3 * cellSize, cellSize, cellSize);
+                maze[x3][y3]=0;
             }
         });
     }
 }
 
-function res()
-{
 
 
-class Node
-{
-    constructor(x,y)
+
+/*class priorityQueue
+ {
+    constructor() 
     {
-        this.x=x;//координата x узла на карте
-        this.y=y;//координата y узла на карте
-        this.g=0;//расстояние от начального узла до текущего
-        this.h=0;//эвристическая оценка расстояния от текущего узла до конечного
-        this.f=0;//сумма g и h
-        this.parent=null;//родительский узел для восстановления пути
-
+        this.queue = [];
     }
-}
-function heuristicFunc(current,ends)
-{
-    return Math.abs(current.x - ends.x) + Math.abs(current.y - ends.y);
-}
-
-function Astar()
-{
-    let Start=new Node(startX,startY);
-    let End=new Node(endX,endY);
-    let openlist=[];//требующие рассмотрения пути
-    let closelist=[];//просмотренные вершины
-    openlist.push(Start);
-    while(openlist.length>0)
+    enqueue(element)
     {
-        let currentNode=openlist.shift();
-        //let currentIndex=0;
-        if(currentNode===End)
+        if (queue.IsEmpty()) 
         {
-            let path = [];
-            //let temp = currentNode;
-            while (currentNode) {
-                path.push(currentNode);
-                currentNode = currentNode.parent;
-            }
-            return path.reverse();
+            queue.push(element);
         }
-        closelist.push(currentNode);
-        let neighbors=[];
-        for(let i=-1;i<=1;i++)
+        else
         {
-            for(let j=-1;j<=1;j++)
+            let added=false;
+            for(let i=0;i<this.queue.length;i++)
             {
-                if(i===0 && j===0)
+                if(element[1]<queue[i][1])
                 {
-                    continue;
-                }
-                let x=currentNode.x+i;
-                let y=currentNode.y+j;
-                if(x<0 || x>=n || y<0 || y>=n)
-                {
-                    continue;
-                }
-                if(maze[x][y])
-                {
-                    continue;
-                }
-                let neighbor=new Node(x,y);
-                neighbors.push(neighbor);
-            }
-        }
-        for(let neighbor of neighbors)
-        {
-            if(closelist.has(neighbor))
-            {
-                continue;
-            }
-            let new_g=currentNode.g+1;
-            let nfo = openlist.find(n => n === neighbor);
-            if(nfo)
-            {
-                if(new_g<nfo.g)
-                {
-                    nfo.g=new_g;
-
-                    nfo.h=heuristicFunc(nfo,End);
-                    nfo.f=nfo.g+nfo.h;
-                    nfo.parent=currentNode;
-
+                    this.queue.splice(i,0,element);
+                    added=true;
+                    break;
                 }
             }
-            else{
-                neighbor.g=new_g;
-                neighbor.h=heuristicFunc(neighbor,End);
-                neighbor.f=neighbor.g+neighbor.h;
-                neighbor.parent=currentNode;
-                openlist.push(neighbor);
+            if(!added)
+            {
+                this.queue.push(element);
             }
         }
     }
+    dequeue() 
+    {
+        return this.queue.shift();
+    }
+    isEmpty() 
+    {
+        return this.queue.length === 0;
+    }
+}*/
+
+function priorityQueue() { // input: [[x, y], priority]
+    let array = [];
+
+    this.enqueue = function(element) {
+        if (this.isEmpty()) {
+            array.push(element);
+        }
+        else {
+            let added = false
+            for (let i = 0; i < array.length; i++) {
+                if (element[1] < array[i][1]) {
+                    array.splice(i, 0, element);
+                    added = true;
+                    break;
+                }
+            }
+            if (!added) {
+                array.push(element);
+            }
+        }
+    }
+
+    this.dequeue = function() {
+        return array.shift();
+    }
+
+    this.isEmpty = function() {
+        return array.length === 0;
+    }
 }
-function drawPath()
+function heuristicFunc(start,end)
+{
+    return Math.abs(start.x - end.x) + Math.abs(start.y - end.y);
+}
+
+function Neighbours(n,current,distance)
+{ 
+    let neighbours=[];
+    let currentX=current[0][0];
+    let currentY=current[0][1];
+    if(currentX+1<n && !maze[currentX+1][currentY] && distance[currentX+1][currentY]===-1)
+    {
+        neighbours.push([currentX+1,currentY]);
+    }
+    if(currentX-1>=0 && !maze[currentX-1][currentY] && distance[currentX-1][currentY]===-1)
+    {
+        neighbours.puah([currentX-1,currentY]);
+    }
+
+    if(currentY+1<n && !maze[currentX][currentY+1] && distance[currentX][currentY+1]===-1)
+    {
+        neighbours.push([currentX,currentY+1]);
+    }
+
+    if(currentY-1>=0 && !maze[currentX][currentY-1] && distance[currentX][currentY-1]===-1)
+    {
+        neighbours.push([currentX,currentY-1]);
+    }
+    
+    return neighbours;
+}
+
+function wait(time)
+{
+    return new Promise(resolve => setTimeout(resolve, time));
+}
+
+
+
+async function Astar(start,end)
 {
     let input = document.querySelector('input');
     let n = input.value;
     const cellSize = Math.floor(width/n);
-    alert(cellSize);
-    for(let node of path)
+   
+    let queue=new priorityQueue();
+    let distance=[];
+    for (let i = 0; i < n; i++)
     {
-        context.fillStyle='blue';
-        context.fillRect(node.x*cellSize,node.y*cellSize,cellSize,cellSize);
+        distance[i] = [];
+        for (let j = 0; j < n; j++) 
+        {
+            distance[i][j] = -1;
+        }
     }
+    distance[start[0]][start[1]] = 0;
+    let parent = new Array(n);
+    for (let i = 0; i < n; i++) {
+        parent[i] = new Array(n);
+    }
+    for (let i = 0; i < n; ++i){
+        for (let j = 0; j < n; ++j){
+            parent[i][j] = new Array(2);
+            parent[i][j][0] = -1;
+            parent[i][j][1] = -1;
+        }
+    }
+
+    /*let parent=[];
+    parent[0]=[];
+    parent[0][0]=[];
+    for(let i=0;i<n;i++)
+    {
+        for(let j=0;j<n;j++)
+        {
+            parent[i][j][0]=0;//по x
+            parent[i][j][1]=0;//по y
+        }
+    }*/
+    
+    queue.enqueue([start,heuristicFunc(start,end)])
+    
+    while(!queue.isEmpty())
+    {
+        
+        let current=queue.dequeue();
+        
+        let currentX=current[0][0];
+        let currentY=current[0][1];
+        
+        /*if(currentX===end[0] && currentY===end[1])
+        {
+            
+            break;
+        }*/
+        
+        let neighbours=Neighbours(n,current,distance);
+        
+        for(let i=0;i<neighbours.length;i++)
+        {
+            let neighbour=neighbours[i];
+            let neighbourX=neighbours[i][0];
+            let neighbourY=neighbours[i][1];
+            
+            await wait(100);
+            context.fillStyle='blue'; 
+            context.fillRect(neighbourX*cellSize,neighbourY*cellSize,cellSize,cellSize);
+
+            if(distance[neighbourX][neighbourY]===-1 || distance[currentX][currentY]+1<distance[neighbourX][neighbourY])
+            {
+                parent[neighbourX][neighbourY][0]=currentX;
+                parent[neighbourX][neighbourY][1]=currentY;
+                distance[neighbourX][neighbourY]=distance[currentX][currentY]+1;
+                queue.enqueue([neighbour,distance[neighbourX][neighbourY]+heuristicFunc(neighbour,end)]);
+            }
+        }
+    }
+    
+
+
+   
 }
-    alert(cellSize);
-    Astar();
-    drawPath();
-}
+
+
+
 
 function clean()
 {
