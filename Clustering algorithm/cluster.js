@@ -1,3 +1,13 @@
+function show(menu)
+{
+    let element=document.getElementById(menu);
+    if(element)
+    {
+        element.style.display="block";
+    }
+
+}
+
 let canvas=document.getElementById("canvas");
 let context=canvas.getContext("2d");
 let points=[];
@@ -8,8 +18,8 @@ let collorCenter=['red','green','blue','yellow','purple'];
 let flagPoints = true;
 let flagCenters=true;
 
-canvas.addEventListener("click",function(event){//расставляем точки
-    
+canvas.addEventListener("click",function(event)//расставляем точки
+{
     if(flagPoints===true)
     {
         let rect=canvas.getBoundingClientRect();
@@ -27,8 +37,7 @@ canvas.addEventListener("click",function(event){//расставляем точ�
         context.fill();
     }
 
-    return points;
-        
+    return points;    
 });
 
 function addCenter()//добавляем центры
@@ -53,8 +62,7 @@ function addCenter()//добавляем центры
             context.stroke();
             context.fill();
             centers.push(Center);
-            clusters.push([]);
-                 
+            clusters.push([]);                 
         }
     
         flagPoints=false;
@@ -62,7 +70,6 @@ function addCenter()//добавляем центры
         return centers; 
     }
 }
-
 
 function Cluster()//группируем на кластеры
 {
@@ -77,6 +84,7 @@ function Cluster()//группируем на кластеры
         }
         allDistances.push(distances);
     }
+
     for(let i=0; i<allDistances.length; i++)
     {
         let min = allDistances[i][0];
@@ -88,7 +96,6 @@ function Cluster()//группируем на кластеры
                 min = allDistances[i][j];
                 index = j;
             }
-            
         }
         clusters[index].push(points[i]);
         context.fillStyle = collorCenter[index];
@@ -101,38 +108,8 @@ function Cluster()//группируем на кластеры
     return clusters;
 }
 
-function avgCoard()//переопределяем центры
+function redCenters()//переопределяем центры
 { 
-    
-    for(let i = 0; i < centers.length; i++)
-    {
-        let sumX = 0;
-        let sumY = 0;
-        
-        for(let j = 0; j < clusters[i].length; j++)
-        {
-            sumX +=clusters[i][j].pointX;
-            sumY += clusters[i][j].pointY;
-        }
-
-        if(clusters[i].length!==0)
-        {            
-            centers[i].X = sumX / clusters[i].length;
-            centers[i].Y = sumY / clusters[i].length;
-        }
-    }   
-    allDistances = [];
-    
-    for(let i=0; i<clusters.length;i++)
-    {
-        clusters[i] = [];
-    }
-    Cluster();
-    return centers;
-} 
-function avgCoard1()//переопределяем центры
-{ 
-    
     for(let i = 0; i < centers.length; i++)
     {
         let sumX = 0;
@@ -157,38 +134,19 @@ function avgCoard1()//переопределяем центры
     {
         clusters[i] = [];
     }
-    Cluster();
 
+    Cluster();
 } 
-function res()
+
+function algorithm()
 {
     addCenter();
     Cluster();
-    //avgCoard1();
-}
-/*
-function isEqual(arr1, arr2) {
-    return arr1.length === arr2.length && arr1.every((value, index) => value === arr2[index]);
-}
-function r()
-{
-function result()
-{
-    centers=addCenter();
-    let oldCenters=[];
-    while(!isEqual(centers,oldCenters))
+    for(let i=0;i<10;i++)
     {
-        oldCenters=[...centers];
-        centers=avgCoard();
+        redCenters();
     }
-    return centers;
 }
-result();
-Cluster();
-}*/
-    
-
-
 
 function clean()//очищаем
 {
