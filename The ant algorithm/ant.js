@@ -1,8 +1,10 @@
 const canvas = document.querySelector("canvas");
 const context = canvas.getContext("2d");
 
+canvas.addEventListener('click', mouseClick);
+
 let vertexes = [];
-let size = 700;
+let size = 750;
 //let lengthOfChromosome; // without start vertex in the end
 let numberOfGenerations = 100000;
 let alpha = 1;
@@ -13,45 +15,33 @@ let desires = [];
 let Q = 200;
 let evaporation = 0.64;
 
-canvas.addEventListener('click', mouseClick);
-document.getElementById("clear").onclick = clearFunc;
-document.getElementById("start").onclick = antAlgorithm;
+function clearFunc(){
+    location.reload();
+}
 
-context.moveTo(0, 0); // border for canvas
-context.lineTo(size, 0);
-context.moveTo(size, 0);
-context.lineTo(size, size);
-context.moveTo(0, 0);
-context.lineTo(0, size);
-context.moveTo(0, size);
-context.lineTo(size, size);
-context.stroke();
-
-
-
-function mouseClick(e){
-    let clientX = e.pageX - e.target.offsetLeft;
-    let clientY = e.pageY - e.target.offsetTop;
-
+function mouseClick(event){
+    
+    let rect=canvas.getBoundingClientRect();   
+    let clientX = event.clientX-rect.left;
+    let clientY = event.clientY-rect.top;
     context.beginPath();
     if (vertexes.length >= 1){
         for(let vert of vertexes){
             let vertX = vert[0];
             let vertY = vert[1];
 
-            let vector = [clientX - vertX , clientY - vertY];
-            let s = Math.sqrt(vector[0] * vector[0] + vector[1] * vector[1]);
-            context.moveTo(vertX + vector[0] * 10 / s, vertY + vector[1] * 10 / s);
+            context.moveTo(vertX, vertY);
 
             context.lineTo(clientX, clientY);
-            context.strokeStyle = "rgba(243,243,243,0.34)";
+            context.strokeStyle = "#EEE8AA";
             context.stroke();
         }
     }
 
     context.beginPath();
-    context.arc(clientX, clientY, 10, 0, 2*Math.PI, false);
-    context.fillStyle = '#a8a1a1';
+    context.arc(clientX,clientY,10,0,Math.PI*2);
+
+    context.fillStyle = '#CD5C5C';
     context.fill();
 
     vertexes.push([clientX, clientY]);
@@ -62,7 +52,7 @@ function redrawVertexes(){
     for (let i = 0; i < vertexes.length; ++i){
         context.beginPath();
         context.arc(vertexes[i][0], vertexes[i][1], 10, 0, 2*Math.PI, false);
-        context.fillStyle = '#a8a1a1';
+        context.fillStyle = '#CD5C5C';
         context.fill();
     }
 }
@@ -84,7 +74,7 @@ function drawTheLines(from, to){
 
         context.moveTo(a[i][0] + vector[0] * 10 / s, a[i][1] + vector[1] * 10 / s);
         context.lineTo(a[i + 1][0] - vector[0] * 10 / s, a[i + 1][1] - vector[1] * 10 / s);
-        context.strokeStyle = "rgba(243,243,243,0.34)";
+        context.strokeStyle = "#EEE8AA";
         context.lineWidth = 1;
         context.stroke()
     }
@@ -98,7 +88,7 @@ function drawTheLines(from, to){
         let s = Math.sqrt(vector[0] * vector[0] + vector[1] * vector[1]);
         context.moveTo(b[i][0] + vector[0] * 10 / s, b[i][1] + vector[1] * 10 / s);
         context.lineTo(b[i + 1][0] - vector[0] * 10 / s, b[i + 1][1] - vector[1] * 10 / s);
-        context.strokeStyle = "rgb(250,142,142)";
+        context.strokeStyle = "rgb(204, 25, 12)";
         context.lineWidth = 1;
         context.stroke();
     }
@@ -195,7 +185,7 @@ async function antAlgorithm(){
 
     for (let generation = 0; generation < numberOfGenerations; ++generation){
         if (end === 0){
-            drawFinishPath(bestAnt[0], "rgb(142,250,142)");
+            drawFinishPath(bestAnt[0], "rgb(28, 158, 16)");
             break;
         }
 
@@ -285,7 +275,4 @@ async function antAlgorithm(){
         await wait(100);
     }
 
-}
-function clean(){
-    location.reload();
 }

@@ -4,7 +4,7 @@ canvas
     cursor: crosshair; 
     background-color: white;  
     border: 5px solid black;
-    top:100px;
+    top:50px;
     right:50px;
 }
 .canvas 
