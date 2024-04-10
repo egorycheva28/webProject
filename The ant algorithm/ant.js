@@ -27,9 +27,7 @@ context.moveTo(0, size);
 context.lineTo(size, size);
 context.stroke();
 
-function clearFunc(){
-    location.reload();
-}
+
 
 function mouseClick(e){
     let clientX = e.pageX - e.target.offsetLeft;
@@ -287,4 +285,7 @@ async function antAlgorithm(){
         await wait(100);
     }
 
+}
+function clean(){
+    location.reload();
 }
