@@ -119,12 +119,6 @@ function avgCoard()//переопределяем центры
         {            
             centers[i].X = sumX / clusters[i].length;
             centers[i].Y = sumY / clusters[i].length;
-            context.fillStyle ='white';
-            context.strokeStyle = 'white';
-            context.beginPath();
-            context.arc(centers[i].X,centers[i].Y,10,0,2*Math.PI);            
-            context.stroke();
-            context.fill();
         }
     }   
     allDistances = [];
@@ -154,12 +148,7 @@ function avgCoard1()//переопределяем центры
         {            
             centers[i].X = sumX / clusters[i].length;
             centers[i].Y = sumY / clusters[i].length;
-            context.fillStyle ='white';
-            context.strokeStyle = 'white';
-            context.beginPath();
-            context.arc(centers[i].X,centers[i].Y,10,0,2*Math.PI);            
-            context.stroke();
-            context.fill();
+            
         }
     }   
     allDistances = [];
@@ -171,6 +160,13 @@ function avgCoard1()//переопределяем центры
     Cluster();
 
 } 
+function res()
+{
+    addCenter();
+    Cluster();
+    //avgCoard1();
+}
+/*
 function isEqual(arr1, arr2) {
     return arr1.length === arr2.length && arr1.every((value, index) => value === arr2[index]);
 }
@@ -189,7 +185,7 @@ function result()
 }
 result();
 Cluster();
-}
+}*/
     
 
 
