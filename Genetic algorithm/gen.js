@@ -1,21 +1,21 @@
-const canvas = document.querySelector('.canvas');
+function show(menu)
+{
+    let element=document.getElementById(menu);
+    if(element)
+    {
+        element.style.display="block";
+    }
 
+}
+
+const canvas = document.querySelector("canvas");
 const context = canvas.getContext("2d");
-
-
 
 let dots = []; // массив для координат точек
 let size = 700;
 let lengthOfChromosome; 
 let numberOfGenerations = 100000;
 let chanceOfMutation = 30;
-
-document.getElementById("run").onclick = geneticAlg;
-
-
-document.getElementById("restart").onclick = function() { // перезагружаем страничку
-    location.reload();
-};
 
 function randomNumber(min, max) {
     return Math.floor(Math.random() * (max - min) + min);
@@ -359,7 +359,10 @@ async function geneticAlg() {
     }
 }
 
-
+function clean()
+{
+    location.reload();
+}
 
 // async function geneticAlg() {
 //     let firstGeneration = [];

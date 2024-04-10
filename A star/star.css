@@ -4,6 +4,7 @@ canvas
     height: 700px;
     cursor: crosshair;   
     background-color:rgb(254, 254, 244);
+    
     position: absolute;
     top:50px;
     right:50px;
@@ -24,20 +25,20 @@ h2
     font-size: 30px;
     position: relative;
     left:200px;
-    top: 90px;
+    top: 20px;
 }
 ul
 {
     font-size: 20px;
     position: relative;
     left:200px;
-    top: 100px;
+    top: 20px;
 }
 button
 {
    background-color: rgb(246, 232, 221);
    font-size: 16px;
-   padding: 15px 32px;
+   padding: 10px 27px;
    border:2px solid black;
    color: black;
    cursor: pointer;
@@ -49,7 +50,7 @@ input
 {
     text-align: center;
     font-size: 16px;
-    padding: 15px 29px;
+    padding: 20px 34px;
     border:2px solid black;
     position: relative;
     top:35px;
@@ -67,14 +68,29 @@ input
 .button3
 {
     position: relative;
-    left:10px;
-    top: 240px;
+    top:30px;
 }
 .button4
 {
     position: relative;
+    top:30px;
+}
+.button5
+{
+    position: relative;
+    top:30px;
+}
+.button6
+{
+    position: relative;
+    left:10px;
+    top: 80px;
+}
+.button7
+{
+    position: relative;
     left:250px;
-    top: 189px;
+    top: 39px;
 }
 
 

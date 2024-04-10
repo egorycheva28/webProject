@@ -1,3 +1,13 @@
+function show(menu)
+{
+    let element=document.getElementById(menu);
+    if(element)
+    {
+        element.style.display="block";
+    }
+
+}
+
 const canvas = document.querySelector("canvas");
 const context = canvas.getContext("2d");
 
@@ -275,4 +285,8 @@ async function antAlgorithm(){
         await wait(100);
     }
 
+}
+
+function clean(){
+    location.reload();
 }

@@ -9,9 +9,13 @@ canvas
 }
 .canvas 
 {
-    position: absolute;
+    position: relative;
     border: 1px solid black;
-    
+}
+.hidden
+{
+    position: absolute;
+    display:none;
 }
 body
 {
@@ -22,20 +26,20 @@ h1
     color:black;
     font-size: 40px;
     position: relative;
-    left:130px;
+    left:200px;
 }
 h2
 {
     font-size: 30px;
     position: relative;
-    left:130px;
+    left:340px;
     top: 90px;
 }
 ul
 {
     font-size: 20px;
     position: relative;
-    left:130px;
+    left:265px;
     top: 100px;
 }
 button
@@ -63,27 +67,17 @@ input
 {
     position: relative;
     top:30px;
+    left:55px;
 }
 .button2
 {
     position: relative;
-    left: 100px;
-    top:30px;
+    left:10px;
+    top: 413px;
 }
 .button3
 {
     position: relative;
-    top:30px;
-}
-.button4
-{
-    position: relative;
-    left:10px;
-    top: 278px;
-}
-.button5
-{
-    position: relative;
     left:250px;
-    top: 227px;
+    top: 362px;
 }

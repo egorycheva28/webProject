@@ -11,6 +11,31 @@ let start1=[-1,-1];
 let end1=[-1,-1];
 
 document.getElementById("alg").onclick = function() {Astar(start1, end1)};
+function generation1()
+{
+    let input = document.querySelector('input');
+    let n=input.value;
+
+    let cellSize =Math.floor(width/n);
+    for (let i = 0; i < n; i++)
+    {
+        maze[i] = [];
+        for (let j = 0; j < n; j++) 
+        {
+            maze[i][j] = 0;
+        }
+    }
+    for (let i = 0; i < n; i++) 
+    {
+        for (let j = 0; j < n; j++) 
+        {
+            context.strokeStyle="black";
+            context.strokeRect(i * cellSize, j * cellSize, cellSize, cellSize);
+            
+        }
+    }
+    return maze;
+}
 function generation()
 {
     let input = document.querySelector('input');
@@ -96,8 +121,8 @@ function generation()
     {
         for (let j = 0; j < n; j++) 
         {
-            context.strokeStyle="black";
-            context.strokeRect(i * cellSize, j * cellSize, cellSize, cellSize);
+            //context.strokeStyle="black";
+            //context.strokeRect(i * cellSize, j * cellSize, cellSize, cellSize);
             if (maze[i][j])
             {
                 context.fillStyle="black";
@@ -108,8 +133,51 @@ function generation()
     return maze;
 }
 
-let flag=0;
+//let flag=0;
+function Start()
+{
+    let rect = canvas.getBoundingClientRect();
+    let input = document.querySelector('input');
+    let n = input.value;
+    const cellSize = Math.floor(width/n);
 
+    
+    canvas.addEventListener('click', function(event1) {
+        //context.fillStyle = 'rgb(254, 254, 244)';
+        //context.fillRect(start1[0] * cellSize, start1[1] * cellSize, cellSize, cellSize);
+        let x1 = Math.floor((event1.clientX - rect.left) / cellSize);
+        let y1 = Math.floor((event1.clientY - rect.top) / cellSize);
+        context.fillStyle = 'rgb(159, 212, 152)';
+        context.fillRect(x1 * cellSize, y1 * cellSize, cellSize, cellSize);
+        start1[0]=x1;
+        start1[1]=y1;
+        maze[x1][y1]=1;
+    });
+        
+}
+
+function End()
+{
+    let rect = canvas.getBoundingClientRect();
+    let input = document.querySelector('input');
+    let n = input.value;
+    const cellSize = Math.floor(width/n);
+
+    
+    canvas.addEventListener('click', function(event1) {
+        //context.fillStyle = 'rgb(254, 254, 244)';
+        //context.fillRect(end1[0] * cellSize, end1[1] * cellSize, cellSize, cellSize);
+        let x2 = Math.floor((event1.clientX - rect.left) / cellSize);
+        let y2 = Math.floor((event1.clientY - rect.top) / cellSize);
+        context.fillStyle = 'red';
+        context.fillRect(x2 * cellSize, y2 * cellSize, cellSize, cellSize);
+        end1[0]=x2;
+        end1[1]=y2;
+        maze[x2][y2]=1;
+    });
+        
+}
+let flag=0;
 function clickCells()//начало, конец, непроходимые клетки
 {
     
@@ -118,43 +186,35 @@ function clickCells()//начало, конец, непроходимые кле
     let n = input.value;
     const cellSize = Math.floor(width/n);
 
-    if(flag===0)
-    {
-        canvas.addEventListener('click', function(event1) {
+    
+    canvas.addEventListener('click', function(event1) {
+        //let x1 = Math.floor((event1.clientX - rect.left) / cellSize);
+        //let y1 = Math.floor((event1.clientY - rect.top) / cellSize);
+        if(flag===0)
+        {
             let x1 = Math.floor((event1.clientX - rect.left) / cellSize);
-            let y1 = Math.floor((event1.clientY - rect.top) / cellSize);
-            context.fillStyle = 'green';
-            context.fillRect(x1 * cellSize, y1 * cellSize, cellSize, cellSize);
-            start1[0]=x1;
-            start1[1]=y1;
-            maze[x1][y1]=1;
-            
-        });
+        let y1 = Math.floor((event1.clientY - rect.top) / cellSize);
+        context.fillStyle = 'rgb(159, 212, 152)';
+        context.fillRect(x1 * cellSize, y1 * cellSize, cellSize, cellSize);
+        start1[0]=x1;
+        start1[1]=y1;
+        maze[x1][y1]=1;
         flag=1;
-        //return startX,startY;
-    }
-
-    else if(flag===1)
-    {
-        canvas.addEventListener('click', function(event2) {
-            let x2 = Math.floor((event2.clientX - rect.left) / cellSize);
-            let y2 = Math.floor((event2.clientY - rect.top) / cellSize);            
-            context.fillStyle = 'red';
-            context.fillRect(x2 * cellSize, y2 * cellSize, cellSize, cellSize);
-            end1[0]=x2;
-            end1[1]=y2;
-            maze[x2][y2]=1;
-            
-            
-        });
+        }
+        else if(flag===1)
+        {
+            let x2 = Math.floor((event1.clientX - rect.left) / cellSize);
+        let y2 = Math.floor((event1.clientY - rect.top) / cellSize);
+        context.fillStyle = 'red';
+        context.fillRect(x2 * cellSize, y2 * cellSize, cellSize, cellSize);
+        end1[0]=x2;
+        end1[1]=y2;
+        maze[x2][y2]=1;
         flag=2;
-    }
-
-    else 
-    {
-        canvas.addEventListener('click', function(event3) {
-            let x3 = Math.floor((event3.clientX - rect.left) / cellSize);
-            let y3 = Math.floor((event3.clientY - rect.top) / cellSize);
+        }
+        else{
+            let x3 = Math.floor((event1.clientX - rect.left) / cellSize);
+        let y3 = Math.floor((event1.clientY - rect.top) / cellSize);
             if(maze[x3][y3]===0)
             {
                 context.fillStyle = 'black';
@@ -169,52 +229,12 @@ function clickCells()//начало, конец, непроходимые кле
                 context.strokeRect(x3 * cellSize, y3 * cellSize, cellSize, cellSize);
                 maze[x3][y3]=0;
             }
-        });
-    }
+        }
+
+            
+    });
+    
 }
-
-
-
-
-/*class priorityQueue
- {
-    constructor() 
-    {
-        this.queue = [];
-    }
-    enqueue(element)
-    {
-        if (queue.IsEmpty()) 
-        {
-            queue.push(element);
-        }
-        else
-        {
-            let added=false;
-            for(let i=0;i<this.queue.length;i++)
-            {
-                if(element[1]<queue[i][1])
-                {
-                    this.queue.splice(i,0,element);
-                    added=true;
-                    break;
-                }
-            }
-            if(!added)
-            {
-                this.queue.push(element);
-            }
-        }
-    }
-    dequeue() 
-    {
-        return this.queue.shift();
-    }
-    isEmpty() 
-    {
-        return this.queue.length === 0;
-    }
-}*/
 
 function priorityQueue() { // input: [[x, y], priority]
     let array = [];
@@ -262,7 +282,7 @@ function Neighbours(n,current,distance)
     }
     if(currentX-1>=0 && !maze[currentX-1][currentY] && distance[currentX-1][currentY]===-1)
     {
-        neighbours.puah([currentX-1,currentY]);
+        neighbours.push([currentX-1,currentY]);
     }
 
     if(currentY+1<n && !maze[currentX][currentY+1] && distance[currentX][currentY+1]===-1)
@@ -287,6 +307,8 @@ function wait(time)
 
 async function Astar(start,end)
 {
+    //alert(start);
+    //alert(end);
     let input = document.querySelector('input');
     let n = input.value;
     const cellSize = Math.floor(width/n);
@@ -336,11 +358,11 @@ async function Astar(start,end)
         let currentX=current[0][0];
         let currentY=current[0][1];
         
-        /*if(currentX===end[0] && currentY===end[1])
+        if(currentX===end[0] && currentY===end[1])
         {
             
             break;
-        }*/
+        }
         
         let neighbours=Neighbours(n,current,distance);
         
@@ -351,7 +373,7 @@ async function Astar(start,end)
             let neighbourY=neighbours[i][1];
             
             await wait(100);
-            context.fillStyle='blue'; 
+            context.fillStyle='rgb(181, 207, 234)'; 
             context.fillRect(neighbourX*cellSize,neighbourY*cellSize,cellSize,cellSize);
 
             if(distance[neighbourX][neighbourY]===-1 || distance[currentX][currentY]+1<distance[neighbourX][neighbourY])
@@ -363,8 +385,24 @@ async function Astar(start,end)
             }
         }
     }
-    
+    /*if (JSON.stringify(parent[end[0]][end[1]]) !== JSON.stringify([-1, -1])){
+        let current = parent[end[0]][end[1]];
+        let counter = 0;
+        while (current[0] !== -1 && current[1] !== -1){
+            counter++;
+            context.fillStyle = "#06d9fd";
+            context.fillRect(current[1] * cellSize, current[0] * cellSize, sizeNode - 1, sizeNode - 1);
+            current = parent[current[0]][current[1]];
+        }
 
+        context.fillStyle="#ff0216";
+        context.fillRect(end[1] * cellSize, end[0] * cellSize, sizeNode - 1, sizeNode - 1);
+        context.fillStyle="#0cfa00";
+        context.fillRect(start[1] * cellSize, start[0] * cellSize, sizeNode - 1, sizeNode - 1);
+
+        counter--;
+        alert("Длина пути = " + counter)
+    }*/
 
    
 }
