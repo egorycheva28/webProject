@@ -8,7 +8,7 @@ function show(menu)
 
 }
 
-const canvas = document.querySelector('.canvas');
+const canvas = document.querySelector("canvas");
 const context = canvas.getContext("2d");
 
 let dots = []; // массив для координат точек
