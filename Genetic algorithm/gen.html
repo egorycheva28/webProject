@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Генетический алгоритм</title>
+    <link rel="stylesheet" href="gen.css">
+</head>
+
+<body>
+    <a href=# onclick="show('menu');return false">меню</a>
+    <h1><u>Генетический алгоритм</u></h1>
+
+    <div id="menu" class="hidden">
+        <p><button onclick="window.location.href='../A star/star.html'">Алгоритм A*</button></p>
+        <p><button onclick="window.location.href='../Clustering algorithm/cluster.html'">Кластеризация</button></p>
+        <p><button onclick="window.location.href='../The ant algorithm/ant.html'">Муравьиный алгоритм</button></p>
+    </div>
+    
+
+    <ul type="disc">
+        <button id="run" class="button2">Запуск</button>
+        <button id="restart" class="button2">Сбросить</button>
+        <!-- <button onclick="window.location.href='../Main/main.html'" class="button2">Вернуться на главную</button> -->
+    </ul>
+    
+    <canvas id="canvas" class="canvas" width="700" height="700"></canvas>
+
+    <script src="gen.js"></script>
+</body>
+
+</html>
