@@ -13,15 +13,15 @@ let chanceOfMutation = 30;
 document.getElementById("run").onclick = geneticAlg;
 
 // рамка для канваса
-context.moveTo(0, 0); 
-context.lineTo(size, 0);
-context.moveTo(size, 0);
-context.lineTo(size, size);
-context.moveTo(0, 0);
-context.lineTo(0, size);
-context.moveTo(0, size);
-context.lineTo(size, size);
-context.stroke();
+// context.moveTo(0, 0); 
+// context.lineTo(size, 0);
+// context.moveTo(size, 0);
+// context.lineTo(size, size);
+// context.moveTo(0, 0);
+// context.lineTo(0, size);
+// context.moveTo(0, size);
+// context.lineTo(size, size);
+// context.stroke();
 
 
 document.getElementById("restart").onclick = function() { // перезагружаем страничку

@@ -1,69 +1,89 @@
-canvas {   
-    width: 700px;
-    height: 700px;
-    
-    cursor: crosshair;   
-    background-color:antiquewhite;
+canvas 
+{   
     position: absolute;
-    top:50px;
+    cursor: crosshair; 
+    background-color: white;  
+    border: 5px solid black;
+    top:100px;
     right:50px;
 }
-.hidden
+.canvas 
 {
     position: absolute;
-    display:none;
+    border: 1px solid black;
+    
+}
+body
+{
+    background-color: rgb(254, 254, 244);
 }
 h1
 {
     color:black;
-    font-size: 60px;
+    font-size: 40px;
     position: relative;
-    left:200px;
+    left:130px;
 }
 h2
 {
-    font-size: 40px;
+    font-size: 30px;
     position: relative;
-    left:260px;
-    top: 50px;
+    left:130px;
+    top: 90px;
 }
-ul{
-    position: relative;
-    left:200px;
-    top: 30px;
-}
-button{
-   background-color:darkkhaki;
-   font-size: 16px;
-   padding: 15px 32px;
-   border: none;
-   box-shadow: 0 8px 16px 0 black; 
-   color: white;
-   cursor: pointer;
-   text-align: center;
-   display: inline-block;
-   transform: translateY(4px);
-   outline: none;
-}
-
-body{
+ul
+{
     font-size: 20px;
-    background-color: antiquewhite;
+    position: relative;
+    left:130px;
+    top: 100px;
+}
+button
+{
+    background-color:rgb(246, 232, 221);
+    font-size: 16px;
+    padding: 15px 32px;
+    border:2px solid black;
+    color: black;
+    cursor: pointer;
+    text-align: center;
+    display: inline-block;
+    transform: translateY(4px);
 }
 input
 {
     text-align: center;
+    font-size: 16px;
     padding: 15px 32px;
+    border:2px solid black;
     position: relative;
-    left:40px;
+    top:35px;
 }
-.er
+.button1
 {
-    text-indent: 30px;
+    position: relative;
+    top:30px;
 }
-.et
+.button2
 {
-    text-indent: 30px;
+    position: relative;
+    left: 100px;
+    top:30px;
 }
-
-
+.button3
+{
+    position: relative;
+    top:30px;
+}
+.button4
+{
+    position: relative;
+    left:10px;
+    top: 278px;
+}
+.button5
+{
+    position: relative;
+    left:250px;
+    top: 227px;
+}
