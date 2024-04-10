@@ -5,30 +5,44 @@ const context = canvas.getContext("2d");
 
 
 let dots = []; // массив для координат точек
-let size = 750;
+let size = 700;
 let lengthOfChromosome; 
 let numberOfGenerations = 100000;
 let chanceOfMutation = 30;
 
 document.getElementById("run").onclick = geneticAlg;
 
-// рамка для канваса
-// context.moveTo(0, 0); 
-// context.lineTo(size, 0);
-// context.moveTo(size, 0);
-// context.lineTo(size, size);
-// context.moveTo(0, 0);
-// context.lineTo(0, size);
-// context.moveTo(0, size);
-// context.lineTo(size, size);
-// context.stroke();
-
 
 document.getElementById("restart").onclick = function() { // перезагружаем страничку
     location.reload();
 };
 
-function drawingDots(color) {
+function randomNumber(min, max) {
+    return Math.floor(Math.random() * (max - min) + min);
+}
+
+function twoRandomNumbers(min, max) {
+    let first = Math.floor(Math.random() * (max - min) + min);
+    let second = Math.floor(Math.random() * (max - min) + min);
+
+    while (first === second) {
+        first = Math.floor(Math.random() * (max - min) + min);
+    }
+    
+    return [first, second];
+}
+
+function mix(array) {
+    let mixedArray = array.slice()
+    for (let i = 0; i < dots.length - 1; i++) {
+        let random1 = randomNumber(1, dots.length - 1);
+        let random2 = randomNumber(1, dots.length - 1);
+        [mixedArray[random1], mixedArray[random2]] = [mixedArray[random2], mixedArray[random1]];
+    }
+    return mixedArray.slice();
+}
+
+function drawingDots(color) { // рисуем точки
     for (let i = 0; i < dots.length; ++i) {
         context.beginPath();
         context.arc(dots[i][0], dots[i][1], 15, 0, 2 * Math.PI, false);
@@ -65,39 +79,6 @@ canvas.addEventListener('click', function (e) { // добавляются точ
     dots.push([userX, userY]);
     drawingDots('#CD5C5C');
 });
-/*
-function drawTheLines(from, to) {
-    from.splice(from.length - 1, 0, from[0].slice())
-    for (let i = 0; i < from.length - 1; ++i) {
-        context.beginPath();
-        let vector = [from[i + 1][0] - from[i][0], from[i + 1][1] - from[i][1]];
-        let s = Math.sqrt(vector[0] * vector[0] + vector[1] * vector[1]);
-
-        context.moveTo(from[i][0] + vector[0] * 10 / s, from[i][1] + vector[1] * 10 / s);
-        context.lineTo(from[i + 1][0] - vector[0] * 10 / s, from[i + 1][1] - vector[1] * 10 / s);
-        context.strokeStyle = "rgb(255,255,255)";
-        context.lineWidth = 2;
-        context.stroke();
-
-        context.moveTo(from[i][0] + vector[0] * 10 / s, from[i][1] + vector[1] * 10 / s);
-        context.lineTo(from[i + 1][0] - vector[0] * 10 / s, from[i + 1][1] - vector[1] * 10 / s);
-        context.strokeStyle = "rgba(243,243,243,0.34)";
-        context.lineWidth = 1;
-        context.stroke()
-    }
-    to.splice(to.length - 1, 0, to[0].slice())
-    for (let q = 0; q < to.length - 1; ++q) {
-        context.beginPath();
-        let vector = [to[q + 1][0] - to[q][0], to[q + 1][1] - to[q][1]];
-        let s = Math.sqrt(vector[0] * vector[0] + vector[1] * vector[1]);
-        context.moveTo(to[q][0] + vector[0] * 10 / s, to[q][1] + vector[1] * 10 / s);
-        context.lineTo(to[q + 1][0] - vector[0] * 10 / s, to[q + 1][1] - vector[1] * 10 / s);
-        context.strokeStyle = "rgb(250,142,142)";
-        context.lineWidth = 1;
-        context.stroke();
-    }
-
-}*/
 
 function drawLine(points, color, lineWidth) {
     for (let i = 0; i < points.length - 1; i++) {
@@ -118,36 +99,12 @@ function drawLine(points, color, lineWidth) {
 
 function drawTheLines(from, to) {
     from.splice(from.length - 1, 0, from[0].slice());
-    drawLine(from, "rgb(255,255,255)", 2); 
+    drawLine(from, "rgb(255,255,255)", 1); 
     drawLine(from, "rgba(243,243,243,0.34)", 1); 
 
     to.splice(to.length - 1, 0, to[0].slice());
     drawLine(to, "rgb(250,142,142)", 1); 
 }
-
-/*
-function drawBest(bestPath, color) {
-    console.log(bestPath.slice())
-    bestPath.splice(bestPath.length - 1, 0, bestPath[0].slice())
-    console.log(bestPath.slice())
-    for (let i = 0; i < bestPath.length - 2; ++i) {
-        context.beginPath();
-        let vector = [bestPath[i + 1][0] - bestPath[i][0], bestPath[i + 1][1] - bestPath[i][1]];
-        let s = Math.sqrt(vector[0] * vector[0] + vector[1] * vector[1]);
-
-        context.moveTo(bestPath[i][0] + vector[0] * 10 / s, bestPath[i][1] + vector[1] * 10 / s);
-        context.lineTo(bestPath[i + 1][0] - vector[0] * 10 / s, bestPath[i + 1][1] - vector[1] * 10 / s);
-        context.strokeStyle = "rgb(255,255,255)";
-        context.lineWidth = 2;
-        context.stroke();
-
-        context.moveTo(bestPath[i][0] + vector[0] * 10 / s, bestPath[i][1] + vector[1] * 10 / s);
-        context.lineTo(bestPath[i + 1][0] - vector[0] * 10 / s, bestPath[i + 1][1] - vector[1] * 10 / s);
-        context.strokeStyle = color;
-        context.lineWidth = 1;
-        context.stroke()
-    }
-}*/
 
 function drawPathSegment(startPoint, endPoint, strokeWidth, strokeColor) {
     let vector = [endPoint[0] - startPoint[0], endPoint[1] - startPoint[1]];
@@ -163,42 +120,30 @@ function drawPathSegment(startPoint, endPoint, strokeWidth, strokeColor) {
 }
 
 function drawBest(bestPath, color) {
-    console.log(bestPath.slice()); // Выводим копию исходного пути
-    bestPath.splice(bestPath.length - 1, 0, bestPath[0].slice()); // Дублируем первую точку перед последней
-    console.log(bestPath.slice()); // Выводим изменённый путь
+    console.log(bestPath.slice()); // выводим копию исходного пути
+    bestPath.splice(bestPath.length - 1, 0, bestPath[0].slice()); // дублируем первую точку перед последней
+    console.log(bestPath.slice()); // выводим изменённый путь
 
     for (let i = 0; i < bestPath.length - 2; ++i) {
-        // Рисуем сегмент пути белым цветом с толщиной линии 2
-        drawPathSegment(bestPath[i], bestPath[i + 1], 2, "rgb(255,255,255)");
-        // Рисуем поверх белой линии линию заданного цвета с меньшей толщиной, чтобы создать эффект обводки
         drawPathSegment(bestPath[i], bestPath[i + 1], 1, color);
     }
     drawingDots('#611F1F');
 }
 
-function mix(array) {
-    let a = array.slice()
-    for (let i = 0; i < dots.length - 1; ++i) {
-        let r1 = randomNumber(1, dots.length - 1);
-        let r2 = randomNumber(1, dots.length - 1);
-        [a[r1], a[r2]] = [a[r2], a[r1]];
-    }
-    return a.slice();
-}
-
 function startPopulation(firstGeneration) {
-    let res = [];
+    let result = [];
     let buffer = firstGeneration.slice();
+
     buffer.push(distance(buffer));
-    res.push(buffer.slice());
+    result.push(buffer.slice());
 
     for (let i = 0; i < dots.length * dots.length; ++i) {
         buffer = firstGeneration.slice();
         buffer = mix(buffer)
         buffer.push(distance(buffer));
-        res.push(buffer.slice())
+        result.push(buffer.slice())
     }
-    return res;
+    return result;
 }
 
 function addToPopulation(population, chromosome) {
@@ -233,19 +178,6 @@ function distance(chromosome) {
     return ans;
 }
 
-function twoRandomNumbers(min, max) {
-    let a = Math.floor(Math.random() * (max - min) + min);
-    let b = Math.floor(Math.random() * (max - min) + min);
-    while (a === b) {
-        a = Math.floor(Math.random() * (max - min) + min);
-    }
-    return [a, b];
-}
-
-function randomNumber(min, max) {
-    return Math.floor(Math.random() * (max - min) + min);
-}
-
 function cross(firstParent, secondParent) {
     let child = [];
     let index1 = randomNumber(0, firstParent.length);
@@ -276,54 +208,207 @@ function crossingParents(firstParent, secondParent) {
     return [firstChild, secondChild];
 }
 
+// Объявление асинхронной функции geneticAlg
 async function geneticAlg() {
+    // Инициализация первого поколения как пустого массива
     let firstGeneration = [];
+    // Установка значения для условия окончания алгоритма
     let end = 500;
 
+    // Копирование данных из массива dots в первое поколение
     for (let i = 0; i < dots.length; ++i) {
         firstGeneration.push(dots[i]);
     }
+    // Задание длины хромосомы равной длине первого поколения
     lengthOfChromosome = firstGeneration.length;
 
+    // Создание начальной популяции из первого поколения
     let population = startPopulation(firstGeneration);
+    // Сортировка популяции по фитнес-функции (последнему элементу хромосомы)
     population.sort((function (a, b) { return a[a.length - 1] - b[b.length - 1] }));
 
+    // Выбор лучшей хромосомы из отсортированной популяции
     let bestChromosome = population[0].slice();
+    // Отрисовка лучшей хромосомы цветом rgb(250,142,142)
     drawBest(bestChromosome, "rgb(250,142,142)")
 
+    // Основной цикл, прогоняющийся numberOfGenerations раз
     for (let i = 0; i < numberOfGenerations; ++i) {
+        // Проверка условия окончания алгоритма
         if (end === 0) {
+            // Отрисовка лучшей хромосомы цветом rgb(142,250,142) в случае завершения
             drawBest(bestChromosome, "rgb(142,250,142)");
             break;
         }
 
+        // Уменьшение размера популяции до установленного лимита
         population = population.slice(0, dots.length * dots.length);
 
+        // Цикл создания новых детей для следующего поколения
         for (let j = 0; j < dots.length * dots.length; ++j) {
+            // Выбор случайных индексов для родителей
             let index1 = randomNumber(0, population.length);
             let index2 = randomNumber(0, population.length);
+            // Выбор первого и второго родителя
             let firstParent = population[index1].slice(0, population[index1].length - 1);
             let secondParent = population[index2].slice(0, population[index2].length - 1);
 
+            // Создание потомков (детей) от двух родителей
             let child = crossingParents(firstParent, secondParent);
+            // Добавление потомков в популяцию
             population.push(child[0].slice())
             population.push(child[1].slice())
         }
 
+        // Сортировка популяции после добавления новых потомков
         population.sort((function (a, b) { return a[a.length - 1] - b[b.length - 1] }));
 
+        // Проверка, изменилась ли лучшая хромосома
         if (JSON.stringify(bestChromosome) !== JSON.stringify(population[0])) {
+            // Отрисовка изменений между старой и новой лучшей хромосомой
             drawTheLines(bestChromosome, population[0])
+            // Обновление лучшей хромосомы
             bestChromosome = population[0].slice();
+            // Сброс счетчика для условия окончания
             end = 500;
         }
 
+        // Логирование каждый 100-й генерации и уменьшение счетчика окончания
         if (i % 100 === 0) {
             console.log(i);
             end -= 100;
         }
 
+        // Отрисовка точек на канвасе
         drawingDots();
+        // Пауза в выполнении для визуализации промежуточных результатов
         await wait(0);
     }
 }
+
+
+async function geneticAlg() {
+    let firstGeneration = []; // первое поколение
+    let end = 500; // условие окончания алгоритма
+
+    for (let i = 0; i < dots.length; i++) {
+        firstGeneration.push(dots[i]); // копия из dots в первое поколение
+    }
+    
+    lengthOfChromosome = firstGeneration.length; // длина хромосомы 
+
+    
+    let population = startPopulation(firstGeneration); // создание начальной популяции из первого поколения
+   
+    population.sort((function (a, b) { return a[a.length - 1] - b[b.length - 1] })); // сортировка популяции по фитнес-функции (последнему элементу хромосомы)
+
+    
+    let bestChromosome = population[0].slice(); // выбор лучшей хромосомы из отсортированной популяции
+    
+    drawBest(bestChromosome, "rgb(250,142,142)") // Отрисовка лучшей хромосомы цветом rgb(250,142,142)
+
+    
+    for (let i = 0; i < numberOfGenerations; ++i) {
+        if (end === 0) { // проверка условия окончания алгоритма
+            drawBest(bestChromosome, "rgb(128, 0, 128");
+            break;
+        }
+
+        // Уменьшение размера популяции до установленного лимита
+        population = population.slice(0, dots.length * dots.length);
+
+        // Цикл создания новых детей для следующего поколения
+        for (let j = 0; j < dots.length * dots.length; ++j) {
+            // Выбор случайных индексов для родителей
+            let index1 = randomNumber(0, population.length);
+            let index2 = randomNumber(0, population.length);
+            // Выбор первого и второго родителя
+            let firstParent = population[index1].slice(0, population[index1].length - 1);
+            let secondParent = population[index2].slice(0, population[index2].length - 1);
+
+            // Создание потомков (детей) от двух родителей
+            let child = crossingParents(firstParent, secondParent);
+            // Добавление потомков в популяцию
+            population.push(child[0].slice())
+            population.push(child[1].slice())
+        }
+
+        // Сортировка популяции после добавления новых потомков
+        population.sort((function (a, b) { return a[a.length - 1] - b[b.length - 1] }));
+
+        // Проверка, изменилась ли лучшая хромосома
+        if (JSON.stringify(bestChromosome) !== JSON.stringify(population[0])) {
+            // Отрисовка изменений между старой и новой лучшей хромосомой
+            drawTheLines(bestChromosome, population[0])
+            // Обновление лучшей хромосомы
+            bestChromosome = population[0].slice();
+            // Сброс счетчика для условия окончания
+            end = 500;
+        }
+
+        // Логирование каждый 100-й генерации и уменьшение счетчика окончания
+        if (i % 100 === 0) {
+            console.log(i);
+            end -= 100;
+        }
+
+        // Отрисовка точек на канвасе
+        drawingDots();
+        // Пауза в выполнении для визуализации промежуточных результатов
+        await wait(0);
+    }
+}
+
+
+
+// async function geneticAlg() {
+//     let firstGeneration = [];
+//     let end = 500;
+
+//     for (let i = 0; i < dots.length; ++i) {
+//         firstGeneration.push(dots[i]);
+//     }
+//     lengthOfChromosome = firstGeneration.length;
+
+//     let population = startPopulation(firstGeneration);
+//     population.sort((function (a, b) { return a[a.length - 1] - b[b.length - 1] }));
+
+//     let bestChromosome = population[0].slice();
+//     drawBest(bestChromosome, "rgb(250,142,142)")
+
+//     for (let i = 0; i < numberOfGenerations; ++i) {
+//         if (end === 0) {
+//             drawBest(bestChromosome, "rgb(142,250,142)");
+//             break;
+//         }
+
+//         population = population.slice(0, dots.length * dots.length);
+
+//         for (let j = 0; j < dots.length * dots.length; ++j) {
+//             let index1 = randomNumber(0, population.length);
+//             let index2 = randomNumber(0, population.length);
+//             let firstParent = population[index1].slice(0, population[index1].length - 1);
+//             let secondParent = population[index2].slice(0, population[index2].length - 1);
+
+//             let child = crossingParents(firstParent, secondParent);
+//             population.push(child[0].slice())
+//             population.push(child[1].slice())
+//         }
+
+//         population.sort((function (a, b) { return a[a.length - 1] - b[b.length - 1] }));
+
+//         if (JSON.stringify(bestChromosome) !== JSON.stringify(population[0])) {
+//             drawTheLines(bestChromosome, population[0])
+//             bestChromosome = population[0].slice();
+//             end = 500;
+//         }
+
+//         if (i % 100 === 0) {
+//             console.log(i);
+//             end -= 100;
+//         }
+
+//         drawingDots();
+//         await wait(0);
+//     }
+// }
