@@ -4,8 +4,8 @@ canvas
     cursor: crosshair; 
     background-color: white;  
     border: 5px solid black;
-    top:50px;
-    right:50px;
+    top: 50px;
+    right: 50px;
 }
 .canvas 
 {
@@ -15,7 +15,7 @@ canvas
 .hidden
 {
     position: absolute;
-    display:none;
+    display: none;
 }
 body
 {
@@ -23,23 +23,23 @@ body
 }
 h1
 {
-    color:black;
+    color: black;
     font-size: 40px;
     position: relative;
-    left:200px;
+    left: 200px;
 }
 h2
 {
     font-size: 30px;
     position: relative;
-    left:340px;
+    left: 340px;
     top: 90px;
 }
 ul
 {
     font-size: 20px;
     position: relative;
-    left:265px;
+    left: 265px;
     top: 100px;
 }
 button
@@ -47,7 +47,7 @@ button
     background-color:rgb(246, 232, 221);
     font-size: 16px;
     padding: 15px 32px;
-    border:2px solid black;
+    border: 2px solid black;
     color: black;
     cursor: pointer;
     text-align: center;
@@ -59,25 +59,25 @@ input
     text-align: center;
     font-size: 16px;
     padding: 15px 32px;
-    border:2px solid black;
+    border: 2px solid black;
     position: relative;
-    top:35px;
+    top: 35px;
 }
 .button1
 {
     position: relative;
-    top:30px;
-    left:55px;
+    top: 30px;
+    left: 55px;
 }
 .button2
 {
     position: relative;
-    left:10px;
+    left: 10px;
     top: 413px;
 }
 .button3
 {
     position: relative;
-    left:250px;
+    left: 250px;
     top: 362px;
 }
