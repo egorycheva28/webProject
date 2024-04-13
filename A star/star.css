@@ -2,11 +2,16 @@ canvas
 {   
     width: 700px;
     height: 700px;
+    position: absolute;
     cursor: crosshair;   
     background-color:rgb(254, 254, 244);
-    position: absolute;
     top: 50px;
     right: 50px;
+}
+.canvas 
+{
+    position: relative;
+    border: 1px solid black;
 }
 .hidden
 {
@@ -20,29 +25,28 @@ body
 h1
 {
     color:black;
-    font-size: 60px;
+    font-size: 40px;
     position: relative;
-    left: 200px;
+    left: 300px;
 }
 h2
 {
     font-size: 30px;
     position: relative;
-    left: 200px;
-    top: 20px;
+    left: 330px;
+    top: 10px;
 }
 ul
 {
     font-size: 20px;
     position: relative;
-    left: 200px;
-    top: 20px;
+    left: 265px;
 }
 button
 {
    background-color: rgb(246, 232, 221);
    font-size: 16px;
-   padding: 10px 27px;
+   padding: 15px 32px;
    border: 2px solid black;
    color: black;
    cursor: pointer;
@@ -54,47 +58,48 @@ input
 {
     text-align: center;
     font-size: 16px;
-    padding: 15px 32px;
+    padding: 15px 30px;
     border: 2px solid black;
     position: relative;
-    top: 35px;
+    top: 13px;
 }
 .button1
 {
     position: relative;
-    top: 30px;
+    top: 10px;
 }
 .button2
 {
     position: relative;
-    top: 30px;
+    top: 10px;
 }
 .button3
 {
     position: relative;
-    top: 30px;
+    left: 245px;
+    top: 10px;
 }
 .button4
 {
     position: relative;
-    top: 30px;
+    left: 440px;
+    top: -41px;
 }
 .button5
 {
     position: relative;
-    top: 30px;
+    left: 303px;
+    top: -23px;
 }
 .button6
 {
     position: relative;
     left: 10px;
-    top: 80px;
+    top: 69px;
 }
 .button7
 {
     position: relative;
     left: 250px;
-    top: 39px;
+    top: 18px;
 }
-
-
