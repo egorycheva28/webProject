@@ -1,13 +1,3 @@
-function show(menu)
-{
-    let element = document.getElementById(menu);
-    if(element)
-    {
-        element.style.display = "block";
-    }
-
-}
-
 const canvas = document.querySelector("canvas");
 const context = canvas.getContext("2d");
 
@@ -45,7 +35,7 @@ function mix(array) {
 function drawingDots(color) { // рисуем точки
     for (let i = 0; i < dots.length; ++i) {
         context.beginPath();
-        context.arc(dots[i][0], dots[i][1], 15, 0, 2 * Math.PI, false);
+        context.arc(dots[i][0], dots[i][1], 10, 0, 2 * Math.PI, false);
         context.fillStyle = color;
         context.fill();
     }
@@ -364,6 +354,14 @@ function clean()
     location.reload();
 }
 
+function show(menu)
+{
+    let element = document.getElementById(menu);
+    if(element)
+    {
+        element.style.display = "block";
+    }
+}
 // async function geneticAlg() {
 //     let firstGeneration = [];
 //     let end = 500;
