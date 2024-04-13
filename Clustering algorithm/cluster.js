@@ -5,7 +5,6 @@ function show(menu)
     {
         element.style.display="block";
     }
-
 }
 
 let canvas=document.getElementById("canvas");

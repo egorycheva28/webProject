@@ -1,3 +1,12 @@
+function show(menu)
+{
+    let element = document.getElementById(menu);
+    if(element)
+    {
+        element.style.display="block";
+    }
+}
+
 const canvas = document.getElementById('canvas');
 const context = canvas.getContext('2d');
 let width = 700;
@@ -5,18 +14,17 @@ let height = 700;
 canvas.width = width;
 canvas.height = height;
 let maze = [];
-maze[0]=[];
+maze[0] = [];
 
-let start1=[-1,-1];
-let end1=[-1,-1];
+let start = [-1,-1];
+let end = [-1,-1];
 
-document.getElementById("alg").onclick = function() {Astar(start1, end1)};
-function generation1()
+function generationMap()
 {
     let input = document.querySelector('input');
-    let n=input.value;
+    let n = input.value;
+    let cellSize = Math.floor(width / n);
 
-    let cellSize =Math.floor(width/n);
     for (let i = 0; i < n; i++)
     {
         maze[i] = [];
@@ -31,17 +39,16 @@ function generation1()
         {
             context.strokeStyle="black";
             context.strokeRect(i * cellSize, j * cellSize, cellSize, cellSize);
-            
         }
     }
-    return maze;
 }
-function generation()
+
+function generationMaze()
 {
     let input = document.querySelector('input');
-    let n=input.value;
+    let n = input.value;
+    let cellSize = Math.floor(width / n);
 
-    let cellSize =Math.floor(width/n);
     for (let i = 0; i < n; i++)
     {
         maze[i] = [];
@@ -139,7 +146,7 @@ function Start()
     let rect = canvas.getBoundingClientRect();
     let input = document.querySelector('input');
     let n = input.value;
-    const cellSize = Math.floor(width/n);
+    const cellSize = Math.floor(width / n);
 
     
     canvas.addEventListener('click', function(event1) {
@@ -149,9 +156,9 @@ function Start()
         let y1 = Math.floor((event1.clientY - rect.top) / cellSize);
         context.fillStyle = 'rgb(159, 212, 152)';
         context.fillRect(x1 * cellSize, y1 * cellSize, cellSize, cellSize);
-        start1[0]=x1;
-        start1[1]=y1;
-        maze[x1][y1]=1;
+        start[0] = x1;
+        start[1] = y1;
+        maze[x1][y1] = 1;
     });
         
 }
@@ -171,13 +178,13 @@ function End()
         let y2 = Math.floor((event1.clientY - rect.top) / cellSize);
         context.fillStyle = 'red';
         context.fillRect(x2 * cellSize, y2 * cellSize, cellSize, cellSize);
-        end1[0]=x2;
-        end1[1]=y2;
-        maze[x2][y2]=1;
+        end[0] = x2;
+        end[1] = y2;
+        maze[x2][y2] = 1;
     });
         
 }
-let flag=0;
+let flag = 0;
 function clickCells()//начало, конец, непроходимые клетки
 {
     
@@ -190,14 +197,14 @@ function clickCells()//начало, конец, непроходимые кле
     canvas.addEventListener('click', function(event1) {
         //let x1 = Math.floor((event1.clientX - rect.left) / cellSize);
         //let y1 = Math.floor((event1.clientY - rect.top) / cellSize);
-        if(flag===0)
+        if(flag === 0)
         {
             let x1 = Math.floor((event1.clientX - rect.left) / cellSize);
-        let y1 = Math.floor((event1.clientY - rect.top) / cellSize);
+            let y1 = Math.floor((event1.clientY - rect.top) / cellSize);
         context.fillStyle = 'rgb(159, 212, 152)';
         context.fillRect(x1 * cellSize, y1 * cellSize, cellSize, cellSize);
-        start1[0]=x1;
-        start1[1]=y1;
+        start[0]=x1;
+        start[1]=y1;
         maze[x1][y1]=1;
         flag=1;
         }
@@ -207,8 +214,8 @@ function clickCells()//начало, конец, непроходимые кле
         let y2 = Math.floor((event1.clientY - rect.top) / cellSize);
         context.fillStyle = 'red';
         context.fillRect(x2 * cellSize, y2 * cellSize, cellSize, cellSize);
-        end1[0]=x2;
-        end1[1]=y2;
+        end[0]=x2;
+        end[1]=y2;
         maze[x2][y2]=1;
         flag=2;
         }
@@ -305,7 +312,7 @@ function wait(time)
 
 
 
-async function Astar(start,end)
+async function Astar()
 {
     //alert(start);
     //alert(end);
@@ -385,7 +392,7 @@ async function Astar(start,end)
             }
         }
     }
-    /*if (JSON.stringify(parent[end[0]][end[1]]) !== JSON.stringify([-1, -1])){
+    if (JSON.stringify(parent[end[0]][end[1]]) !== JSON.stringify([-1, -1])){
         let current = parent[end[0]][end[1]];
         let counter = 0;
         while (current[0] !== -1 && current[1] !== -1){
@@ -402,7 +409,7 @@ async function Astar(start,end)
 
         counter--;
         alert("Длина пути = " + counter)
-    }*/
+    }
 
    
 }

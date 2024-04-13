@@ -1,9 +1,9 @@
 function show(menu)
 {
-    let element=document.getElementById(menu);
+    let element = document.getElementById(menu);
     if(element)
     {
-        element.style.display="block";
+        element.style.display = "block";
     }
 
 }
