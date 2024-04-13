@@ -15,6 +15,7 @@ let centers=[];
 let clusters=[];
 let allDistances = [];
 let collorCenter=['red','green','blue','yellow','purple'];
+let colloenter=[[0, 0], [0, 180], [180, 0], [90,270], [270,90]];
 let flagPoints = true;
 let flagCenters=true;
 
@@ -89,19 +90,23 @@ function centroid(){
     } 
 }
 
+
+function getRadians(degrees) {
+	return (Math.PI / 180) * degrees;
+}
+
 function draw(){
     for(let i = 0; i < clustersHierarchy.length; i++){
-        for(let j = 0; j < clustersHierarchy[i].length-1; j++){
+        for(let j = 0; j < clustersHierarchy[i].length; j++){
             context.beginPath();
-            context.moveTo(clustersHierarchy[i][j].pointX, clustersHierarchy[i][j].pointY);
-            context.lineTo(clustersHierarchy[i][j+1].pointX, clustersHierarchy[i][j+1].pointY);
+            context.strokeStyle = "rgb(0, 0, 0)";
+            context.fillStyle = "rgb(0, 0, 0)";
+            context.arc(clustersHierarchy[i][j].pointX, clustersHierarchy[i][j].pointY, 10,  getRadians(colloenter[i][0]), getRadians(colloenter[i][1]));
+            context.fill();
             context.stroke()
+            
         }
-        context.beginPath();
-        context.strokeStyle = "rgb(200, 182, 182)";
-        context.moveTo(clustersHierarchy[i][clustersHierarchy[i].length-1].pointX, clustersHierarchy[i][clustersHierarchy[i].length-1].pointY);
-        context.lineTo(clustersHierarchy[i][0].pointX, clustersHierarchy[i][0].pointY);
-        context.stroke();
+
     }
 }
 
@@ -133,9 +138,10 @@ function hierarchy(){
 
         clustersHierarchy[min1].push(...clustersHierarchy[min2]);
         clustersHierarchy.splice(min2, 1);
-        draw();
+        
     }
 
+    draw();
 }
 
 
