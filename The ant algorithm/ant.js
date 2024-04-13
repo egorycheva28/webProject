@@ -1,20 +1,10 @@
-function show(menu)
-{
-    let element=document.getElementById(menu);
-    if(element)
-    {
-        element.style.display="block";
-    }
-
-}
-
 const canvas = document.querySelector("canvas");
 const context = canvas.getContext("2d");
 
 canvas.addEventListener('click', mouseClick);
 
 let vertexes = [];
-let size = 750;
+let size = 700;
 //let lengthOfChromosome; // without start vertex in the end
 let numberOfGenerations = 100000;
 let alpha = 1;
@@ -24,10 +14,6 @@ let distance;
 let desires = [];
 let Q = 200;
 let evaporation = 0.64;
-
-function clearFunc(){
-    location.reload();
-}
 
 function mouseClick(event){
     
@@ -289,4 +275,14 @@ async function antAlgorithm(){
 
 function clean(){
     location.reload();
+}
+
+function show(menu)
+{
+    let element=document.getElementById(menu);
+    if(element)
+    {
+        element.style.display="block";
+    }
+
 }
