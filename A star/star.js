@@ -344,8 +344,8 @@ async function Astar()
     path.push(end);
 
     let current = parent[end[0]][end[1]];
-
-    while (current[0] !== 0 && current[1] !== 0)
+    
+    while (current[0] !== 0 || current[1] !== 0)
     {
         path.push(current);
         current = parent[current[0]][current[1]];
