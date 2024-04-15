@@ -4,8 +4,8 @@ canvas
     cursor: crosshair; 
     background-color: white;  
     border: 5px solid black;
-    top:50px;
-    right:50px;
+    top: 50px;
+    right: 50px;
 }
 .canvas
  {
@@ -15,7 +15,7 @@ canvas
 .hidden
 {
     position: absolute;
-    display:none;
+    display: none;
 }
 body
 {
@@ -26,20 +26,20 @@ h1
     color:black;
     font-size: 40px;
     position: relative;
-    left:200px;
+    left: 230px;
 }
 h2
 {
     font-size: 30px;
     position: relative;
-    left:340px;
+    left: 340px;
     top: 90px;
 }
 ul
 {
     font-size: 20px;
     position: relative;
-    left:265px;
+    left: 265px;
     top: 100px;
 }
 button
@@ -54,23 +54,23 @@ button
     display: inline-block;
     transform: translateY(4px);
 
- }
- .button1
+}
+.button1
 {
     position: relative;
-    top:30px;
-    left:55px;
+    top: 30px;
+    left: 55px;
 }
 .button2
 {
     position: relative;
-    left:10px;
+    left: 10px;
     top: 414px;
 }
 .button3
 {
     position: relative;
-    left:250px;
+    left: 250px;
     top: 363px;
 }
 
