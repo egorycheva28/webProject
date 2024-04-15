@@ -11,16 +11,23 @@
             <p><button onclick = "window.location.href = '../Clustering algorithm/cluster.html'">Кластеризация</button></p>
             <p><button onclick = "window.location.href = '../Genetic algorithm/gen.html'">Генетический алгоритм</button></p>
             <p><button onclick = "window.location.href ='../The ant algorithm/ant.html'">Муравьиный алгоритм</button></p>
+            <p><button onclick = "window.location.href = '../Decision tree/tree.html'">Дерево решений</button></p>
             <p><button onclick = "window.location.href = '../Neural NetWork 1/nn.html'">Нейронная сеть</button></p>
         </div>
         <h1><u>Алгоритм кластеризации</u></h1>
+        <ul type = "disc" class = "description">
+            <p><u>К-средних</u> - кластеры образованы цветами</p>
+            <p><u>Иерархический</u> - кластеры образованы типом раскраски</p>
+            <p><u>Алгоритм минимального покрывающего дерева</u></p>
+            <p>- кластеры образованы линиями</p>
+        </ul>
         <h2><u>Инструкция:</u></h2>
-        <ul type = "disc">
+        <ul type = "disc" class = "instructions">
             <li>Введите количество кластеров</li>
             <li>Расставьте точки на плоскости</li>
             <li>Запустите алгоритм</li>
             <input type = "number" name = "name" placeholder = "1-5" id = "n"></input>
-            <p class = "button1"><button onclick = "algorithm()">Запустить</button></p>
+            <p class = "button1"><button onclick = "Algorithms()">Запустить</button></p>
         </ul>
         <div class = "button2"><button onclick = "window.location.href = '../Main/main.html'">Вернуться на главную</button></div>
         <div class = "button3"><button onclick = "clean()">Сброс</button></div>            
