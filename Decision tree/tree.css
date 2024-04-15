@@ -1,0 +1,35 @@
+.hidden
+{
+    position: absolute;
+    display: none;
+}
+body
+{
+    background-color: rgb(254, 254, 244);
+}
+h1
+{
+    color:black;
+    font-size: 40px;
+    position: relative;
+    left: 200px;
+}
+h2
+{
+    font-size: 30px;
+    position: relative;
+    left: 340px;
+    top: 90px;
+}
+button
+{
+    background-color:rgb(246, 232, 221);
+    font-size: 16px;
+    padding: 15px 32px;
+    border: 2px solid black;
+    color: black;
+    cursor: pointer;
+    text-align: center;
+    display: inline-block;
+    transform: translateY(4px);
+}
