@@ -108,9 +108,9 @@ function draw()
 function hierarchy()
 {
     let input = document.querySelector('input');
-    let numberCluster=input.value;
+    let numberCluster = input.value;
 
-    while(clustersHierarchy.length !== numberCluster)
+    while(clustersHierarchy.length != numberCluster)
     {
         getdistanceMatrix();
         centroid();
@@ -126,9 +126,9 @@ function hierarchy()
             {
                 if (dictenceHierarchy[i][j] < minn)
                 {
-                    minn=dictenceHierarchy[i][j]
-                     min1 = i;
-                     min2 = j;  
+                    minn = dictenceHierarchy[i][j];
+                    min1 = i;
+                    min2 = j;  
                 }
             }
         }
@@ -360,7 +360,7 @@ function MST()
     {
         for(let j = i + 1; j < points.length; j++)
         {
-            if(tree[i][j] !== 0)
+            if(tree[i][j] != 0)
             {
                 context.beginPath();
                 context.strokeStyle = "rgb(255,0,0)";
