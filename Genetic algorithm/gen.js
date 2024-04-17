@@ -102,10 +102,10 @@ function drawTheLines(from, to)
 {
     from.splice(from.length - 1, 0, from[0].slice());
     drawLine(from, "rgb(255,255,255)", 1); 
-    drawLine(from, "rgba(243,243,243,0.34)", 1); 
+    drawLine(from, "#EEE8AA", 1); 
 
     to.splice(to.length - 1, 0, to[0].slice());
-    drawLine(to, "rgb(250,142,142)", 1); 
+    drawLine(to, "rgb(204, 25, 12)", 1); 
 }
 
 function drawPathSegment(startPoint, endPoint, strokeWidth, strokeColor) 
@@ -299,8 +299,6 @@ async function geneticAlg()
             end -= 100;
         }
 
-        // Отрисовка точек на канвасе
-        //drawingDots();
         // Пауза в выполнении для визуализации промежуточных результатов
         await wait(0);
     }
