@@ -340,7 +340,7 @@ async function Astar()
         }
     }
 
-    let path=[];
+    let path = [];
     path.push(end);
 
     let current = parent[end[0]][end[1]];
@@ -354,13 +354,20 @@ async function Astar()
     path.push(start);
     path.reverse();
 
-    for(let i = 0; i < path.length; i++)
+    if(path.length > 2)
     {
-        await wait(20);
-        context.strokeRect(path[i][0] * cellSize, path[i][1] * cellSize, cellSize, cellSize);
-        context.fillStyle = 'rgb(125, 183, 240)';
-        context.fillRect(path[i][0] * cellSize, path[i][1] * cellSize, cellSize, cellSize);
-    }   
+        for(let i = 0; i < path.length; i++)
+        {
+            await wait(20);
+            context.strokeRect(path[i][0] * cellSize, path[i][1] * cellSize, cellSize, cellSize);
+            context.fillStyle = 'rgb(125, 183, 240)';
+            context.fillRect(path[i][0] * cellSize, path[i][1] * cellSize, cellSize, cellSize);
+        }  
+    }
+    else
+    {
+        alert('Нет пути');
+    }
 }
 
 function clean()
