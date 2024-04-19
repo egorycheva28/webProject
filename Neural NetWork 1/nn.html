@@ -1,21 +1,32 @@
 <!DOCTYPE html>
 <html>
+    <head>
+        <title>Neural network</title>
+        <link rel = "stylesheet" href = "nn.css">
+    </head>
+    <body>
+        <a href = # onclick = "show('menu'); return false;">меню</a>
+        <div id = "menu" class = "hidden">
+            <p><button onclick = "window.location.href = '../A star/star.html'">Алгоритм A*</button></p>
+            <p><button onclick = "window.location.href = '../Clustering algorithm/cluster.html'">Кластеризация</button></p>
+            <p><button onclick = "window.location.href = '../Genetic algorithm/gen.html'">Генетический алгоритм</button></p>
+            <p><button onclick = "window.location.href ='../The ant algorithm/ant.html'">Муравьиный алгоритм</button></p>
+            <p><button onclick = "window.location.href = '../Decision tree/tree.html'">Дерево решений</button></p>
+            <p><button onclick = "window.location.href = '../Neural NetWork 1/nn.html'">Нейронная сеть</button></p>
+        </div>
+        <h1><u>Нейронная сеть для распознавания цифр</u></h1>
+        <h2><u>Инструкция:</u></h2>
+        <ul type = "disc">
+            <li>Нарисуйте цифру</li>
+            <li>Проверьте цифру</li>
+            <button id = "ready">Готово</button>
+        </ul>
+        
+        <div class = "button1"><button onclick = "window.location.href = '../Main/main.html'">Вернуться на главную</button></div>
+        <div class = "button2"><button onclick = "clean()">Сброс</button></div>
 
-<head>
-    <title>Рисование на Canvas</title>
-    <link rel="stylesheet" href="nn.css">
-
-</head>
-
-<body>
-    
-    <h1><u>Нейронная сеть для распознавания цифр</u></h1>
-    <canvas id="drawingCanvas" width="50" height="50"></canvas>
-    <button id="ready">Готово</button>
-    <div class="button1"><button onclick="window.location.href='../Main/main.html'">Вернуться на главную</button></div>
-    <div class="button2"><button onclick="clean()">Сброс</button></div>
-    <script src="new_weights_250.js"></script>
-    <script src="draw_predict.js"></script>
-</body>
-
+        <canvas id = "drawingCanvas" width = "50" height = "50"></canvas>
+        <script src = "new_weights_250.js"></script>
+        <script src = "draw_predict.js"></script
+        </body>
 </html>
