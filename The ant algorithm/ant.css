@@ -7,11 +7,6 @@ canvas
     top: 50px;
     right: 50px;
 }
-.canvas
- {
-    position: relative;
-    border: 1px solid black;
-}
 .hidden
 {
     position: absolute;
