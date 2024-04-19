@@ -69,18 +69,18 @@ input
     position: relative;
     top: 35px;
 }
-.button1
+.Ready
 {
     position: relative;
     top: 30px;
 }
-.button2
+.Back
 {
     position: relative;
     left: 10px;
     top: 200px;
 }
-.button3
+.Clean
 {
     position: relative;
     left: 250px;

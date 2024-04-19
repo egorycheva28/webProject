@@ -62,36 +62,36 @@ input
     position: relative;
     top: 13px;
 }
-.button1, .button2
+.Map, .Maze
 {
     position: relative;
     top: 10px;
 }
-.button3
+.Start
 {
     position: relative;
     left: 245px;
     top: 10px;
 }
-.button4
+.End
 {
     position: relative;
     left: 440px;
     top: -41px;
 }
-.button5
+.Ready
 {
     position: relative;
     left: 303px;
     top: -23px;
 }
-.button6
+.Back
 {
     position: relative;
     left: 10px;
     top: 69px;
 }
-.button7
+.Clean
 {
     position: relative;
     left: 250px;

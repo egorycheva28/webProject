@@ -53,19 +53,19 @@ button:hover
 {
     background-color:rgb(236, 202, 174);
 }
-.button1
+.Ready
 {
     position: relative;
     top: 30px;
     left: 55px;
 }
-.button2
+.Back
 {
     position: relative;
     left: 10px;
     top: 414px;
 }
-.button3
+.Clean
 {
     position: relative;
     left: 250px;

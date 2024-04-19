@@ -23,14 +23,14 @@
             <li>Установите или уберите стенки</li>
             <li>Запустите алгоритм</li>
             <input type = "number" name = "name" placeholder = "Размер карты" id = "n"></input>
-            <p class = "button1"><button onclick = "generationMap()">Сгенерировать поле</button></p>
-            <p class = "button2"><button onclick = "generationMaze()">Сгенерировать лабиринт</button></p>
+            <p class = "Map"><button onclick = "generationMap()">Сгенерировать поле</button></p>
+            <p class = "Maze"><button onclick = "generationMaze()">Сгенерировать лабиринт</button></p>
         </ul>
-        <div class = "button3"><button onclick = "Start()">Выбрать начало</button></div>
-        <div class = "button4"><button onclick = "End()">Выбрать конец</button></div>
-        <div class = "button5"><button onclick = "Astar()">Запустить алгоритм</button></div>
-        <div class = "button6"><button onclick = "window.location.href = '../Main/main.html'">Вернуться на главную</button></div>
-        <div class = "button7"><button onclick = "clean()">Сброс</button></div>
+        <div class = "Start"><button onclick = "Start()">Выбрать начало</button></div>
+        <div class = "End"><button onclick = "End()">Выбрать конец</button></div>
+        <div class = "Ready"><button onclick = "Astar()">Запустить алгоритм</button></div>
+        <div class = "Back"><button onclick = "window.location.href = '../Main/main.html'">Вернуться на главную</button></div>
+        <div class = "Clean"><button onclick = "clean()">Сброс</button></div>
          
         <canvas id = "canvas"></canvas>
         <script src = "star.js"></script>

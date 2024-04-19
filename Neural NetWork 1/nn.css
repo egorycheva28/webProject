@@ -24,22 +24,22 @@ body
 h1
 {
     color:black;
-    font-size: 30px;
+    font-size: 40px;
     position: relative;
-    left: 210px;
+    left: 300px;
 }
 h2
 {
     font-size: 30px;
     position: relative;
-    left: 340px;
-    top: 70px;
+    left: 350px;
+    top: 90px;
 }
 ul
 {
     font-size: 20px;
     position: relative;
-    left: 265px;
+    left: 330px;
     top: 100px;
 }
 button
@@ -58,16 +58,21 @@ button:hover
 {
     background-color:rgb(236, 202, 174);
 }
-.button1
+#ready
+{
+    position: relative;
+    top: 30px;
+}
+.Back
 {
     position: relative;
     left: 10px;
-    top: 300px;
+    top: 434px;
 }
-.button2
+.Clean
 {
     position: relative;
     left: 250px;
-    top: 249px;
+    top: 383px;
 } 
 
