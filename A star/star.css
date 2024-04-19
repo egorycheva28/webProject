@@ -8,11 +8,6 @@ canvas
     top: 50px;
     right: 50px;
 }
-.canvas 
-{
-    position: relative;
-    border: 1px solid black;
-}
 .hidden
 {
     position: absolute;
@@ -63,12 +58,7 @@ input
     position: relative;
     top: 13px;
 }
-.button1
-{
-    position: relative;
-    top: 10px;
-}
-.button2
+.button1, .button2
 {
     position: relative;
     top: 10px;

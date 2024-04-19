@@ -68,12 +68,12 @@ function centroid()
 {
     for(let i = 0; i < clustersHierarchy.length; i++)
     {
-        let sumX=0;
-        let sumY=0;
+        let sumX = 0;
+        let sumY = 0;
 
         for(let j = 0; j < clustersHierarchy[i].length; j++)
         {
-            sumX +=clustersHierarchy[i][j].pointX;
+            sumX += clustersHierarchy[i][j].pointX;
             sumY += clustersHierarchy[i][j].pointY;
         }
 
@@ -109,7 +109,7 @@ function hierarchy()
 {
     let input = document.querySelector('input');
     let numberCluster = input.value;
-
+    
     while(clustersHierarchy.length != numberCluster)
     {
         getdistanceMatrix();
@@ -178,8 +178,8 @@ function Cluster()
         let distances = [];
         for(let j = 0; j<centers.length; j++)
         {
-            let dotCoardX = centers[j].X-points[i].pointX;
-            let dotCoardY = centers[j].Y-points[i].pointY;
+            let dotCoardX = centers[j].X - points[i].pointX;
+            let dotCoardY = centers[j].Y - points[i].pointY;
             let distance = Math.pow((Math.pow(dotCoardX, 2) + Math.pow(dotCoardY, 2)), 0.5);
             distances.push(distance);
         }

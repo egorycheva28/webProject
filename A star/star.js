@@ -28,7 +28,7 @@ function generationMap()
     {
         for (let j = 0; j < n; j++) 
         {
-            context.strokeStyle='black';
+            context.strokeStyle = 'black';
             context.strokeRect(i * cellSize, j * cellSize, cellSize, cellSize);
         }
     }
@@ -54,7 +54,7 @@ function generationMaze()
         let directions = ['top', 'bottom', 'right', 'left'];
         directions = directions.sort(function() 
         {
-            return 0.5-Math.random();
+            return 0.5 - Math.random();
         });
         for (let i = 0; i < directions.length; i++) 
         {
