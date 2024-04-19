@@ -64,12 +64,14 @@ document.getElementById('ready').addEventListener('click', function () {
         return;
     }
     nnRun = true;
+
     let output = NN.predict(pixels);
-    console.log("Predicted Output:", output);
-    alert("Predicted digit: " + output);
 
+    let digit1 = output[0];
+    let digit2 = output[1];
+    let digit3 = output[2];
 
-    // console.log("Input Column:", pixels);
+    alert("Предсказанные цифры (по вероятности): " + digit1 + ", " + digit2 + ", " + digit3);
 });
 
 
