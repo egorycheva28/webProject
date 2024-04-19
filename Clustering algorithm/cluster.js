@@ -1,5 +1,5 @@
-let canvas = document.getElementById("canvas");
-let context = canvas.getContext("2d");
+const canvas = document.getElementById("canvas");
+const context = canvas.getContext("2d");
 let points = [];
 let centers = [];
 let clusters = [];

@@ -70,30 +70,29 @@ input
 .Start
 {
     position: relative;
-    left: 245px;
+    left: -60px;
     top: 10px;
 }
 .End
 {
     position: relative;
-    left: 440px;
+    left: 135px;
     top: -41px;
 }
 .Ready
 {
     position: relative;
-    left: 303px;
     top: -23px;
 }
 .Back
 {
     position: relative;
     left: 10px;
-    top: 69px;
+    top: 49px;
 }
 .Clean
 {
     position: relative;
     left: 250px;
-    top: 18px;
+    top: -2px;
 }

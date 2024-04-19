@@ -53,15 +53,6 @@ button:hover
 {
     background-color:rgb(236, 202, 174);
 }
-input
-{
-    text-align: center;
-    font-size: 16px;
-    padding: 15px 32px;
-    border: 2px solid black;
-    position: relative;
-    top: 35px;
-}
 .Ready
 {
     position: relative;
