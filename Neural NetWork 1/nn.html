@@ -1,25 +1,21 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Рисование на Canvas</title>
-        <link rel = "stylesheet" href = "nn.css">
-    </head>
-    <body>
-        <a href = # onclick = "show('menu'); return false;">меню</a>
-        <div id = "menu" class = "hidden">
-            <p><button onclick = "window.location.href = '../A star/star.html'">Алгоритм A*</button></p>
-            <p><button onclick = "window.location.href = '../Clustering algorithm/cluster.html'">Алгоритм кластеризации</button></p>
-            <p><button onclick = "window.location.href = '../Genetic algorithm/gen.html'">Генетический алгоритм</button></p>
-            <p><button onclick = "window.location.href = '../The ant algorithm/ant.html'">Муравьиный алгоритм</button></p>
-            <p><button onclick = "window.location.href = '../Neural NetWork 1/nn.html'">Нейронная сеть</button></p>
-        </div>
-        <h1><u>Нейронная сеть для распознавания цифр</u></h1>
-        
-        <button id = "ready">Готово</button>
-        <!-- <canvas id="outputCanvas" width="28" height="28"></canvas> -->
-        <div class = "button1"><button onclick = "window.location.href='../Main/main.html'">Вернуться на главную</button></div>
-        <div class = "button2"><button onclick = "clean()">Сброс</button></div>
-        <canvas id = "drawingCanvas" width = "50" height = "50"></canvas>
-        <script src = "nn.js"></script>
-    </body>
+
+<head>
+    <title>Рисование на Canvas</title>
+    <link rel="stylesheet" href="nn.css">
+
+</head>
+
+<body>
+    
+    <h1><u>Нейронная сеть для распознавания цифр</u></h1>
+    <canvas id="drawingCanvas" width="50" height="50"></canvas>
+    <button id="ready">Готово</button>
+    <div class="button1"><button onclick="window.location.href='../Main/main.html'">Вернуться на главную</button></div>
+    <div class="button2"><button onclick="clean()">Сброс</button></div>
+    <script src="new_weights_250.js"></script>
+    <script src="draw_predict.js"></script>
+</body>
+
 </html>

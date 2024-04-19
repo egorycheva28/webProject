@@ -1,4 +1,162 @@
-canvas 
+/* body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin: 0;
+    padding: 50px 0;
+    background-color: rgb(254, 254, 244);
+    font-family: Arial, sans-serif;
+}
+
+canvas {
+    border: 10px solid rgb(0, 54, 23);
+    
+    display: block;
+    margin-bottom: 20px;
+    background-color: white;
+}
+
+
+#ready {
+    margin-top: 20px;
+    background-color: darkkhaki;
+    font-size: 16px;
+    padding: 15px 32px;
+    border: none;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    color: white;
+    cursor: pointer;
+    text-align: center;
+    display: inline-block;
+    outline: none;
+}
+
+#ready:hover {
+    background-color: olive;
+}
+
+#drawingCanvas {
+    transform: scale(7);
+    image-rendering: pixelated;
+    cursor: pointer;
+    background-color: white;
+    grid-area: canvas;
+    border: 2px solid #ccc;
+    margin: auto;
+    display: block;
+    position: relative;
+    left: 20%;
+    top: 20%;
+    transform: scale(7);
+    border: 2px solid #ccc;
+}
+
+#ready {
+    background-color: darkkhaki;
+    font-size: 16px;
+    padding: 15px 32px;
+    border: none;
+    box-shadow: 0 8px 16px 0 black;
+    color: white;
+    cursor: pointer;
+    text-align: center;
+    display: inline-block;
+    transform: translateY(4px);
+    outline: none;
+}
+button
+{
+   background-color: rgb(246, 232, 221);
+   font-size: 16px;
+   padding: 15px 32px;
+   border:2px solid black;
+   color: black;
+   cursor: pointer;
+   text-align: center;
+   display: inline-block;
+   transform: translateY(4px);
+}
+.button1
+{
+    position: relative;
+    left:10px;
+    top: 200px;
+}
+.button2
+{
+    position: relative;
+    left:250px;
+    top: 149px;
+} */
+canvas {
+    position: relative;  
+    margin: 0 auto;     
+    border: 10px solid rgb(0, 54, 23);
+    background-color: white;
+    display: block;
+    width: 50px;      
+    height: 50px;
+    image-rendering: pixelated;
+    cursor: crosshair;
+}
+
+.hidden {
+    display: none;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin: 0;
+    padding: 50px 0;
+    background-color: rgb(254, 254, 244);
+    font-family: Arial, sans-serif;
+}
+/* 
+.button {  
+   background-color: rgb(246, 232, 221);
+   font-size: 16px;
+   padding: 15px 32px;
+   border: 2px solid black;
+   color: black;
+   cursor: pointer;
+   text-align: center;
+   display: inline-block;
+}
+.button1, .button2 {
+    position: relative;
+    margin-top: 20px; 
+} */
+
+button
+{
+   background-color: rgb(246, 232, 221);
+   font-size: 16px;
+   padding: 15px 32px;
+   border:2px solid black;
+   color: black;
+   cursor: pointer;
+   text-align: center;
+   display: inline-block;
+   transform: translateY(4px);
+}
+.button1
+{
+    position: relative;
+    left:10px;
+    top: 200px;
+}
+.button2
+{
+    position: relative;
+    left:250px;
+    top: 149px;
+} 
+
+/* canvas 
 {
     position: absolute;
     border: 10px solid rgb(0, 54, 23);
@@ -6,6 +164,7 @@ canvas
     margin-bottom: 20px;
     top: 50px;
     right: 50px;
+    background-color: white;
 }
 
 .hidden
@@ -48,6 +207,7 @@ body
     height: 500px;
     image-rendering: pixelated;
     cursor: pointer;
+    background-color: white;
 }
 
 #ready {
@@ -86,4 +246,4 @@ button
     position: relative;
     left:250px;
     top: 149px;
-}
+} */

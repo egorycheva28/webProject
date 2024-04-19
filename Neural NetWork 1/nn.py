@@ -1,28 +1,53 @@
 import numpy as np
+import json
+from PIL import Image
 
+def resize_image_with_pil(image_data, new_width=50, new_height=50):
+    image = Image.fromarray(np.uint8(image_data * 255), 'L')  
+    resized_image = image.resize((new_width, new_height), Image.Resampling.LANCZOS)
+    resized_image_data = np.array(resized_image).astype(np.float32) / 255.0
+    return resized_image_data
 
 def load_mnist_images(filename):
     with open(filename, "rb") as f:
-        # Пропускаем магическое число и количество изображений
         f.read(4)
-        num_images = int.from_bytes(f.read(4), 'big')
-        rows = int.from_bytes(f.read(4), 'big')
-        cols = int.from_bytes(f.read(4), 'big')
-        
-        # Считываем пиксели
+        num_images = int.from_bytes(f.read(4), "big")
+        rows = int.from_bytes(f.read(4), "big")
+        cols = int.from_bytes(f.read(4), "big")
         images = np.frombuffer(f.read(), dtype=np.uint8)
-        images = images.reshape((num_images, rows * cols))
-        return images / 255  # Нормализация
+        images = images.reshape((num_images, rows, cols))
+        
+        resized_images = np.array([resize_image_with_pil(img) for img in images])
+
+        return resized_images
+
+
+
 
 def load_mnist_labels(filename):
     with open(filename, "rb") as f:
-        # Пропускаем магическое число и количество меток
         f.read(4)
-        # num_labels = int.from_bytes(f.read(4), 'big')
-        
-        # Считываем метки
+        num_labels = int.from_bytes(f.read(4), "big")
         labels = np.frombuffer(f.read(), dtype=np.uint8)
         return labels
+
+
+images_path = "/Users/bdvzt/Desktop/untitled/train-images-idx3-ubyte"
+labels_path = "/Users/bdvzt/Desktop/untitled/train-labels-idx1-ubyte"
+
+X = load_mnist_images(images_path)
+y = load_mnist_labels(labels_path)
+
+num_train = 50000
+num_test = 10000
+
+X_train = X[:num_train, :]
+y_train = np.zeros((num_train, 10))
+y_train[np.arange(num_train), y[:num_train]] = 1
+
+X_test = X[num_train:, :]
+y_test = np.zeros((num_test, 10))
+y_test[np.arange(num_test), y[-num_test:]] = 1
 
 
 def sigmoid(x):
@@ -96,26 +121,8 @@ class NeuralNetwork:
         predicted_output = sigmoid(output_layer_in)
         return predicted_output
 
-images_path = "/Users/bdvzt/Desktop/WEB_PROJECT/webProject/Neural_NetWork/train-images-idx3-ubyte"
-labels_path = "/Users/bdvzt/Desktop/WEB_PROJECT/webProject/Neural_NetWork/train-labels-idx1-ubyte"
 
-X = load_mnist_images(images_path)
-y = load_mnist_labels(labels_path)
-
-# Продолжаем с вашим кодом по разделению и предобработке данных
-num_train = 50000
-num_test = 10000
-
-X_train = X[:num_train, :]
-y_train = np.zeros((num_train, 10))
-y_train[np.arange(num_train), y[:num_train]] = 1
-
-X_test = X[num_train:, :]
-y_test = np.zeros((num_test, 10))
-y_test[np.arange(num_test), y[-num_test:]] = 1
-
-
-nn = NeuralNetwork(784, 350, 10)
+nn = NeuralNetwork(2500, 250, 10)
 
 for i in range(X_train.shape[0]):
     inputs = np.array(X_train[i, :].reshape(-1, 1))
@@ -136,5 +143,15 @@ for i in range(len(prediction_list)):
         correct_counter += 1
 
 accuracy = correct_counter / num_test
+
+weights = {
+    "hidden_weights": nn.hidden_weights.tolist(),  
+    "hidden_bias": nn.hidden_bias.tolist(),
+    "output_weights": nn.output_weights.tolist(),
+    "output_bias": nn.output_bias.tolist()
+}
+
+with open('new_weights50x50_250.json', 'w') as file:
+    json.dump(weights, file)
 
 print("Accuracy is : ", accuracy * 100, " %")
