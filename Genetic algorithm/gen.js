@@ -162,7 +162,8 @@ function addToPopulation(population, chromosome)
     else 
     {
         let added = false
-        for (let i = 0; i < population.length; ++i) {
+        for (let i = 0; i < population.length; ++i) 
+        {
             if (chromosome[chromosome.length - 1] < population[i][population[i].length - 1]) 
             {
                 population.splice(i, 0, chromosome);
@@ -247,23 +248,18 @@ async function geneticAlg()
     
     let bestChromosome = population[0].slice();// Выбор лучшей хромосомы из отсортированной популяции
     
-    drawBest(bestChromosome, "rgb(255,255,255)")// Отрисовка лучшей хромосомы цветом rgb(250,142,142)
-
+    drawBest(bestChromosome, "rgb(255,255,255)")// Отрисовка лучшей хромосомы цветом rgb(255,255,255)
    
     for (let i = 0; i < numberOfGenerations; ++i) 
     {
-        
         if (end === 0) // Проверка условия окончания алгоритма
         {
-            
-            drawBest(bestChromosome, "rgb(28, 158, 16)");// Отрисовка лучшей хромосомы цветом rgb(142,250,142) в случае завершения
+            drawBest(bestChromosome, "rgb(28, 158, 16)");// Отрисовка лучшей хромосомы цветом rgb(28, 158, 16) в случае завершения
             break;
         }
 
-        
         population = population.slice(0, dots.length * dots.length);// Уменьшение размера популяции до установленного лимита
 
-        
         for (let j = 0; j < dots.length * dots.length; ++j) // Цикл создания новых детей для следующего поколения
         {
             // Выбор случайных индексов для родителей
@@ -284,7 +280,8 @@ async function geneticAlg()
         population.sort((function (a, b) { return a[a.length - 1] - b[b.length - 1] }));
 
         // Проверка, изменилась ли лучшая хромосома
-        if (JSON.stringify(bestChromosome) !== JSON.stringify(population[0])) {
+        if (JSON.stringify(bestChromosome) !== JSON.stringify(population[0])) 
+        {
             // Отрисовка изменений между старой и новой лучшей хромосомой
             drawTheLines(bestChromosome, population[0])
             // Обновление лучшей хромосомы
@@ -294,7 +291,8 @@ async function geneticAlg()
         }
 
         // Логирование каждый 100-й генерации и уменьшение счетчика окончания
-        if (i % 100 === 0) {
+        if (i % 100 === 0) 
+        {
             console.log(i);
             end -= 100;
         }
@@ -303,9 +301,6 @@ async function geneticAlg()
         await wait(0);
     }
 }
-
-
-
 
 function clean()
 {
