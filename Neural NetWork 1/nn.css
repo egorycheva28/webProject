@@ -5,8 +5,8 @@ canvas
     border: 5px solid black;
     background-color: white;
     display: block;
-    width: 50px;      
-    height: 50px;
+    width: 700px;      
+    height: 700px;
     image-rendering: pixelated;
     cursor: crosshair;
     top: 50px;
