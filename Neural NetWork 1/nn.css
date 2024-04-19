@@ -24,7 +24,7 @@ body
 h1
 {
     color:black;
-    font-size: 40px;
+    font-size: 30px;
     position: relative;
     left: 210px;
 }
@@ -53,6 +53,10 @@ button
    text-align: center;
    display: inline-block;
    transform: translateY(4px);
+}
+button:hover
+{
+    background-color:rgb(236, 202, 174);
 }
 .button1
 {
