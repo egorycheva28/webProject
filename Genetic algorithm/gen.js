@@ -48,6 +48,16 @@ function mix(array) { // перемешиваем рандомно
     return mixedArray.slice();
 }
 
+function comparing(arr1, arr2) {
+    if (arr1.length !== arr2.length)
+        return false;
+    for (let i = 0; i < arr1.length; i++) {
+        if (arr1[i] !== arr2[i])
+            return false;
+    }
+    return true;
+}
+
 function drawingDots(color) // рисуем точки
 {
     for (let i = 0; i < dots.length; ++i) {
@@ -226,8 +236,7 @@ async function geneticAlg() {
     if (!isAlgorithmRunning) {
         let ending = 500;
 
-        let startingGen = [];
-        startingGen = dots;
+        let startingGen = dots;
 
         chromosomeLength = startingGen.length;
 
@@ -238,6 +247,8 @@ async function geneticAlg() {
 
 
         for (let i = 0; i < 1000000; i++) {
+            await wait(0);
+
             isAlgorithmRunning = true;
 
             drawingDots('#CD5C5C');
@@ -263,9 +274,9 @@ async function geneticAlg() {
                 population.push(child[1].slice())
             }
 
-            population.sort((function (a, b) { return a[a.length - 1] - b[b.length - 1] }));  // после добавления новых потомков
+            sortPopulationByLastElement(population);  // после добавления новых потомков
 
-            if (JSON.stringify(bestChromosome) !== JSON.stringify(population[0])) {
+            if (!comparing(bestChromosome, population[0])) {
                 drawingLine(bestChromosome, population[0])
                 bestChromosome = population[0].slice();
                 ending = 500;
@@ -273,8 +284,6 @@ async function geneticAlg() {
 
             if (i % 100 === 0)
                 ending -= 100;
-
-            await wait(0);
         }
     }
     else {
