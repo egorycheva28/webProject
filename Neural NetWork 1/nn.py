@@ -1,34 +1,98 @@
-import numpy as np
-import json
+import json  # https://medium.com/@akhmisy/build-a-neural-network-for-handwritten-digits-recognition-from-scratch-using-python-2244f6b9e494
 from PIL import Image
+import math
+import random
+
+
+def sigmoid(x):
+    return 1 / (1 + math.exp(-x))
+
+
+def sigmoid_derivative(x):
+    return x * (1 - x)
+
+
+def loss(predicted_output, desired_output):
+    return sum(
+        0.5 * (d_o - p_o) ** 2 for d_o, p_o in zip(desired_output, predicted_output)
+    ) / len(desired_output)
+
+
+def dot_product(v1, v2):
+    return sum(x * y for x, y in zip(v1, v2))
+
+
+def matrix_multiply(matrix, vector):
+    return [dot_product(row, vector) for row in matrix]
+
+
+def matrix_add(v1, v2):
+    return [x + y for x, y in zip(v1, v2)]
+
+
+def vector_scalar_multiply(vector, scalar):
+    return [x * scalar for x in vector]
+
+
+def transpose(matrix):
+    return list(map(list, zip(*matrix)))
+
 
 def resize_image_with_pil(image_data, new_width=50, new_height=50):
-    image = Image.fromarray(np.uint8(image_data * 255), 'L')  
+    image = Image.new(
+        "L", (len(image_data[0]), len(image_data)), 255
+    )  # cоздание черно-белого изображения
+    for y, row in enumerate(image_data):
+        for x, value in enumerate(row):
+            image.putpixel((x, y), int(value * 255))  # установка значения пикселя
+
     resized_image = image.resize((new_width, new_height), Image.Resampling.LANCZOS)
-    resized_image_data = np.array(resized_image).astype(np.float32) / 255.0
+
+    # преобразование обратно в нормализованный список пикселей
+    resized_image_data = [
+        [resized_image.getpixel((x, y)) / 255.0 for x in range(new_width)]
+        for y in range(new_height)
+    ]
+
     return resized_image_data
+
 
 def load_mnist_images(filename):
     with open(filename, "rb") as f:
-        f.read(4)
+        f.read(4)  # магическое число
         num_images = int.from_bytes(f.read(4), "big")
         rows = int.from_bytes(f.read(4), "big")
         cols = int.from_bytes(f.read(4), "big")
-        images = np.frombuffer(f.read(), dtype=np.uint8)
-        images = images.reshape((num_images, rows, cols))
-        
-        resized_images = np.array([resize_image_with_pil(img) for img in images])
+
+        # чтение данных изображения
+        data = f.read()
+        images = []
+        for i in range(num_images):
+            image = []
+            for r in range(rows):
+                row = []
+                for c in range(cols):
+                    # вычисление индекса начала пикселя
+                    index = i * rows * cols + r * cols + c
+                    pixel = data[index]
+                    row.append(pixel / 255.0)
+                image.append(row)
+            images.append(image)
+
+        # изменение размера каждого изображения
+        resized_images = [resize_image_with_pil(img) for img in images]
 
         return resized_images
 
 
-
-
 def load_mnist_labels(filename):
     with open(filename, "rb") as f:
-        f.read(4)
-        num_labels = int.from_bytes(f.read(4), "big")
-        labels = np.frombuffer(f.read(), dtype=np.uint8)
+        f.read(4)  # пропускаем магическое число
+        num_labels = int.from_bytes(f.read(4), "big")  # количество меток
+
+        # оставшиеся байты файла - метки
+        data = f.read()
+        labels = [data[i] for i in range(num_labels)]  # байт в целое число
         return labels
 
 
@@ -41,25 +105,21 @@ y = load_mnist_labels(labels_path)
 num_train = 50000
 num_test = 10000
 
-X_train = X[:num_train, :]
-y_train = np.zeros((num_train, 10))
-y_train[np.arange(num_train), y[:num_train]] = 1
+X_train = X[:num_train]
+y_train = []
 
-X_test = X[num_train:, :]
-y_test = np.zeros((num_test, 10))
-y_test[np.arange(num_test), y[-num_test:]] = 1
+for i in range(num_train):
+    y_row = [0] * 10
+    y_row[y[i]] = 1
+    y_train.append(y_row)
 
+X_test = X[-num_test:]
+y_test = []
 
-def sigmoid(x):
-    return 1 / (1 + np.exp(-x))
-
-
-def sigmoid_derivative(x):
-    return x * (1 - x)
-
-
-def loss(predicted_output, desired_output):
-    return 1 / 2 * (desired_output - predicted_output) ** 2
+for i in range(num_test):
+    y_row = [0] * 10
+    y_row[y[-num_test + i]] = 1
+    y_test.append(y_row)
 
 
 class NeuralNetwork:
@@ -72,86 +132,116 @@ class NeuralNetwork:
         self.inputLayerNeuronsNumber = inputLayerNeuronsNumber
         self.hiddenLayerNeuronsNumber = hiddenLayerNeuronsNumber
         self.outputLayerNeuronsNumber = outputLayerNeuronsNumber
+
         self.learning_rate = 0.1
-        # He initialization
-        self.hidden_weights = np.random.randn(
-            hiddenLayerNeuronsNumber, inputLayerNeuronsNumber
-        ) * np.sqrt(2 / inputLayerNeuronsNumber)
-        self.hidden_bias = np.zeros([hiddenLayerNeuronsNumber, 1])
-        self.output_weights = np.random.randn(
-            outputLayerNeuronsNumber, hiddenLayerNeuronsNumber
-        )
-        self.output_bias = np.zeros([outputLayerNeuronsNumber, 1])
+
+        self.hidden_weights = [
+            [
+                random.gauss(0, math.sqrt(2 / inputLayerNeuronsNumber))
+                for _ in range(inputLayerNeuronsNumber)
+            ]
+            for _ in range(hiddenLayerNeuronsNumber)
+        ]
+        self.hidden_bias = [0] * hiddenLayerNeuronsNumber
+        self.output_weights = [
+            [random.gauss(0, 1) for _ in range(hiddenLayerNeuronsNumber)]
+            for _ in range(outputLayerNeuronsNumber)
+        ]
+        self.output_bias = [0] * outputLayerNeuronsNumber
         self.loss = []
 
     def train(self, inputs, desired_output):
-        hidden_layer_in = np.dot(self.hidden_weights, inputs) + self.hidden_bias
-        hidden_layer_out = sigmoid(hidden_layer_in)
-
-        output_layer_in = (
-            np.dot(self.output_weights, hidden_layer_out) + self.output_bias
+        hidden_layer_in = matrix_add(
+            matrix_multiply(self.hidden_weights, inputs), self.hidden_bias
         )
-        predicted_output = sigmoid(output_layer_in)
+        hidden_layer_out = list(map(sigmoid, hidden_layer_in))
 
-        error = desired_output - predicted_output
-        d_predicted_output = error * sigmoid_derivative(predicted_output)
-
-        error_hidden_layer = d_predicted_output.T.dot(self.output_weights)
-        d_hidden_layer = error_hidden_layer.T * sigmoid_derivative(hidden_layer_out)
-
-        self.output_weights += (
-            hidden_layer_out.dot(d_predicted_output.T).T * self.learning_rate
+        output_layer_in = matrix_add(
+            matrix_multiply(self.output_weights, hidden_layer_out),
+            self.output_bias,
         )
-        self.output_bias += (
-            np.sum(d_predicted_output, axis=0, keepdims=True) * self.learning_rate
+        predicted_output = list(map(sigmoid, output_layer_in))
+
+        error = [d_o - p_o for d_o, p_o in zip(desired_output, predicted_output)]
+
+        d_predicted_output = [
+            e * sigmoid_derivative(p) for e, p in zip(error, predicted_output)
+        ]
+
+        error_hidden_layer = matrix_multiply(
+            transpose(self.output_weights), d_predicted_output
+        )
+        d_hidden_layer = [
+            e * sigmoid_derivative(h)
+            for e, h in zip(error_hidden_layer, hidden_layer_out)
+        ]
+
+        self.output_weights = [
+            matrix_add(ow, vector_scalar_multiply(vector, self.learning_rate))
+            for ow, vector in zip(
+                self.output_weights,
+                transpose([d_predicted_output] * self.hiddenLayerNeuronsNumber),
+            )
+        ]
+        self.output_bias = matrix_add(
+            self.output_bias,
+            vector_scalar_multiply(d_predicted_output, self.learning_rate),
         )
 
-        self.hidden_weights += inputs.dot(d_hidden_layer.T).T * self.learning_rate
-        self.hidden_bias += (
-            np.sum(d_hidden_layer, axis=0, keepdims=True) * self.learning_rate
+        self.hidden_weights = [
+            matrix_add(hw, vector_scalar_multiply(vector, self.learning_rate))
+            for hw, vector in zip(
+                self.hidden_weights,
+                transpose([d_hidden_layer] * self.inputLayerNeuronsNumber),
+            )
+        ]
+        self.hidden_bias = matrix_add(
+            self.hidden_bias, vector_scalar_multiply(d_hidden_layer, self.learning_rate)
         )
+
         self.loss.append(loss(predicted_output, desired_output))
 
     def predict(self, inputs):
-        hidden_layer_in = np.dot(self.hidden_weights, inputs) + self.hidden_bias
-        hidden_layer_out = sigmoid(hidden_layer_in)
-        output_layer_in = (
-            np.dot(self.output_weights, hidden_layer_out) + self.output_bias
+        hidden_layer_in = matrix_add(
+            matrix_multiply(self.hidden_weights, inputs), self.hidden_bias
         )
-        predicted_output = sigmoid(output_layer_in)
+        hidden_layer_out = list(map(sigmoid, hidden_layer_in))
+        output_layer_in = matrix_add(
+            matrix_multiply(self.output_weights, hidden_layer_out), self.output_bias
+        )
+        predicted_output = list(map(sigmoid, output_layer_in))
         return predicted_output
 
 
 nn = NeuralNetwork(2500, 250, 10)
 
-for i in range(X_train.shape[0]):
-    inputs = np.array(X_train[i, :].reshape(-1, 1))
-    desired_output = np.array(y_train[i, :].reshape(-1, 1))
+for i in range(len(X_train)):
+    inputs = [[x] for x in X_train[i]]  
+    desired_output = [[y] for y in y_train[i]]
     nn.train(inputs, desired_output)
 
-
 prediction_list = []
-for i in range(X_test.shape[0]):
-    inputs = np.array(X_test[i].reshape(-1, 1))
+for i in range(len(X_test)):
+    inputs = [[x] for x in X_test[i]]
     prediction_list.append(nn.predict(inputs))
 
 correct_counter = 0
-for i in range(len(prediction_list)):
-    out_index = np.where(prediction_list[i] == np.amax(prediction_list[i]))[0][0]
 
+for i in range(len(prediction_list)):
+    out_index = max(range(len(prediction_list[i])), key=lambda x: prediction_list[i][x])
+    
     if y_test[i][out_index] == 1:
         correct_counter += 1
 
-accuracy = correct_counter / num_test
+print(f"Accuracy: {correct_counter / len(y_test) * 100}%")
+
 
 weights = {
-    "hidden_weights": nn.hidden_weights.tolist(),  
+    "hidden_weights": nn.hidden_weights.tolist(),
     "hidden_bias": nn.hidden_bias.tolist(),
     "output_weights": nn.output_weights.tolist(),
-    "output_bias": nn.output_bias.tolist()
+    "output_bias": nn.output_bias.tolist(),
 }
 
-with open('new_weights50x50_250.json', 'w') as file:
+with open("new_weights50x50_250tru.json", "w") as file:
     json.dump(weights, file)
-
-print("Accuracy is : ", accuracy * 100, " %")
