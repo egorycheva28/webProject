@@ -1,18 +1,29 @@
 const canvas = document.getElementById("canvas");
 const context = canvas.getContext("2d");
+//для алгоритма К-средних
 let points = [];
 let centers = [];
 let clusters = [];
 let allDistances = [];
 let collorCenter = ['red','green','blue','yellow','purple'];
-let colloenter = [[0, 0], [0, 180], [180, 0], [90,270], [270,90]];
 let flagPoints = true;
 let flagCenters = true;
+
+//для алгоритма Иерархический
 let clustersHierarchy = [];
 let dictenceHierarchy = [];
 let centroids = [];
+let blackColoring  = [[0, 0], [0, 180], [180, 0], [90,270], [270,90]];
 
-canvas.addEventListener("click",  function(event)
+//для алгоритма минимального покрывающего дерева
+let keys = [];
+let mstSet = [];
+let tree = [];
+let graph = [];
+let INF = 900000000;
+
+
+canvas.addEventListener("click",  function(event) // ставит точки на экране
 {
     if(flagPoints === true)
     {
@@ -35,16 +46,16 @@ canvas.addEventListener("click",  function(event)
     return points;    
 });
 
-function getdistanceMatrix() 
+function Algorithms() //основная функция со всеми алгоритмами
 {
-    for (let i = 0; i < clustersHierarchy.length; i++) 
+    addCenter();
+    Cluster();
+    for(let i = 0; i < 10; i++)
     {
-        dictenceHierarchy[i] = [];
-        for (let j = 0; j < clustersHierarchy.length; j++) 
-        {
-            dictenceHierarchy[i][j] = 1000000000000;
-        }
+        redCenters();
     }
+    hierarchy();
+    MST();
 }
 
 function euclideanDistance(x1, y1, x2, y2)
@@ -52,7 +63,7 @@ function euclideanDistance(x1, y1, x2, y2)
     return Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2);
 }
 
-function distanceMatrix()
+function distanceMatrixHierarchy()
 {
     for(let i = 0; i < clustersHierarchy.length; i++)
     {
@@ -64,7 +75,7 @@ function distanceMatrix()
     }
 }
 
-function centroid()
+function centroid()//считаем центроид для каждого кластера
 {
     for(let i = 0; i < clustersHierarchy.length; i++)
     {
@@ -89,7 +100,7 @@ function getRadians(degrees)
 	return (Math.PI / 180) * degrees;
 }
 
-function draw()
+function drawHierarchy()
 {
     for(let i = 0; i < clustersHierarchy.length; i++)
     {
@@ -98,7 +109,7 @@ function draw()
             context.beginPath();
             context.strokeStyle = "rgb(0, 0, 0)";
             context.fillStyle = "rgb(0, 0, 0)";
-            context.arc(clustersHierarchy[i][j].pointX, clustersHierarchy[i][j].pointY, 10,  getRadians(colloenter[i][0]), getRadians(colloenter[i][1]));
+            context.arc(clustersHierarchy[i][j].pointX, clustersHierarchy[i][j].pointY, 10,  getRadians(blackColoring[i][0]), getRadians(blackColoring[i][1]));
             context.fill();
             context.stroke()
         }
@@ -109,17 +120,28 @@ function hierarchy()
 {
     let input = document.querySelector('input');
     let numberCluster = input.value;
-    
+
+    //сначало все точки это отдельный кластр, потом их последовательно объединяем
     while(clustersHierarchy.length != numberCluster)
     {
-        getdistanceMatrix();
+        //заполняем матрицу с растояниями значением 1000000000000
+        for (let i = 0; i < clustersHierarchy.length; i++) 
+        {
+            dictenceHierarchy[i] = [];
+            for (let j = 0; j < clustersHierarchy.length; j++) 
+            {
+                dictenceHierarchy[i][j] = 1000000000000;
+            }
+        }
+
         centroid();
-        distanceMatrix();
+        distanceMatrixHierarchy();
 
         let minn = 100000000000000;
         let min1 = 0;
         let min2 = 0;
 
+        //проходимся по всем расстояниям и ищем минимальное, запоминаем между какими кластарами
         for(let i = 0; i < clustersHierarchy.length; i++) 
         {
             for(let j = i + 1; j < clustersHierarchy.length; j++)
@@ -133,11 +155,11 @@ function hierarchy()
             }
         }
 
-        clustersHierarchy[min1].push(...clustersHierarchy[min2]);
-        clustersHierarchy.splice(min2, 1);
+        clustersHierarchy[min1].push(...clustersHierarchy[min2]);// объединяем нужные класторы
+        clustersHierarchy.splice(min2, 1);// удаляем второй
     }
 
-    draw();
+    drawHierarchy();
 }
 
 function addCenter()
@@ -239,13 +261,7 @@ function redCenters()
     Cluster();
 } 
 
-let keys = [];
-let mstSet = [];
-let tree = [];
-let graph = [];
-let INF = 900000000;
-
-function findMinKey() 
+function findMinKey() // нужна для Прима
 {
     let minKey = INF, minIndex = -1;
     for (let v = 0; v < points.length; ++v) 
@@ -257,18 +273,6 @@ function findMinKey()
         }
     }
     return minIndex;
-}
-
-function getdistanceMatrixe()
-{
-    for (let i = 0; i < points.length; i++) 
-    {
-        graph[i] = [];
-        for (let j = 0; j < points.length; j++) 
-        {
-            graph[i][j] = 0;
-        }
-    }
 }
 
 function distanceMatrixe()
@@ -283,7 +287,7 @@ function distanceMatrixe()
     }
 }
 
-function primAlgorithm() 
+function primAlgorithm() // составляем минимальное составное дерево
 {
     let parent = [];
 
@@ -327,40 +331,13 @@ function primAlgorithm()
     }
 }
 
-function MST()
+function drawMST()
 {
-    let input = document.querySelector('input');
-    let numberCluster = input.value;
-    getdistanceMatrixe();
-    distanceMatrixe();
-    primAlgorithm();
-    for(let k = 0; k < numberCluster - 1; k++)
-    {
-        let maxx = 0;
-        let min1 = 0;
-        let min2 = 0;
-
-        for(let i = 0; i < points.length; i++)
-        {
-            for(let j = i + 1; j < points.length; j++)
-            {
-                if (tree[i][j] > maxx)
-                {
-                    maxx = tree[i][j];
-                    min1 = i;
-                    min2 = j;  
-
-                }
-            }
-        }
-        tree[min1][min2] = 0;
-    }
-
     for(let i = 0; i < points.length; i++)
     {
         for(let j = i + 1; j < points.length; j++)
         {
-            if(tree[i][j] != 0)
+            if(tree[i][j] !== 0)
             {
                 context.beginPath();
                 context.strokeStyle = "rgb(255,0,0)";
@@ -372,16 +349,49 @@ function MST()
     }
 }
 
-function Algorithms()
+function MST()// основная функция для третий класторизации
 {
-    addCenter();
-    Cluster();
-    for(let i = 0; i < 10; i++)
+    let input = document.querySelector('input');
+    let numberCluster = input.value;
+
+    //заполняем матрицу с рёбрами
+    for (let i = 0; i < points.length; i++) 
     {
-        redCenters();
+        graph[i] = [];
+        for (let j = 0; j < points.length; j++) 
+        {
+            graph[i][j] = 0;
+        }
+    } 
+
+    distanceMatrixe();
+    primAlgorithm();
+
+    for(let k = 0; k < numberCluster - 1; k++) // нужно удалить n-1 самых длинных рёбер
+    {
+        //проходимся по каждому ребру и ищем максимальное, запоминаем между какими вершинами
+        let maxx = 0;
+        let max1 = 0;
+        let max2 = 0;
+
+        for(let i = 0; i < points.length; i++)
+        {
+            for(let j = i + 1; j < points.length; j++)
+            {
+                if (tree[i][j] > maxx)
+                {
+                    maxx = tree[i][j];
+                    max1 = i;
+                    max2 = j;  
+
+                }
+            }
+        }
+        tree[max1][max2] = 0; // меняем на 0, имея в виду что пути нет
     }
-    hierarchy();
-    MST();
+
+    drawMST();
+    
 }
 
 function clean()
