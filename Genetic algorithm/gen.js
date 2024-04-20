@@ -95,31 +95,51 @@ canvas.addEventListener('click', function (event) // добавляются то
     }
 });
 
-function line(points, color, lineWidth) {
-    for (let i = 0; i < points.length - 1; i++) {
-        context.beginPath();
-
-        let arr = [points[i + 1][0] - points[i][0], points[i + 1][1] - points[i][1]];
-        let len = Math.sqrt(arr[0] * arr[0] + arr[1] * arr[1]); // пифагор ван лав
-
-        context.moveTo(points[i][0] + arr[0] / len, points[i][1] + arr[1] / len);
-        context.lineTo(points[i + 1][0] - arr[0] / len, points[i + 1][1] - arr[1] / len);
-
-        context.strokeStyle = color;
-        context.lineWidth = lineWidth;
-
-        context.stroke();
-    }
-}
-
-function drawingLine(from, to) {
+function lines(from, to) {
     from.splice(from.length - 1, 0, from[0].slice());
     to.splice(to.length - 1, 0, to[0].slice());
 
-    line(from, "rgb(255,255,255)", 1);
-    line(from, "rgba(238, 232, 170, 0.45)", 0.4);
+    for (let i = 0; i < from.length - 1; i++) {
+        context.beginPath();
 
-    line(to, "rgba(204, 25, 12)", 0.4);
+        let array = [from[i + 1][0] - from[i][0], from[i + 1][1] - from[i][1]];
+
+        let len = Math.sqrt(array[0] * array[0] + array[1] * array[1]);
+
+        context.moveTo(from[i][0] + array[0] / len, from[i][1] + array[1]/ len);
+        context.lineTo(from[i + 1][0] - array[0]/ len, from[i + 1][1] - array[1] / len);
+
+        context.strokeStyle = "rgb(255,255,255)";
+        context.lineWidth = 2;
+
+
+        context.stroke();
+        
+
+        context.moveTo(from[i][0] + array[0] / len, from[i][1] + array[1] / len);
+        context.lineTo(from[i + 1][0] - array[0]/ len, from[i + 1][1] - array[1]/ len);
+
+        context.strokeStyle = "#EEE8AA";
+        context.lineWidth = 0.5;
+
+        context.stroke()
+    }
+
+    for (let j = 0; j < to.length - 1; j++) {
+        context.beginPath();
+        
+        let array = [to[j + 1][0] - to[j][0], to[j + 1][1] - to[j][1]];
+
+        let len = Math.sqrt(array[0] * array[0] + array[1] * array[1]);
+
+        context.moveTo(to[j][0] + array[0] / len, to[j][1] + array[1] / len);
+        context.lineTo(to[j + 1][0] - array[0]  / len, to[j + 1][1] - array[1] / len);
+
+        context.strokeStyle = "rgb(204, 25, 12)";
+        context.lineWidth = 0.5;
+
+        context.stroke();
+    }
 }
 
 function drawPathSegment(startPoint, endPoint, strokeWidth, strokeColor) {
@@ -234,7 +254,7 @@ function crossing(parent1, parent2) {
 
 async function geneticAlg() {
     if (!isAlgorithmRunning) {
-        let ending = 500;
+        let ending = 800;
 
         let startingGen = dots;
 
@@ -277,13 +297,13 @@ async function geneticAlg() {
             sortPopulationByLastElement(population);  // после добавления новых потомков
 
             if (!comparing(bestChromosome, population[0])) {
-                drawingLine(bestChromosome, population[0])
+                lines(bestChromosome, population[0]);
                 bestChromosome = population[0].slice();
-                ending = 500;
+                ending = 800;
             }
 
-            if (i % 100 === 0)
-                ending -= 100;
+            if (i % 200 === 0)
+                ending -= 200;
         }
     }
     else {
