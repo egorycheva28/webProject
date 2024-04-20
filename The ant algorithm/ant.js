@@ -1,18 +1,19 @@
+//основной алгоритм и числа брались из этого видео
+//https://www.youtube.com/watch?v=8KTzAiusfPs&t=1111s&ab_channel=foo52ru%D0%A2%D0%B5%D1%85%D0%BD%D0%BE%D0%A8%D0%B0%D0%BC%D0%B0%D0%BD
+
 const canvas = document.querySelector("canvas");
 const context = canvas.getContext("2d");
 
-canvas.addEventListener('click', mouseClick);
+canvas.addEventListener('click', mouseClick); // рисует точки по клику мыши
 
-let vertexes = [];
-let size = 700;
-let numberOfGenerations = 100000;
+let points = [];
+let Q = 200;
+let evaporation = 0.64;
 let alpha = 1;
 let beta = 1;
 let pheromones;
 let distance;
-let desires = [];
-let Q = 200;
-let evaporation = 0.64;
+
 
 function mouseClick(event)
 {    
@@ -20,14 +21,14 @@ function mouseClick(event)
     let clientX = event.clientX - rect.left;
     let clientY = event.clientY - rect.top;
     context.beginPath();
-    if (vertexes.length >= 1)
+    if (points.length >= 1)
     {
-        for(let vert of vertexes)
+        for(let point of points)//соединяет новую точку с другими
         {
-            let vertX = vert[0];
-            let vertY = vert[1];
+            let pointX = point[0];
+            let pointY = point[1];
 
-            context.moveTo(vertX, vertY);
+            context.moveTo(pointX, pointY);
             context.lineTo(clientX, clientY);
             context.strokeStyle = "#EEE8AA";
             context.stroke();
@@ -38,209 +39,131 @@ function mouseClick(event)
     context.arc(clientX, clientY, 10, 0, Math.PI * 2);
     context.fillStyle = '#CD5C5C';
     context.fill();
-    vertexes.push([clientX, clientY]);
-    redrawVertexes();
+    points.push([clientX, clientY]);
+    redrawArc();
 }
 
-function redrawVertexes()
+function redrawArc()//перересовываем круги, так как проблема слиниями
 {
-    for (let i = 0; i < vertexes.length; ++i)
+    for (let i = 0; i < points.length; ++i)
     {
         context.beginPath();
-        context.arc(vertexes[i][0], vertexes[i][1], 10, 0, 2 * Math.PI, false);
+        context.arc(points[i][0], points[i][1], 10, 0, 2 * Math.PI, false);
         context.fillStyle = '#CD5C5C';
         context.fill();
     }
 }
 
-function drawTheLines(from, to)
+function drawWhiteLineAndColor(arr,color)
 {
-    let a = from.slice()
-    a.push(a[0].slice())
 
-    for (let i = 0; i < a.length - 1; ++i)
+    arr.push(arr[0]);
+    for (let i = 0; i < arr.length - 1; ++i)
     {
         context.beginPath();
-        let vector = [a[i + 1][0] - a[i][0] , a[i + 1][1] - a[i][1]];
-        let s = Math.sqrt(vector[0] * vector[0] + vector[1] * vector[1]);
 
-        context.moveTo(a[i][0] + vector[0] * 10 / s, a[i][1] + vector[1] * 10 / s);
-        context.lineTo(a[i + 1][0] - vector[0] * 10 / s, a[i + 1][1] - vector[1] * 10 / s);
+        context.moveTo(arr[i][0] , arr[i][1]);
+        context.lineTo(arr[i + 1][0] , arr[i + 1][1]);
         context.strokeStyle = "rgb(255,255,255)";
         context.lineWidth = 2;
         context.stroke();
 
-        context.moveTo(a[i][0] + vector[0] * 10 / s, a[i][1] + vector[1] * 10 / s);
-        context.lineTo(a[i + 1][0] - vector[0] * 10 / s, a[i + 1][1] - vector[1] * 10 / s);
-        context.strokeStyle = "#EEE8AA";
-        context.lineWidth = 1;
-        context.stroke()
-    }
-
-    let b = to.slice();
-    b.push(b[0].slice())
-
-    for (let i = 0; i < b.length - 1; ++i)
-    {
-        context.beginPath();
-        let vector = [b[i + 1][0] - b[i][0] , b[i + 1][1] - b[i][1]];
-        let s = Math.sqrt(vector[0] * vector[0] + vector[1] * vector[1]);
-        context.moveTo(b[i][0] + vector[0] * 10 / s, b[i][1] + vector[1] * 10 / s);
-        context.lineTo(b[i + 1][0] - vector[0] * 10 / s, b[i + 1][1] - vector[1] * 10 / s);
-        context.strokeStyle = "rgb(204, 25, 12)";
-        context.lineWidth = 1;
-        context.stroke();
-    }
-}
-
-function drawFinishPath(bestPath, color)
-{
-    bestPath.push(bestPath[0].slice());
-    for (let i = 0; i < bestPath.length - 1; ++i)
-    {
-        context.beginPath();
-        let vector = [bestPath[i + 1][0] - bestPath[i][0] , bestPath[i + 1][1] - bestPath[i][1]];
-        let s = Math.sqrt(vector[0] * vector[0] + vector[1] * vector[1]);
-
-        context.moveTo(bestPath[i][0] + vector[0] * 10 / s, bestPath[i][1] + vector[1] * 10 / s);
-        context.lineTo(bestPath[i + 1][0] - vector[0] * 10 / s, bestPath[i + 1][1] - vector[1] * 10 / s);
-        context.strokeStyle = "rgb(255,255,255)";
-        context.lineWidth = 2;
-        context.stroke();
-
-        context.moveTo(bestPath[i][0] + vector[0] * 10 / s, bestPath[i][1] + vector[1] * 10 / s);
-        context.lineTo(bestPath[i + 1][0] - vector[0] * 10 / s, bestPath[i + 1][1] - vector[1] * 10 / s);
+        context.moveTo(arr[i][0], arr[i][1]);
+        context.lineTo(arr[i + 1][0], arr[i + 1][1]);
         context.strokeStyle = color;
         context.lineWidth = 1;
-        context.stroke()
+        context.stroke();
     }
+    redrawArc();
 }
 
-function wait(time)
+function euclideanDistance(point1, point2)//расстояние между двумя точками
 {
-    return new Promise(resolve => setTimeout(resolve, time));
+    return Math.sqrt((point1[0] - point2[0])**2 + (point1[1] - point2[1])**2);
 }
 
-function distanceBetweenTwoPoints(first, second)
-{
-    return Math.sqrt(Math.pow(first[0] - second[0], 2) + Math.pow(first[1] - second[1], 2));
-}
-
-function allDistanceForPath(path_idx)
+function distancePath(path)
 {
     let dist = 0
-    for (let i = 0; i < path_idx.length - 1; ++i)
+    for (let i = 0; i < path.length - 1; ++i)
     {
-        dist += distanceBetweenTwoPoints(vertexes[path_idx[i]].slice(), vertexes[path_idx[i + 1]].slice());
+        dist += euclideanDistance(path[i] , path[i + 1] );
     }
-    dist += distanceBetweenTwoPoints(vertexes[path_idx[path_idx.length - 1]].slice(), vertexes[path_idx[0]].slice());
+    dist += euclideanDistance(path[path.length - 1] , path[0] );
     return dist;
 }
 
-function addToPopulation(allWays, path) 
-{
-    if (!allWays.length) 
+function randome(p){
+    let rand = Math.random();
+    for (let i = 0; i < p.length; ++i)
     {
-        allWays.push(path.slice());
-    }
-    else 
-    {
-        let added = false
-        for (let i = 0; i < allWays.length; ++i) 
+        if (rand < p[i][1])
         {
-            if (path[path.length - 1] < allWays[i][allWays[i].length - 1]) 
-            {
-                allWays.splice(i, 0, path);
-                added = true;
-                break;
-            }
-        }
-        if (!added) 
-        {
-            allWays.push(path.slice());
+            return p[i][0];
         }
     }
 }
 
 async function antAlgorithm()
 {
-    let vertexesLength = vertexes.length;
-    let bestAnt = []; // [[vertexes], [idx_vertexes], length of path]
+    let bestPath = []; 
+    let newBestPath=[];
 
-    let b = vertexes.slice(0);
+    let copy = points.slice(0);
 
-    let qwe = [];
-    for (let i = 0; i < vertexes.length; ++i)
-    {
-        qwe.push(i);
-    }
-
-    bestAnt.push(b, qwe, allDistanceForPath(qwe));
+    bestPath.push(copy, distancePath(copy));
 
     pheromones = [];
     distance = [];
 
-    for (let i = 0; i < vertexesLength; ++i)
+    for (let i = 0; i < points.length - 1; ++i)
     {
-        pheromones[i] = new Array(vertexesLength);
-        distance[i] = new Array(vertexesLength);
-    }
-
-    for (let i = 0; i < vertexes.length - 1; ++i)
-    {
-        for (let j = i + 1; j < vertexes.length; ++j)
+        pheromones[i] = [];
+        distance[i] = [];
+        for (let j = i + 1; j < points.length; ++j)
         {
-            distance[i][j] = Q / distanceBetweenTwoPoints(vertexes[i].slice(), vertexes[j].slice());
+            distance[i][j] = Q / euclideanDistance(points[i] , points[j] );
             pheromones[i][j] = 0.2;
         }
     }
 
-    let end = vertexesLength * 2;
+    let end = points.length * 2;
 
-    for (let generation = 0; generation < numberOfGenerations; ++generation)
+    for (let k = end; k > 0; --k)
     {
-        if (end === 0)
+        let result = [];
+
+        for (let ant = 0; ant < points.length; ++ant)
         {
-            drawFinishPath(bestAnt[0], "rgb(28, 158, 16)");
-            break;
-        }
+            let path = [];
+            let path_id = [];
 
-        let ways = [];
-        let path = [];
-        let path_idx = [];
+            let start_idx = ant;
+            let start = points[start_idx] ;
 
-        for (let ant = 0; ant < vertexes.length; ++ant)
-        {
-            path = [];
-            path_idx = [];
+            path.push(start);
+            path_id.push(start_idx);
 
-            let startVertex_idx = ant;
-            let startVertex = vertexes[startVertex_idx].slice();
-
-            path.push(startVertex);
-            path_idx.push(startVertex_idx);
-
-            while (path.length !== vertexes.length)
+            while (path.length !== points.length)
             {
-                let sumOfDesires = 0;
+                let desireSum = 0;
 
                 let p = [];
-                for (let j = 0; j < vertexes.length; ++j) 
+                for (let i = 0; i < points.length; ++i) 
                 {
-                    if (path_idx.indexOf(j) !== -1)
+                    if (path.indexOf(points[i]) == -1)
                     {
-                        continue;
+                        let min = Math.min(start_idx, i);
+                        let max = Math.max(start_idx, i);
+                        let desire = (pheromones[min][max])** alpha * (distance[min][max])** beta;
+                        p.push([i,desire]);
+                        desireSum += desire;
                     }
-                    let min = Math.min(startVertex_idx, j);
-                    let max = Math.max(startVertex_idx, j);
-                    let desire = Math.pow(pheromones[min][max], alpha) * Math.pow(distance[min][max], beta);
-                    p.push([j,desire]);
-                    sumOfDesires += desire;
                 }
 
                 for (let i = 0; i < p.length; ++i)
                 {
-                    p[i][1] /= sumOfDesires;
+                    p[i][1] /= desireSum;
                 }
 
                 for (let j = 1; j < p.length; ++j)
@@ -248,66 +171,65 @@ async function antAlgorithm()
                     p[j][1] += p[j - 1][1];
                 }
 
-                let rand = Math.random()
-                let choice
-                for (let i = 0; i < p.length; ++i)
-                {
-                    if (rand < p[i][1])
-                    {
-                        choice = p[i][0];
-                        break;
-                    }
-                }
-                startVertex_idx = choice;
-
-                startVertex = vertexes[startVertex_idx].slice();
-                path.push(startVertex.slice());
-                path_idx.push(startVertex_idx);
+                start_idx = randome(p);
+                        
+                start = points[start_idx] ;
+                path.push(start );
+                path_id.push(start_idx);
             }
-            ways.push([path.slice(), path_idx.slice(), allDistanceForPath(path_idx)])
+            result.push([path , path_id , distancePath(path)])
         }
 
-        ways.sort((function (a, b) { return a[2] - b[2]}));
-
-        for (let i = 0; i < vertexesLength - 1; ++i)
+        let minn = result[0][2] 
+        for (let i = 1; i < result.length; ++i)
         {
-            for (let j = i + 1; j < vertexesLength; ++j)
+            if(minn > result[i][2] ){
+                minn = result[i][2];
+                newBestPath = [result[i][0], result[i][2]];
+            }
+        }   
+
+
+        for (let i = 0; i < points.length - 1; ++i)
+        {
+            for (let j = i + 1; j < points.length; ++j)
             {
                 pheromones[i][j] *= evaporation;
             }
         }
 
-        for (let i = 0; i < ways.length; ++i)
+        for (let i = 0; i < result.length; ++i)
         {
-            let idx_path = ways[i][1].slice();
-            let lenOfPath = ways[i][2]
-            for (let j = 0; j < vertexesLength - 1; ++j)
+            let idx_path = result[i][1] ;
+            let lenOfPath = result[i][2];
+            for (let j = 0; j < points.length - 1; ++j)
             {
-                let min = Math.min(idx_path[j], idx_path[j + 1]);
-                let max = Math.max(idx_path[j], idx_path[j + 1]);
-                pheromones[min][max] += Q / lenOfPath;
+                pheromones[Math.min(idx_path[j], idx_path[j + 1])][Math.max(idx_path[j], idx_path[j + 1])] += Q / lenOfPath;
             }
         }
 
-        let newBestAnt = ways[0].slice();
-
-        if (newBestAnt[2] < bestAnt[2])
+        if (newBestPath[1] < bestPath[1])
         {
-            drawTheLines(bestAnt[0], newBestAnt[0]);
-            bestAnt = newBestAnt.slice();
-            redrawVertexes();
-            end = vertexesLength * 2;
+            drawWhiteLineAndColor(bestPath[0],"#EEE8AA");
+            drawWhiteLineAndColor(newBestPath[0],"rgb(204, 25, 12)");
+            bestPath = newBestPath ;
+            end = points.length * 2;
         }
 
         end -= 1;
-        console.log(generation)
         await wait(100);
     }
+    drawWhiteLineAndColor(bestPath[0], "rgb(28, 158, 16)");
 }
 
 function clean()
 {
     location.reload();
+}
+
+function wait(time)
+{
+    return new Promise(resolve => setTimeout(resolve, time));
 }
 
 function show(menu)
