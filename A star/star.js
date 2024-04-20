@@ -10,7 +10,7 @@ maze[0] = [];
 let start = [-1,-1];
 let end = [-1,-1];
 
-function generationMap()
+function generationMap()//создание карты
 {
     let input = document.querySelector('input');
     let n = input.value;
@@ -34,7 +34,7 @@ function generationMap()
     }
 }
 
-function generationMaze()
+function generationMaze()//создание лабиринта
 {
     let input = document.querySelector('input');
     let n = input.value;
@@ -133,7 +133,7 @@ canvas.addEventListener('click', function(event)
     let rect = canvas.getBoundingClientRect();
     let x = Math.floor((event.clientX - rect.left) / cellSize);
     let y = Math.floor((event.clientY - rect.top) / cellSize);
-    if(flag === 0)
+    if(flag === 0)//добавляем начало
     {
         context.fillStyle = 'rgb(159, 212, 152)';
         context.fillRect(x * cellSize, y * cellSize, cellSize, cellSize);
@@ -142,7 +142,7 @@ canvas.addEventListener('click', function(event)
         maze[x][y] = 2;
         flag = 2;
     }
-    else if(flag === 1)
+    else if(flag === 1)//добавляем конец
     {
         context.fillStyle = 'rgb(236, 148, 148)';
         context.fillRect(x * cellSize, y * cellSize, cellSize, cellSize);
@@ -151,7 +151,7 @@ canvas.addEventListener('click', function(event)
         maze[x][y] = 2;
         flag = 2;
     }
-    else
+    else//ставим и убираем стенки
     {
         if(maze[x][y] === 0)
         {
@@ -244,7 +244,7 @@ function heuristicFunction(start1, end1)
     return Math.abs(start1.x - end1.x) + Math.abs(start1.y - end1.y);
 }
 
-function Neighbours(n, current, distance)
+function Neighbours(n, current, distance)//проверка и добавление соседей
 { 
     let neighbours = [];
     let currentX = current[0][0];
@@ -274,7 +274,7 @@ function wait(time)
     return new Promise(resolve => setTimeout(resolve, time));
 }
 
-async function Astar()
+async function Astar()//основной алгоритм A*
 {
     let input = document.querySelector('input');
     let n = input.value;
@@ -339,7 +339,7 @@ async function Astar()
             }  
         }
     }
-
+    //записываем конечный путь
     let path = [];
     path.push(end);
 
@@ -353,7 +353,7 @@ async function Astar()
 
     path.push(start);
     path.reverse();
-
+    //выводим конечный путь
     if(path.length > 2)
     {
         for(let i = 0; i < path.length; i++)
